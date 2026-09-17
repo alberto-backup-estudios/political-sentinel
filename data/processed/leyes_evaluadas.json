@@ -83,5 +83,47 @@
       "d6_burocracia": 0.4
     },
     "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Pauta, El Mostrador, Emol, revisado] Rechazada en general (idea de legislar) en la Cámara el 8 de marzo de 2023, 71 en contra / 73 a favor / 3 abstenciones (no alcanzó el quórum simple de 74), por lo que no continuó su tramitación ni se convirtió en ley. El texto (buscaba recaudar ~3,6% del PIB) incluía impuesto a la riqueza, nueva tasa marginal de 43% en IUSC/IGC, desintegración tributaria para grandes empresas y norma antielusión con más facultades al SII — alzas tributarias directas e inmediatas (d4), parcialmente atenuadas por el alivio transitorio a Pymes que también incluía (rebaja temporal a 13-20% y depreciación instantánea del 50%). La norma antielusión y mayor fiscalización del SII generan nuevos costos de cumplimiento (d5) y carga regulatoria (d6) al sector privado. No crea transferencias monetarias ni expande bienes públicos en su propio texto (d1/d2=0): la 'justicia social' del título es la finalidad declarada, no un mecanismo concreto de este boletín — se clasifica según su contenido textual verificado, no según su nombre."
+  },
+  {
+    "boletin": "15480-13",
+    "titulo": "Crea un nuevo Sistema Mixto de Pensiones y un Seguro Social en el pilar contributivo, mejora la Pensión Garantizada Universal (Reforma de Pensiones)",
+    "sectores_afectados": ["Trabajadores dependientes", "Empleadores del sector privado", "Pensionistas y beneficiarios de la PGU", "Sistema de seguridad social"],
+    "vector_impacto": {
+      "d1_transferencias": 0.6,
+      "d2_bienes_publicos": 0.5,
+      "d3_derechos_laborales": 0.4,
+      "d4_carga_fiscal": -0.1,
+      "d5_costos_privados": 0.7,
+      "d6_burocracia": 0.2
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Superintendencia de Pensiones, Subsecretaría de Previsión Social, revisado] Ley 21.735 (publicada 26-03-2025, mensaje ingresado 07-11-2022). Crea una cotización adicional de cargo del EMPLEADOR de 8,5% sobre la remuneración imponible: 6 puntos a la cuenta de capitalización individual del propio trabajador, 2,5 puntos a un nuevo Fondo Autónomo de Protección Previsional (FAPP) solidario que financia un nuevo Seguro Social (d3). Mejora y amplía la cobertura de la PGU con reajuste automático según PIB/inflación (d1/d2). El costo de la cotización adicional recae en el empleador privado, no en el fisco (d5), no en impuestos o gasto público (d4≈0) — una cotización previsional obligatoria no es un tributo al tesoro, aunque la fije la ley."
+  },
+  {
+    "boletin": "16621-05",
+    "titulo": "Dicta normas para asegurar el cumplimiento de las obligaciones tributarias dentro del Pacto por el Crecimiento Económico, el Progreso Social y la Responsabilidad Fiscal (Ley de Cumplimiento Tributario)",
+    "sectores_afectados": ["Grupos empresariales y empresas multinacionales", "Plataformas de comercio electrónico", "Importadores de bienes de bajo valor", "Sector financiero", "Contribuyentes de altos ingresos y patrimoniales"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 0.8,
+      "d5_costos_privados": 0.5,
+      "d6_burocracia": 0.3
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: SII, Ministerio de Hacienda, Carey Abogados, revisado] Ley 21.713 (publicada 24-10-2024, mensaje ingresado 29-01-2024). Fortalece la Norma General Antielusión, aumenta supervisión de Grupos Empresariales, aplica IVA a compras de bajo valor vía plataformas digitales, y simplifica el levantamiento del secreto bancario para fiscalización del SII. No crea ni sube ninguna tasa de impuesto existente — recauda ~1,5% del PIB (USD 4.500 millones) combatiendo evasión y elusión de tributos ya vigentes, no mediante alza directa (d4 positivo igual, porque el efecto es un aumento cierto e inmediato de recaudación, a diferencia de un efecto especulativo vía crecimiento económico). Genera costos de cumplimiento y fiscalización al sector privado (d5/d6)."
+  },
+  {
+    "boletin": "16566-03",
+    "titulo": "Establece una Ley Marco de Autorizaciones Sectoriales e introduce modificaciones en cuerpos legales que indica (Ley de Permisos Sectoriales / \"Permisología\")",
+    "sectores_afectados": ["Inversión y proyectos de infraestructura", "Sectores regulados (minería, energía, construcción, industria)", "Emprendimientos y Pymes", "Administración pública (autoridades sectoriales)"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 0.0,
+      "d5_costos_privados": -0.7,
+      "d6_burocracia": -0.8
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Ministerio de Economía, Senado, DiarioConstitucional, revisado] Ley 21.770 (aprobada 01-07-2025, mensaje ingresado enero de 2024). Reduce entre 30% y 70% los tiempos de tramitación de más de 380 permisos sectoriales. Introduce silencio administrativo positivo (si la autoridad no responde a tiempo, el permiso se otorga automáticamente), principio de proporcionalidad según nivel de riesgo del proyecto, y una plataforma digital única (SUPER) con plazos máximos de 25-120 días. Es el primer caso del corpus de desregulación pro-crecimiento (Regla 5 del clasificador): no toca ningún tributo (d4=0) — el efecto directo del texto es reducir costos y trámites (d5/d6 negativos), no aumentar recaudación futura vía crecimiento económico especulativo."
   }
 ]

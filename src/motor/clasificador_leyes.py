@@ -54,6 +54,17 @@ REGLAS IMPORTANTES:
        especulativo: no lo uses para justificar un d4 positivo (misma lógica de la regla 1:
        no le atribuyas a esta ley un efecto que depende de dinámicas económicas futuras,
        no del mecanismo directo de su texto).
+6. d4_carga_fiscal es específicamente sobre el TESORO PÚBLICO: impuestos, tasas, o
+   gasto/deuda del Estado. Una cotización previsional, de seguridad social o de salud
+   obligatoria (aunque la fije la ley y sea "obligatoria") NO es un impuesto ni gasto
+   público — es un costo laboral que paga un privado (empleador o trabajador) a un
+   fondo dedicado (AFP, isapre, fondo de reparto previsional, etc.), no al fisco.
+   Ese mecanismo va en d5_costos_privados (si lo paga la empresa) o no computa en
+   ningún eje si lo paga el propio trabajador de su bolsillo. NO uses el mismo
+   mecanismo para justificar un valor alto en d4 Y en d5 a la vez — es el mismo costo
+   contado dos veces. Excepción: si la ley crea explícitamente un fondo público nuevo
+   financiado con cargo al Presupuesto de la Nación (no a cotizaciones privadas), eso
+   sí es d4.
 """
 
 
