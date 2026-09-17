@@ -56,6 +56,7 @@ El sistema aprovecha datos abiertos oficiales del Congreso Nacional de Chile:
 ```
 Political-sentinel/
 ├── README.md                   # Descripción general y guía rápida
+├── INSTRUCCIONES_OTRO_PC.md    # Guía para configurar y sincronizar en el segundo PC
 ├── conversacion_completa.md    # Registro íntegro del diseño conceptual y acuerdos
 ├── metodologia_y_mapas.md      # Marco matemático, índices y diseño de cuadrantes
 ├── requirements.txt            # Dependencias Python
