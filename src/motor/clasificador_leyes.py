@@ -41,6 +41,19 @@ REGLAS IMPORTANTES:
    evidencia verificada, no las menciones en la justificación.
 4. La justificación debe citar mecanismos o artículos concretos de la ley, no opiniones
    generales.
+5. Distingue dos tipos de ley que buscan aumentar la recaudación del Estado, aunque el
+   Ejecutivo declare la misma intención de fondo para ambas:
+   (a) Aumento DIRECTO: sube tasas, crea impuestos, elimina exenciones o créditos
+       tributarios. Tiene un efecto cierto e inmediato -> d4 positivo.
+   (b) Crecimiento económico INDIRECTO: reduce trámites, simplifica regulación o
+       incentiva inversión/formalización esperando que la mayor actividad económica
+       aumente la recaudación a futuro. NO sube ninguna tasa ni impuesto de forma
+       directa -> d4 se mantiene neutro o incluso negativo si reduce algún tributo, y el
+       efecto real de esta ley aparece en d5/d6 (probablemente negativos, porque alivia
+       costos y burocracia). El aumento de recaudación esperado es un efecto indirecto y
+       especulativo: no lo uses para justificar un d4 positivo (misma lógica de la regla 1:
+       no le atribuyas a esta ley un efecto que depende de dinámicas económicas futuras,
+       no del mecanismo directo de su texto).
 """
 
 
