@@ -146,6 +146,19 @@ def calcular_perfil_radar_parlamentario(
     )
 
 
+def calcular_perfil_radar_bancada(perfiles: List["PerfilRadarParlamentario"]) -> VectorImpacto:
+    """Promedio simple (no ponderado) del perfil de radar de los parlamentarios de
+    una bancada, en línea con cómo ya se calcula su centroide (X, Y)."""
+    if not perfiles:
+        return VectorImpacto(**{eje: 0.0 for eje in EJES_VECTOR_IMPACTO})
+
+    promedio = {
+        eje: round(sum(getattr(p.vector_promedio, eje) for p in perfiles) / len(perfiles), 4)
+        for eje in EJES_VECTOR_IMPACTO
+    }
+    return VectorImpacto(**promedio)
+
+
 def calcular_perfil_promedio_leyes(leyes_map: Dict[str, LeyEvaluada]) -> VectorImpacto:
     """Promedio simple del vector de impacto de todas las leyes evaluadas -
     el radar 'de referencia' contra el que se puede comparar a un parlamentario."""
@@ -161,7 +174,7 @@ def calcular_perfil_promedio_leyes(leyes_map: Dict[str, LeyEvaluada]) -> VectorI
 
 
 def calcular_metricas_bancada(
-    partido: str,
+    bancada: str,
     posiciones: List[PosicionamientoParlamentario],
     k_confianza: float = DEFAULT_ELLIPSE_CONFIDENCE_K,
 ) -> MetricasBancada:
@@ -172,7 +185,7 @@ def calcular_metricas_bancada(
     n = len(posiciones)
     if n == 0:
         return MetricasBancada(
-            partido=partido,
+            bancada=bancada,
             x_centroide=0.0,
             y_centroide=0.0,
             sigma_x=0.0,
@@ -194,7 +207,7 @@ def calcular_metricas_bancada(
     if n == 1:
         # Con 1 miembro, la dispersión es 0 y la disciplina es 100%
         return MetricasBancada(
-            partido=partido,
+            bancada=bancada,
             x_centroide=round(x_mean, 4),
             y_centroide=round(y_mean, 4),
             sigma_x=0.0,
@@ -238,7 +251,7 @@ def calcular_metricas_bancada(
     angulo_grados = math.degrees(angulo_rad)
 
     return MetricasBancada(
-        partido=partido,
+        bancada=bancada,
         x_centroide=round(x_mean, 4),
         y_centroide=round(y_mean, 4),
         sigma_x=round(sigma_x, 4),

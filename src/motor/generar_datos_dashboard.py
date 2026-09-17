@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from src.config import COLORES_PARTIDOS, PROCESSED_DATA_DIR, VISUALIZADOR_DIR
+from src.config import COLORES_BANCADAS, PERIODOS_LEGISLATIVOS, PROCESSED_DATA_DIR, VISUALIZADOR_DIR
 from src.extractores.camara import obtener_detalle_votacion, obtener_votaciones_por_boletin
 from src.extractores.senado import obtener_votaciones_senado
 from src.models import (
@@ -28,6 +28,7 @@ from src.models import (
 from src.motor.calculo_cuadrantes import (
     calcular_metricas_bancada,
     calcular_perfil_promedio_leyes,
+    calcular_perfil_radar_bancada,
     calcular_perfil_radar_parlamentario,
     calcular_posicionamiento_parlamentario,
 )
@@ -87,6 +88,29 @@ def recolectar_votaciones_emblematicas(leyes: Dict[str, LeyEvaluada]) -> List[Vo
     return votaciones_totales
 
 
+def _fecha_a_periodo(fecha: str) -> Optional[str]:
+    """Determina a qué período legislativo (PERIODOS_LEGISLATIVOS) corresponde una
+    fecha de votación. Acepta ISO ('2022-01-26T14:55:15') o Senado ('24/01/2022')."""
+    fecha = (fecha or "").strip()
+    dt = None
+    for parser in (
+        lambda s: datetime.fromisoformat(s.split("T")[0]),
+        lambda s: datetime.strptime(s, "%d/%m/%Y"),
+    ):
+        try:
+            dt = parser(fecha)
+            break
+        except ValueError:
+            continue
+    if dt is None:
+        return None
+
+    for nombre_periodo, (ini, fin) in PERIODOS_LEGISLATIVOS.items():
+        if datetime.fromisoformat(ini) <= dt <= datetime.fromisoformat(fin):
+            return nombre_periodo
+    return None
+
+
 def _normalizar_texto(texto: str) -> str:
     """Minúsculas y sin tildes/diacríticos, para comparar nombres de forma robusta."""
     t = texto.strip().lower()
@@ -120,19 +144,30 @@ def asociar_votos_a_parlamentarios(
     solo se asigna si hay EXACTAMENTE UN candidato del catálogo que calce — una
     coincidencia ambigua o nula se reporta y no se asigna, para no atribuirle a
     alguien un voto que no es suyo.
+
+    Además, los candidatos se restringen al período legislativo vigente en la
+    fecha de la votación (el Senado tiene términos de 8 años escalonados, así
+    que quién ocupaba un escaño cambia entre períodos): un voto de 2022 nunca
+    se cruza contra el catálogo de un período distinto.
     """
     senadores = [p for p in parlamentarios if p.camara == CamaraTipo.SENADO and p.apellido_paterno]
 
     for vot in votaciones:
         if vot.camara != CamaraTipo.SENADO:
             continue
+
+        periodo_voto = _fecha_a_periodo(vot.fecha)
+        senadores_del_periodo = (
+            [p for p in senadores if p.periodo == periodo_voto] if periodo_voto else senadores
+        )
+
         for v in vot.votos:
             apellido_v, nombre_v = _parsear_nombre_voto_senado(v.nombre_completo)
             if not apellido_v:
                 continue
 
             candidatos = [
-                p for p in senadores
+                p for p in senadores_del_periodo
                 if _normalizar_texto(p.apellido_paterno) == apellido_v
                 and (
                     _normalizar_texto(p.nombre) == nombre_v
@@ -189,26 +224,46 @@ def compilar_dashboard():
             if v.parlamentario_id in ids_catalogo:
                 votos_por_parlamentario[v.parlamentario_id][votacion.boletin] = v.opcion.value
 
-    # Agrupar por partido y calcular centroides y elipses
-    partidos_map: Dict[str, List[PosicionamientoParlamentario]] = {}
+    # Agrupar por bancada (comité parlamentario) y calcular centroides y elipses.
+    # Se agrupa por bancada -no por partido legal- porque con el catálogo completo
+    # (155+50) el partido legal queda demasiado fragmentado (~23 partidos, varios
+    # de 1-3 personas) para que la disciplina de bloque sea informativa.
+    bancadas_map: Dict[str, List[PosicionamientoParlamentario]] = {}
     for pos in posiciones:
-        partido = pos.parlamentario.partido
-        partidos_map.setdefault(partido, []).append(pos)
+        bancada = pos.parlamentario.bancada or pos.parlamentario.partido
+        bancadas_map.setdefault(bancada, []).append(pos)
 
     bancadas_metricas: List[MetricasBancada] = []
-    for partido, lista_pos in partidos_map.items():
-        mb = calcular_metricas_bancada(partido, lista_pos)
+    for bancada, lista_pos in bancadas_map.items():
+        mb = calcular_metricas_bancada(bancada, lista_pos)
         bancadas_metricas.append(mb)
+
+    # Perfil de radar (6 ejes) agregado por bancada, para poder comparar dos
+    # bancadas entre sí en el radar, igual que se compara a dos personas.
+    perfiles_por_bancada_id: Dict[str, List] = {}
+    for pf in perfiles_radar:
+        bancada = pf.parlamentario.bancada or pf.parlamentario.partido
+        perfiles_por_bancada_id.setdefault(bancada, []).append(pf)
+
+    perfiles_radar_bancadas = [
+        {
+            "bancada": bancada,
+            "vector_promedio": calcular_perfil_radar_bancada(lista_pf).model_dump(),
+            "total_miembros": len(lista_pf),
+        }
+        for bancada, lista_pf in perfiles_por_bancada_id.items()
+    ]
 
     # Formatear payload completo para el visualizador web
     payload = {
         "leyes": [ley.model_dump() for ley in leyes_map.values()],
         "parlamentarios_posicionados": [pos.model_dump() for pos in posiciones],
         "perfiles_radar_parlamentarios": [pf.model_dump() for pf in perfiles_radar],
+        "perfiles_radar_bancadas": perfiles_radar_bancadas,
         "perfil_promedio_leyes": perfil_promedio_leyes.model_dump(),
         "votos_por_parlamentario": votos_por_parlamentario,
         "bancadas_metricas": [b.model_dump() for b in bancadas_metricas],
-        "colores_partidos": COLORES_PARTIDOS,
+        "colores_bancadas": COLORES_BANCADAS,
         "resumen": {
             "total_leyes": len(leyes_map),
             "total_parlamentarios": len(posiciones),

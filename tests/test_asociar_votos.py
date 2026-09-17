@@ -17,6 +17,7 @@ class TestAsociarVotosSenado(unittest.TestCase):
         self.insulza = Parlamentario(
             id="103", nombre="José Miguel", apellido_paterno="Insulza",
             nombre_completo="José Miguel Insulza Salinas", camara=CamaraTipo.SENADO, partido="PS",
+            periodo="2022-2026",
         )
         self.catalogo = [self.insulza]
 
@@ -63,10 +64,26 @@ class TestAsociarVotosSenado(unittest.TestCase):
         insulza_2 = Parlamentario(
             id="199", nombre="José Miguel", apellido_paterno="Insulza",
             nombre_completo="José Miguel Insulza Rojas", camara=CamaraTipo.SENADO, partido="PS",
+            periodo="2022-2026",
         )
         catalogo = [self.insulza, insulza_2]
         vot = self._votacion_senado([("Insulza S., José Miguel", OpcionVoto.AFIRMATIVO)])
         asociar_votos_a_parlamentarios(catalogo, [vot])
+        self.assertEqual(vot.votos[0].parlamentario_id, "Insulza S., José Miguel")
+
+    def test_no_cruza_con_otro_periodo(self):
+        """Un senador de un período distinto al de la votación no debe calzar,
+        aunque el nombre coincida exactamente (el Senado tiene términos de 8 años
+        escalonados: quién ocupaba un escaño en 2022 puede no ser quien lo ocupa
+        en otro período)."""
+        insulza_periodo_anterior = Parlamentario(
+            id="203", nombre="José Miguel", apellido_paterno="Insulza",
+            nombre_completo="José Miguel Insulza Salinas", camara=CamaraTipo.SENADO,
+            partido="PS", periodo="2018-2022",
+        )
+        vot = self._votacion_senado([("Insulza S., José Miguel", OpcionVoto.AFIRMATIVO)])
+        # fecha por defecto de _votacion_senado ("2024-01-01") cae en el período 2022-2026
+        asociar_votos_a_parlamentarios([insulza_periodo_anterior], [vot])
         self.assertEqual(vot.votos[0].parlamentario_id, "Insulza S., José Miguel")
 
     def test_no_toca_votos_de_camara(self):

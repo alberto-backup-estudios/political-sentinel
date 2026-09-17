@@ -96,7 +96,13 @@ class Parlamentario(BaseModel):
     camara: CamaraTipo
     partido: str = "Independiente"
     bancada: Optional[str] = None
+    coalicion: Optional[str] = None
     distrito_o_circunscripcion: Optional[str] = None
+    # Período legislativo al que corresponde este registro (ej. "2022-2026"). La
+    # Cámara se renueva completa cada período; el Senado tiene términos de 8 años
+    # escalonados, pero igual se etiqueta con el período en que se emitió cada voto
+    # para poder filtrar candidatos de cruce por fecha.
+    periodo: Optional[str] = None
     # Para Cámara, `id` es el Id oficial de opendata.camara.cl (cruce exacto, sin
     # ambigüedad). Para Senado, no hay Id oficial disponible vía datos abiertos;
     # `nombre` y `apellido_paterno` se usan para el cruce estructurado por nombre.
@@ -158,7 +164,7 @@ class PerfilRadarParlamentario(BaseModel):
 
 
 class MetricasBancada(BaseModel):
-    partido: str
+    bancada: str
     x_centroide: float
     y_centroide: float
     sigma_x: float
