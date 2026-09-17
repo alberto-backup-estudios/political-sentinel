@@ -2,46 +2,49 @@
   "leyes": [
     {
       "boletin": "11179-13",
-      "titulo": "Ley de 40 Horas: Reduce la jornada laboral ordinaria",
+      "titulo": "Modifica el Código del Trabajo con el objeto de reducir la jornada laboral (Ley de 40 Horas)",
       "sectores_afectados": [
-        "Comercio",
-        "Industria",
+        "Sector manufacturero",
+        "Comercio y retail",
         "Servicios",
-        "Pymes"
+        "Transporte y logística",
+        "Industria",
+        "Pymes",
+        "Grandes corporaciones"
       ],
       "vector_impacto": {
         "d1_transferencias": 0.0,
         "d2_bienes_publicos": 0.0,
-        "d3_derechos_laborales": 0.9,
+        "d3_derechos_laborales": 0.7,
         "d4_carga_fiscal": 0.0,
         "d5_costos_privados": 0.8,
         "d6_burocracia": 0.3
       },
-      "costo_fiscal_anual_clp": 0.0,
+      "costo_fiscal_anual_clp": null,
       "recaudacion_estimada_clp": null,
-      "beneficiarios_estimados": 4700000,
-      "justificacion": "Reduce la jornada laboral semanal de 45 a 40 horas con gradualidad de 5 años. Otorga mayor descanso a los trabajadores (alta protección laboral), pero impone costos de adecuación de turnos y aumentos en costo laboral por hora para los empleadores."
+      "beneficiarios_estimados": null,
+      "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Ministerio del Trabajo y prensa especializada, revisado] Reduce la jornada laboral ordinaria de 45 a 40 horas semanales de forma gradual (44 horas desde abril 2024, 42 en 2026, 40 en 2028; Ley 21.561). Permite jornada 4x3 y promediar en ciclos de hasta 4 semanas. Amplía la protección y descanso de los trabajadores cubiertos (d3), excluyendo cargos gerenciales y sin fiscalización superior directa. Genera costos privados sustanciales (d5): las empresas reorganizan turnos sin reducción proporcional de remuneraciones, aumentando el costo laboral por hora. Obligaciones administrativas menores de registro y control de asistencia (d6). No genera transferencias del Estado ni gasto fiscal permanente (d1/d4=0): el costo lo asume el empleador privado."
     },
     {
       "boletin": "12093-08",
-      "titulo": "Royalty Minero: Compensación al Estado por minería de cobre y litio",
+      "titulo": "Ley sobre Royalty a la Minería",
       "sectores_afectados": [
-        "Gran Minería",
-        "Gobiernos Regionales",
-        "Municipios"
+        "Minería de cobre",
+        "Operadores mineros grandes",
+        "Gobiernos regionales y municipales de comunas mineras"
       ],
       "vector_impacto": {
-        "d1_transferencias": 0.7,
-        "d2_bienes_publicos": 0.6,
+        "d1_transferencias": 0.3,
+        "d2_bienes_publicos": 0.0,
         "d3_derechos_laborales": 0.0,
-        "d4_carga_fiscal": 1.0,
-        "d5_costos_privados": 0.9,
-        "d6_burocracia": 0.4
+        "d4_carga_fiscal": 0.8,
+        "d5_costos_privados": 0.2,
+        "d6_burocracia": 0.1
       },
       "costo_fiscal_anual_clp": null,
-      "recaudacion_estimada_clp": 1250000000000.0,
-      "beneficiarios_estimados": 302,
-      "justificacion": "Crea un impuesto específico ad valorem y sobre el margen operativo para grandes mineras (tope de 46.5%). Recauda aprox. US$ 1.350 millones anuales que se transfieren a municipios vulnerables (Fondo de Equidad Territorial) y regiones mineras."
+      "recaudacion_estimada_clp": null,
+      "beneficiarios_estimados": null,
+      "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: BCN, DLA Piper, vLex, revisado] Ley 21.591 crea el Royalty Minero, que reemplaza el antiguo Impuesto Específico a la Minería, con dos componentes vinculantes: (1) ad valorem de 1% sobre ventas anuales de cobre para operadores sobre 50.000 toneladas métricas de cobre fino; (2) sobre el margen operacional minero (MOM) cuando más del 50% de las ventas provienen del cobre. Es un aumento tributario directo (d4). Parte de la recaudación se destina a fondos de distribución a gobiernos regionales y municipales de comunas mineras — una transferencia fiscal a gobiernos subnacionales, no a personas directamente, por lo que puntúa moderado en d1 y no en d2 (no crea ni expande acceso a salud/educación/vivienda por sí misma). Los operadores enfrentan una tasa estándar sobre su operación ya declarada, no una exigencia de cumplimiento extraordinaria nueva (d5 modesto), con mínimo componente de registro/reporte adicional (d6). Cifras exactas de recaudación anual pendientes de sourcing verificado del Informe Financiero DIPRES (Capa 1)."
     },
     {
       "boletin": "14588-13",
@@ -90,45 +93,47 @@
     },
     {
       "boletin": "15093-13",
-      "titulo": "Ley Karin: Prevención, investigación y sanción del acoso laboral",
+      "titulo": "Modifica el Código del Trabajo y otros cuerpos legales, en materia de prevención, investigación y sanción del acoso laboral, sexual o de violencia en el trabajo (Ley Karin)",
       "sectores_afectados": [
-        "Empresas transversales",
-        "Sector Público",
-        "Trabajadores"
+        "Todas las empresas (independiente del tamaño)",
+        "Departamentos de RR.HH.",
+        "Trabajadores",
+        "Dirección del Trabajo (fiscalización)"
       ],
       "vector_impacto": {
         "d1_transferencias": 0.0,
         "d2_bienes_publicos": 0.0,
-        "d3_derechos_laborales": 1.0,
+        "d3_derechos_laborales": 0.8,
         "d4_carga_fiscal": 0.0,
         "d5_costos_privados": 0.7,
         "d6_burocracia": 0.6
       },
       "costo_fiscal_anual_clp": null,
       "recaudacion_estimada_clp": null,
-      "beneficiarios_estimados": 5500000,
-      "justificacion": "Fortalece las garantías contra el acoso laboral, sexual y violencia en el trabajo. Exige a todas las empresas elaborar protocolos de prevención, procedimientos de denuncia formal y sanciones, aumentando costos de compliance y supervisión de la Dirección del Trabajo."
+      "beneficiarios_estimados": null,
+      "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: SSMC, Dirección del Trabajo, revisado] Ley 21.643 elimina el requisito de reiteración para configurar acoso laboral (basta un acto único), obliga a todo Reglamento Interno a contener un protocolo de prevención e investigación con contenido mínimo legal, y garantiza atención psicológica temprana a víctimas — amplía significativamente la protección laboral (d3). Impone a todas las empresas obligaciones nuevas de protocolo, capacitación, procedimiento de investigación con plazo legal de 30 días (d5). Crea procedimientos y registros obligatorios de seguimiento de denuncias (d6). No crea transferencias monetarias ni modifica tributos ni el gasto fiscal (d1/d2/d4=0): los costos recaen en las empresas privadas, no en el presupuesto público."
     },
     {
       "boletin": "15170-05",
-      "titulo": "Reforma Tributaria / Pacto Fiscal (Votación Idea de Legislar)",
+      "titulo": "Establece reforma tributaria hacia un pacto fiscal por el desarrollo y la justicia social (rechazada en general, marzo 2023)",
       "sectores_afectados": [
-        "Personas de altos ingresos",
-        "Empresas",
-        "Inversionistas"
+        "Personas naturales de altos ingresos",
+        "Grandes empresas",
+        "Pymes (medida transitoria)",
+        "Sistema tributario general"
       ],
       "vector_impacto": {
-        "d1_transferencias": 0.5,
-        "d2_bienes_publicos": 0.7,
+        "d1_transferencias": 0.0,
+        "d2_bienes_publicos": 0.0,
         "d3_derechos_laborales": 0.0,
-        "d4_carga_fiscal": 1.0,
-        "d5_costos_privados": 0.9,
-        "d6_burocracia": 0.8
+        "d4_carga_fiscal": 0.65,
+        "d5_costos_privados": 0.35,
+        "d6_burocracia": 0.4
       },
       "costo_fiscal_anual_clp": null,
-      "recaudacion_estimada_clp": 3200000000000.0,
+      "recaudacion_estimada_clp": null,
       "beneficiarios_estimados": null,
-      "justificacion": "Proyecto emblemático de reforma estructural que buscaba recaudar 3.6% del PIB mediante impuesto a la riqueza, desintegración del régimen tributario y norma antielusión con mayores facultades al SII. Fue rechazado en la votación general en la Cámara."
+      "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Pauta, El Mostrador, Emol, revisado] Rechazada en general (idea de legislar) en la Cámara el 8 de marzo de 2023, 71 en contra / 73 a favor / 3 abstenciones (no alcanzó el quórum simple de 74), por lo que no continuó su tramitación ni se convirtió en ley. El texto (buscaba recaudar ~3,6% del PIB) incluía impuesto a la riqueza, nueva tasa marginal de 43% en IUSC/IGC, desintegración tributaria para grandes empresas y norma antielusión con más facultades al SII — alzas tributarias directas e inmediatas (d4), parcialmente atenuadas por el alivio transitorio a Pymes que también incluía (rebaja temporal a 13-20% y depreciación instantánea del 50%). La norma antielusión y mayor fiscalización del SII generan nuevos costos de cumplimiento (d5) y carga regulatoria (d6) al sector privado. No crea transferencias monetarias ni expande bienes públicos en su propio texto (d1/d2=0): la 'justicia social' del título es la finalidad declarada, no un mecanismo concreto de este boletín — se clasifica según su contenido textual verificado, no según su nombre."
     }
   ],
   "parlamentarios_posicionados": [
@@ -141,8 +146,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 10"
       },
-      "x": 0.56,
-      "y": 0.3133,
+      "x": 0.3933,
+      "y": 0.1533,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 5
@@ -156,8 +161,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 9"
       },
-      "x": 0.6167,
-      "y": 0.3667,
+      "x": 0.4083,
+      "y": 0.15,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 4
@@ -171,8 +176,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 5"
       },
-      "x": 0.5389,
-      "y": 0.3167,
+      "x": 0.4,
+      "y": 0.1722,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -186,8 +191,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 15"
       },
-      "x": 0.5389,
-      "y": 0.3167,
+      "x": 0.4,
+      "y": 0.1722,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -201,10 +206,10 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 8"
       },
-      "x": -0.0167,
-      "y": 0.0389,
-      "cuadrante": "II",
-      "nombre_cuadrante": "II. Populismo Fiscal",
+      "x": 0.1222,
+      "y": 0.1389,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
     },
     {
@@ -216,8 +221,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 21"
       },
-      "x": 0.2389,
-      "y": 0.1833,
+      "x": 0.2444,
+      "y": 0.1722,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -232,7 +237,7 @@
         "distrito_o_circunscripcion": "Distrito 6"
       },
       "x": 0.1417,
-      "y": 0.2667,
+      "y": 0.2333,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 4
@@ -246,10 +251,10 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 11"
       },
-      "x": -0.1389,
-      "y": -0.0611,
-      "cuadrante": "III",
-      "nombre_cuadrante": "III. Liberalismo Clásico / Pro-Mercado",
+      "x": -0.0,
+      "y": 0.0611,
+      "cuadrante": "II",
+      "nombre_cuadrante": "II. Populismo Fiscal",
       "total_votaciones_computadas": 6
     },
     {
@@ -276,8 +281,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 8"
       },
-      "x": 0.5389,
-      "y": 0.3167,
+      "x": 0.4,
+      "y": 0.1722,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -291,8 +296,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 12"
       },
-      "x": 0.5389,
-      "y": 0.3167,
+      "x": 0.4,
+      "y": 0.1722,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -306,8 +311,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 6"
       },
-      "x": 0.3917,
-      "y": 0.2667,
+      "x": 0.2917,
+      "y": 0.15,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 4
@@ -321,8 +326,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 6"
       },
-      "x": 0.4667,
-      "y": 0.3,
+      "x": 0.3867,
+      "y": 0.2067,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 5
@@ -336,8 +341,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 5"
       },
-      "x": 0.5619,
-      "y": 0.3286,
+      "x": 0.3857,
+      "y": 0.1571,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 7
@@ -351,8 +356,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 1"
       },
-      "x": 0.3424,
-      "y": 0.2364,
+      "x": 0.3091,
+      "y": 0.1879,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 11
@@ -366,8 +371,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 11"
       },
-      "x": 0.2143,
-      "y": 0.1619,
+      "x": 0.1619,
+      "y": 0.1048,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 7
@@ -381,8 +386,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 9"
       },
-      "x": 0.5061,
-      "y": 0.3091,
+      "x": 0.3939,
+      "y": 0.1879,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 11
@@ -396,8 +401,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 6"
       },
-      "x": 0.5222,
-      "y": 0.3556,
+      "x": 0.3889,
+      "y": 0.2,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 3
@@ -411,8 +416,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 9"
       },
-      "x": 0.1364,
-      "y": 0.103,
+      "x": 0.1758,
+      "y": 0.1273,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 11
@@ -426,8 +431,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 11"
       },
-      "x": 0.4333,
-      "y": 0.32,
+      "x": 0.3533,
+      "y": 0.24,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 5
@@ -441,8 +446,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 7"
       },
-      "x": 0.2292,
-      "y": 0.1542,
+      "x": 0.1833,
+      "y": 0.1125,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 8
@@ -451,60 +456,60 @@
   "bancadas_metricas": [
     {
       "partido": "Frente Amplio",
-      "x_centroide": 0.5133,
-      "y_centroide": 0.3066,
-      "sigma_x": 0.066,
-      "sigma_y": 0.0094,
-      "sigma_xy": 0.0006,
-      "disciplina_id": 0.9334,
+      "x_centroide": 0.39,
+      "y_centroide": 0.18,
+      "sigma_x": 0.0047,
+      "sigma_y": 0.0378,
+      "sigma_xy": -0.0002,
+      "disciplina_id": 0.962,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.0666,
+      "elipse_semieje_mayor": 0.038,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -171.89
+      "elipse_angulo_grados": 97.05
     },
     {
       "partido": "Partido Comunista",
-      "x_centroide": 0.5893,
-      "y_centroide": 0.3477,
-      "sigma_x": 0.0387,
-      "sigma_y": 0.0269,
-      "sigma_xy": 0.001,
-      "disciplina_id": 0.9528,
+      "x_centroide": 0.397,
+      "y_centroide": 0.1535,
+      "sigma_x": 0.016,
+      "sigma_y": 0.005,
+      "sigma_xy": -0.0001,
+      "disciplina_id": 0.9832,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.0472,
+      "elipse_semieje_mayor": 0.02,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -145.19
+      "elipse_angulo_grados": 162.56
     },
     {
       "partido": "Partido Socialista",
-      "x_centroide": 0.4406,
-      "y_centroide": 0.2765,
-      "sigma_x": 0.1389,
-      "sigma_y": 0.0568,
-      "sigma_xy": 0.0079,
-      "disciplina_id": 0.8499,
+      "x_centroide": 0.3546,
+      "y_centroide": 0.18,
+      "sigma_x": 0.0643,
+      "sigma_y": 0.0111,
+      "sigma_xy": -0.0007,
+      "disciplina_id": 0.9348,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.1501,
+      "elipse_semieje_mayor": 0.0652,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -157.77
+      "elipse_angulo_grados": 170.2
     },
     {
       "partido": "Partido por la Democracia",
-      "x_centroide": 0.3766,
-      "y_centroide": 0.2393,
-      "sigma_x": 0.2295,
-      "sigma_y": 0.1095,
-      "sigma_xy": 0.0251,
-      "disciplina_id": 0.7457,
+      "x_centroide": 0.281,
+      "y_centroide": 0.1385,
+      "sigma_x": 0.1684,
+      "sigma_y": 0.0477,
+      "sigma_xy": 0.008,
+      "disciplina_id": 0.825,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2543,
+      "elipse_semieje_mayor": 0.175,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -154.5
+      "elipse_angulo_grados": -164.19
     },
     {
       "partido": "Democracia Cristiana",
-      "x_centroide": -0.0167,
-      "y_centroide": 0.0389,
+      "x_centroide": 0.1222,
+      "y_centroide": 0.1389,
       "sigma_x": 0.0,
       "sigma_y": 0.0,
       "sigma_xy": 0.0,
@@ -516,73 +521,73 @@
     },
     {
       "partido": "Demócratas",
-      "x_centroide": 0.3725,
-      "y_centroide": 0.2462,
-      "sigma_x": 0.1889,
-      "sigma_y": 0.089,
-      "sigma_xy": 0.0168,
-      "disciplina_id": 0.7912,
+      "x_centroide": 0.3191,
+      "y_centroide": 0.18,
+      "sigma_x": 0.1057,
+      "sigma_y": 0.0111,
+      "sigma_xy": 0.0012,
+      "disciplina_id": 0.8937,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2088,
+      "elipse_semieje_mayor": 0.1063,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -154.79
+      "elipse_angulo_grados": -174.0
     },
     {
       "partido": "Renovación Nacional",
-      "x_centroide": 0.3319,
-      "y_centroide": 0.3112,
-      "sigma_x": 0.2691,
-      "sigma_y": 0.0629,
-      "sigma_xy": 0.0169,
-      "disciplina_id": 0.7237,
+      "x_centroide": 0.2653,
+      "y_centroide": 0.2167,
+      "sigma_x": 0.1748,
+      "sigma_y": 0.0235,
+      "sigma_xy": -0.0041,
+      "disciplina_id": 0.8236,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2763,
+      "elipse_semieje_mayor": 0.1764,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -166.85
+      "elipse_angulo_grados": 172.33
     },
     {
       "partido": "Unión Demócrata Independiente",
-      "x_centroide": -0.0013,
-      "y_centroide": 0.0209,
-      "sigma_x": 0.1947,
-      "sigma_y": 0.116,
-      "sigma_xy": 0.0226,
-      "disciplina_id": 0.7734,
+      "x_centroide": 0.0879,
+      "y_centroide": 0.0942,
+      "sigma_x": 0.1243,
+      "sigma_y": 0.0468,
+      "sigma_xy": 0.0058,
+      "disciplina_id": 0.8672,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2266,
+      "elipse_semieje_mayor": 0.1328,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -149.2
+      "elipse_angulo_grados": -159.37
     },
     {
       "partido": "Evópoli",
-      "x_centroide": 0.2167,
-      "y_centroide": 0.16,
-      "sigma_x": 0.3064,
-      "sigma_y": 0.2263,
-      "sigma_xy": 0.0693,
-      "disciplina_id": 0.6191,
+      "x_centroide": 0.1767,
+      "y_centroide": 0.12,
+      "sigma_x": 0.2498,
+      "sigma_y": 0.1697,
+      "sigma_xy": 0.0424,
+      "disciplina_id": 0.698,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.3809,
+      "elipse_semieje_mayor": 0.302,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -143.55
+      "elipse_angulo_grados": -145.81
     },
     {
       "partido": "Partido Republicano",
-      "x_centroide": 0.3841,
-      "y_centroide": 0.2354,
-      "sigma_x": 0.219,
-      "sigma_y": 0.1149,
-      "sigma_xy": 0.0252,
-      "disciplina_id": 0.7527,
+      "x_centroide": 0.2917,
+      "y_centroide": 0.1424,
+      "sigma_x": 0.1532,
+      "sigma_y": 0.0422,
+      "sigma_xy": 0.0065,
+      "disciplina_id": 0.8411,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2473,
+      "elipse_semieje_mayor": 0.1589,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -152.31
+      "elipse_angulo_grados": -164.6
     },
     {
       "partido": "Independientes",
-      "x_centroide": 0.5389,
-      "y_centroide": 0.3167,
+      "x_centroide": 0.4,
+      "y_centroide": 0.1722,
       "sigma_x": 0.0,
       "sigma_y": 0.0,
       "sigma_xy": 0.0,
@@ -594,8 +599,8 @@
     },
     {
       "partido": "Partido de la Gente",
-      "x_centroide": 0.3917,
-      "y_centroide": 0.2667,
+      "x_centroide": 0.2917,
+      "y_centroide": 0.15,
       "sigma_x": 0.0,
       "sigma_y": 0.0,
       "sigma_xy": 0.0,

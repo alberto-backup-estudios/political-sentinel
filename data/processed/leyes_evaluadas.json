@@ -1,35 +1,31 @@
 [
   {
     "boletin": "11179-13",
-    "titulo": "Ley de 40 Horas: Reduce la jornada laboral ordinaria",
-    "sectores_afectados": ["Comercio", "Industria", "Servicios", "Pymes"],
+    "titulo": "Modifica el Código del Trabajo con el objeto de reducir la jornada laboral (Ley de 40 Horas)",
+    "sectores_afectados": ["Sector manufacturero", "Comercio y retail", "Servicios", "Transporte y logística", "Industria", "Pymes", "Grandes corporaciones"],
     "vector_impacto": {
       "d1_transferencias": 0.0,
       "d2_bienes_publicos": 0.0,
-      "d3_derechos_laborales": 0.9,
+      "d3_derechos_laborales": 0.7,
       "d4_carga_fiscal": 0.0,
       "d5_costos_privados": 0.8,
       "d6_burocracia": 0.3
     },
-    "costo_fiscal_anual_clp": 0.0,
-    "beneficiarios_estimados": 4700000,
-    "justificacion": "Reduce la jornada laboral semanal de 45 a 40 horas con gradualidad de 5 años. Otorga mayor descanso a los trabajadores (alta protección laboral), pero impone costos de adecuación de turnos y aumentos en costo laboral por hora para los empleadores."
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Ministerio del Trabajo y prensa especializada, revisado] Reduce la jornada laboral ordinaria de 45 a 40 horas semanales de forma gradual (44 horas desde abril 2024, 42 en 2026, 40 en 2028; Ley 21.561). Permite jornada 4x3 y promediar en ciclos de hasta 4 semanas. Amplía la protección y descanso de los trabajadores cubiertos (d3), excluyendo cargos gerenciales y sin fiscalización superior directa. Genera costos privados sustanciales (d5): las empresas reorganizan turnos sin reducción proporcional de remuneraciones, aumentando el costo laboral por hora. Obligaciones administrativas menores de registro y control de asistencia (d6). No genera transferencias del Estado ni gasto fiscal permanente (d1/d4=0): el costo lo asume el empleador privado."
   },
   {
     "boletin": "12093-08",
-    "titulo": "Royalty Minero: Compensación al Estado por minería de cobre y litio",
-    "sectores_afectados": ["Gran Minería", "Gobiernos Regionales", "Municipios"],
+    "titulo": "Ley sobre Royalty a la Minería",
+    "sectores_afectados": ["Minería de cobre", "Operadores mineros grandes", "Gobiernos regionales y municipales de comunas mineras"],
     "vector_impacto": {
-      "d1_transferencias": 0.7,
-      "d2_bienes_publicos": 0.6,
+      "d1_transferencias": 0.3,
+      "d2_bienes_publicos": 0.0,
       "d3_derechos_laborales": 0.0,
-      "d4_carga_fiscal": 1.0,
-      "d5_costos_privados": 0.9,
-      "d6_burocracia": 0.4
+      "d4_carga_fiscal": 0.8,
+      "d5_costos_privados": 0.2,
+      "d6_burocracia": 0.1
     },
-    "recaudacion_estimada_clp": 1250000000000.0,
-    "beneficiarios_estimados": 302,
-    "justificacion": "Crea un impuesto específico ad valorem y sobre el margen operativo para grandes mineras (tope de 46.5%). Recauda aprox. US$ 1.350 millones anuales que se transfieren a municipios vulnerables (Fondo de Equidad Territorial) y regiones mineras."
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: BCN, DLA Piper, vLex, revisado] Ley 21.591 crea el Royalty Minero, que reemplaza el antiguo Impuesto Específico a la Minería, con dos componentes vinculantes: (1) ad valorem de 1% sobre ventas anuales de cobre para operadores sobre 50.000 toneladas métricas de cobre fino; (2) sobre el margen operacional minero (MOM) cuando más del 50% de las ventas provienen del cobre. Es un aumento tributario directo (d4). Parte de la recaudación se destina a fondos de distribución a gobiernos regionales y municipales de comunas mineras — una transferencia fiscal a gobiernos subnacionales, no a personas directamente, por lo que puntúa moderado en d1 y no en d2 (no crea ni expande acceso a salud/educación/vivienda por sí misma). Los operadores enfrentan una tasa estándar sobre su operación ya declarada, no una exigencia de cumplimiento extraordinaria nueva (d5 modesto), con mínimo componente de registro/reporte adicional (d6). Cifras exactas de recaudación anual pendientes de sourcing verificado del Informe Financiero DIPRES (Capa 1)."
   },
   {
     "boletin": "14588-13",
@@ -62,32 +58,30 @@
   },
   {
     "boletin": "15093-13",
-    "titulo": "Ley Karin: Prevención, investigación y sanción del acoso laboral",
-    "sectores_afectados": ["Empresas transversales", "Sector Público", "Trabajadores"],
+    "titulo": "Modifica el Código del Trabajo y otros cuerpos legales, en materia de prevención, investigación y sanción del acoso laboral, sexual o de violencia en el trabajo (Ley Karin)",
+    "sectores_afectados": ["Todas las empresas (independiente del tamaño)", "Departamentos de RR.HH.", "Trabajadores", "Dirección del Trabajo (fiscalización)"],
     "vector_impacto": {
       "d1_transferencias": 0.0,
       "d2_bienes_publicos": 0.0,
-      "d3_derechos_laborales": 1.0,
+      "d3_derechos_laborales": 0.8,
       "d4_carga_fiscal": 0.0,
       "d5_costos_privados": 0.7,
       "d6_burocracia": 0.6
     },
-    "beneficiarios_estimados": 5500000,
-    "justificacion": "Fortalece las garantías contra el acoso laboral, sexual y violencia en el trabajo. Exige a todas las empresas elaborar protocolos de prevención, procedimientos de denuncia formal y sanciones, aumentando costos de compliance y supervisión de la Dirección del Trabajo."
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: SSMC, Dirección del Trabajo, revisado] Ley 21.643 elimina el requisito de reiteración para configurar acoso laboral (basta un acto único), obliga a todo Reglamento Interno a contener un protocolo de prevención e investigación con contenido mínimo legal, y garantiza atención psicológica temprana a víctimas — amplía significativamente la protección laboral (d3). Impone a todas las empresas obligaciones nuevas de protocolo, capacitación, procedimiento de investigación con plazo legal de 30 días (d5). Crea procedimientos y registros obligatorios de seguimiento de denuncias (d6). No crea transferencias monetarias ni modifica tributos ni el gasto fiscal (d1/d2/d4=0): los costos recaen en las empresas privadas, no en el presupuesto público."
   },
   {
     "boletin": "15170-05",
-    "titulo": "Reforma Tributaria / Pacto Fiscal (Votación Idea de Legislar)",
-    "sectores_afectados": ["Personas de altos ingresos", "Empresas", "Inversionistas"],
+    "titulo": "Establece reforma tributaria hacia un pacto fiscal por el desarrollo y la justicia social (rechazada en general, marzo 2023)",
+    "sectores_afectados": ["Personas naturales de altos ingresos", "Grandes empresas", "Pymes (medida transitoria)", "Sistema tributario general"],
     "vector_impacto": {
-      "d1_transferencias": 0.5,
-      "d2_bienes_publicos": 0.7,
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
       "d3_derechos_laborales": 0.0,
-      "d4_carga_fiscal": 1.0,
-      "d5_costos_privados": 0.9,
-      "d6_burocracia": 0.8
+      "d4_carga_fiscal": 0.65,
+      "d5_costos_privados": 0.35,
+      "d6_burocracia": 0.4
     },
-    "recaudacion_estimada_clp": 3200000000000.0,
-    "justificacion": "Proyecto emblemático de reforma estructural que buscaba recaudar 3.6% del PIB mediante impuesto a la riqueza, desintegración del régimen tributario y norma antielusión con mayores facultades al SII. Fue rechazado en la votación general en la Cámara."
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Pauta, El Mostrador, Emol, revisado] Rechazada en general (idea de legislar) en la Cámara el 8 de marzo de 2023, 71 en contra / 73 a favor / 3 abstenciones (no alcanzó el quórum simple de 74), por lo que no continuó su tramitación ni se convirtió en ley. El texto (buscaba recaudar ~3,6% del PIB) incluía impuesto a la riqueza, nueva tasa marginal de 43% en IUSC/IGC, desintegración tributaria para grandes empresas y norma antielusión con más facultades al SII — alzas tributarias directas e inmediatas (d4), parcialmente atenuadas por el alivio transitorio a Pymes que también incluía (rebaja temporal a 13-20% y depreciación instantánea del 50%). La norma antielusión y mayor fiscalización del SII generan nuevos costos de cumplimiento (d5) y carga regulatoria (d6) al sector privado. No crea transferencias monetarias ni expande bienes públicos en su propio texto (d1/d2=0): la 'justicia social' del título es la finalidad declarada, no un mecanismo concreto de este boletín — se clasifica según su contenido textual verificado, no según su nombre."
   }
 ]
