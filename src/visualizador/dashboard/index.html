@@ -106,8 +106,8 @@
       <div class="radar-layout">
         <div class="radar-controls">
           <div class="radar-mode-toggle">
-            <button class="mode-btn active" data-modo="ley">Por Ley</button>
-            <button class="mode-btn" data-modo="parlamentario">Por Parlamentario</button>
+            <button class="mode-btn active" data-modo="ley">Ver una Ley</button>
+            <button class="mode-btn" data-modo="comparar">Comparar</button>
           </div>
 
           <div id="radarControlLey">
@@ -115,11 +115,27 @@
             <select id="selectLeyRadar"></select>
           </div>
 
-          <div id="radarControlParlamentario" style="display:none;">
-            <label for="selectParlamentarioRadar">Seleccionar Parlamentario:</label>
-            <select id="selectParlamentarioRadar"></select>
-            <label for="selectComparacionRadar">Comparar contra:</label>
-            <select id="selectComparacionRadar"></select>
+          <div id="radarControlComparar" style="display:none;">
+            <div class="comparador-lado comparador-a">
+              <label>Lado A</label>
+              <select id="tipoLadoA">
+                <option value="parlamentario">Parlamentario</option>
+                <option value="bancada">Bancada</option>
+                <option value="ley">Ley</option>
+                <option value="promedio">Promedio de todas las leyes</option>
+              </select>
+              <select id="valorLadoA"></select>
+            </div>
+            <div class="comparador-lado comparador-b">
+              <label>Lado B</label>
+              <select id="tipoLadoB">
+                <option value="promedio">Promedio de todas las leyes</option>
+                <option value="parlamentario">Parlamentario</option>
+                <option value="bancada">Bancada</option>
+                <option value="ley">Ley</option>
+              </select>
+              <select id="valorLadoB"></select>
+            </div>
           </div>
 
           <div class="ley-info-card" id="leyInfoCard">
@@ -132,14 +148,13 @@
       </div>
 
       <div class="votos-detail" id="votosDetailContainer" style="display:none;">
-        <h3>🗳️ Detalle de Votos del Parlamentario en cada Ley Evaluada</h3>
+        <h3>🗳️ Detalle de Votos en cada Ley Evaluada</h3>
         <div class="table-responsive">
           <table id="tablaVotosParlamentario">
             <thead>
               <tr>
                 <th>Boletín</th>
                 <th>Ley</th>
-                <th>Voto</th>
               </tr>
             </thead>
             <tbody></tbody>

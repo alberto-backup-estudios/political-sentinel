@@ -79,12 +79,12 @@ function renderStats() {
 function setupFilters() {
   if (!dashboardData) return;
   const selectPartido = document.getElementById("filtroPartido");
-  const partidos = [...new Set(dashboardData.parlamentarios_posicionados.map(p => p.parlamentario.partido))].sort();
+  const bancadas = [...new Set(dashboardData.parlamentarios_posicionados.map(p => p.parlamentario.bancada || p.parlamentario.partido))].sort();
   
-  partidos.forEach(part => {
+  bancadas.forEach(banc => {
     const opt = document.createElement("option");
-    opt.value = part;
-    opt.textContent = part;
+    opt.value = banc;
+    opt.textContent = banc;
     selectPartido.appendChild(opt);
   });
 
@@ -102,7 +102,7 @@ function getFilteredParlamentarios() {
 
   return dashboardData.parlamentarios_posicionados.filter(p => {
     const matchCamara = (camara === "TODAS") || (p.parlamentario.camara === camara);
-    const matchPart = (partido === "TODOS") || (p.parlamentario.partido === partido);
+    const matchPart = (partido === "TODOS") || ((p.parlamentario.bancada || p.parlamentario.partido) === partido);
     return matchCamara && matchPart;
   });
 }
@@ -116,7 +116,7 @@ function renderPlano2D() {
 
   // 1. Puntos de parlamentarios
   const parlPoints = filtrados.map(p => {
-    const col = (dashboardData.colores_partidos && dashboardData.colores_partidos[p.parlamentario.partido]) || DEFAULT_COLOR;
+    const col = (dashboardData.colores_bancadas && dashboardData.colores_bancadas[p.parlamentario.bancada]) || DEFAULT_COLOR;
     return {
       x: p.x,
       y: p.y,
@@ -138,11 +138,11 @@ function renderPlano2D() {
   // 2. Centroides de bancada
   const selectedPartido = document.getElementById("filtroPartido").value;
   const bancadasFiltradas = dashboardData.bancadas_metricas.filter(b => {
-    return (selectedPartido === "TODOS") || (b.partido === selectedPartido);
+    return (selectedPartido === "TODOS") || (b.bancada === selectedPartido);
   });
 
   const centroidesData = bancadasFiltradas.map(b => {
-    const col = (dashboardData.colores_partidos && dashboardData.colores_partidos[b.partido]) || DEFAULT_COLOR;
+    const col = (dashboardData.colores_bancadas && dashboardData.colores_bancadas[b.bancada]) || DEFAULT_COLOR;
     return {
       x: b.x_centroide,
       y: b.y_centroide,
@@ -213,7 +213,7 @@ function renderPlano2D() {
             const rx = Math.abs(x.getPixelForValue(b.elipse_semieje_mayor) - x.getPixelForValue(0));
             const ry = Math.abs(y.getPixelForValue(b.elipse_semieje_menor) - y.getPixelForValue(0));
             const rotRad = (b.elipse_angulo_grados * Math.PI) / 180;
-            const col = (dashboardData.colores_partidos && dashboardData.colores_partidos[b.partido]) || DEFAULT_COLOR;
+            const col = (dashboardData.colores_bancadas && dashboardData.colores_bancadas[b.bancada]) || DEFAULT_COLOR;
 
             ctx.save();
             ctx.beginPath();
@@ -279,7 +279,7 @@ function renderPlano2D() {
               }
               if (raw.bancada) {
                 const b = raw.bancada;
-                return `Bancada: ${b.partido} (Centroide: X=${b.x_centroide}, Y=${b.y_centroide}, Disciplina: ${b.disciplina_id})`;
+                return `Bancada: ${b.bancada} (Centroide: X=${b.x_centroide}, Y=${b.y_centroide}, Disciplina: ${b.disciplina_id})`;
               }
               return "";
             }
@@ -317,7 +317,7 @@ function mostrarDetalleParlamentario(pos) {
     <div class="parl-card">
       <h4>${p.nombre_completo}</h4>
       <div class="parl-meta">
-        <strong>${p.camara}</strong> &bull; ${p.partido} &bull; ${p.distrito_o_circunscripcion || ""}
+        <strong>${p.camara}</strong> &bull; ${p.partido}${p.bancada && p.bancada !== p.partido ? ` &bull; Bancada: ${p.bancada}` : ""} &bull; ${p.distrito_o_circunscripcion || ""}
       </div>
 
       <div class="coord-box">
@@ -368,14 +368,14 @@ function renderBancadasTable() {
   dashboardData.bancadas_metricas
     .sort((a, b) => b.total_miembros - a.total_miembros)
     .forEach(b => {
-      const col = (dashboardData.colores_partidos && dashboardData.colores_partidos[b.partido]) || DEFAULT_COLOR;
+      const col = (dashboardData.colores_bancadas && dashboardData.colores_bancadas[b.bancada]) || DEFAULT_COLOR;
       const row = document.createElement("tr");
       
       const cuad = (b.x_centroide > 0 ? (b.y_centroide > 0 ? "I" : "IV") : (b.y_centroide > 0 ? "II" : "III"));
       const disp = Math.sqrt(Math.pow(b.sigma_x, 2) + Math.pow(b.sigma_y, 2)).toFixed(3);
 
       row.innerHTML = `
-        <td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${col};margin-right:8px;"></span><strong>${b.partido}</strong></td>
+        <td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${col};margin-right:8px;"></span><strong>${b.bancada}</strong></td>
         <td>${b.total_miembros}</td>
         <td><code>(${b.x_centroide}, ${b.y_centroide})</code></td>
         <td><span class="q-badge q${cuad.toLowerCase()}">Cuadrante ${cuad}</span></td>
@@ -397,7 +397,7 @@ function vectorAValores(vi) {
 function renderRadar6D() {
   if (!dashboardData || !dashboardData.leyes) return;
 
-  // Modo "Por Ley"
+  // Modo "Ver una Ley"
   const selectLey = document.getElementById("selectLeyRadar");
   selectLey.innerHTML = "";
   dashboardData.leyes.forEach((ley, idx) => {
@@ -409,38 +409,10 @@ function renderRadar6D() {
   });
   selectLey.addEventListener("change", () => updateRadarChart(selectLey.value));
 
-  // Modo "Por Parlamentario"
-  const selectParl = document.getElementById("selectParlamentarioRadar");
-  selectParl.innerHTML = "";
-  if (dashboardData.perfiles_radar_parlamentarios) {
-    [...dashboardData.perfiles_radar_parlamentarios]
-      .sort((a, b) => a.parlamentario.nombre_completo.localeCompare(b.parlamentario.nombre_completo))
-      .forEach((pf, idx) => {
-        const opt = document.createElement("option");
-        opt.value = pf.parlamentario.id;
-        opt.textContent = `${pf.parlamentario.nombre_completo} (${pf.parlamentario.partido})`;
-        if (idx === 0) opt.selected = true;
-        selectParl.appendChild(opt);
-      });
-  }
-
-  const selectComp = document.getElementById("selectComparacionRadar");
-  selectComp.innerHTML = "";
-  const optPromedio = document.createElement("option");
-  optPromedio.value = "__promedio__";
-  optPromedio.textContent = "Promedio de todas las leyes evaluadas";
-  optPromedio.selected = true;
-  selectComp.appendChild(optPromedio);
-  dashboardData.leyes.forEach(ley => {
-    const opt = document.createElement("option");
-    opt.value = ley.boletin;
-    opt.textContent = `Ley: [${ley.boletin}] ${ley.titulo}`;
-    selectComp.appendChild(opt);
-  });
-
-  const actualizarModoParlamentario = () => updateRadarChartParlamentario(selectParl.value, selectComp.value);
-  selectParl.addEventListener("change", actualizarModoParlamentario);
-  selectComp.addEventListener("change", actualizarModoParlamentario);
+  // Modo "Comparar": cada lado puede ser un parlamentario, una bancada, una ley,
+  // o el promedio de todas las leyes.
+  setupComparador("A", "parlamentario");
+  setupComparador("B", "promedio");
 
   // Toggle de modo
   const modeButtons = document.querySelectorAll(".mode-btn");
@@ -450,17 +422,186 @@ function renderRadar6D() {
       btn.classList.add("active");
       const esLey = btn.dataset.modo === "ley";
       document.getElementById("radarControlLey").style.display = esLey ? "" : "none";
-      document.getElementById("radarControlParlamentario").style.display = esLey ? "none" : "";
+      document.getElementById("radarControlComparar").style.display = esLey ? "none" : "";
       document.getElementById("votosDetailContainer").style.display = esLey ? "none" : "";
       if (esLey) {
         updateRadarChart(selectLey.value);
       } else {
-        actualizarModoParlamentario();
+        renderComparacion();
       }
     });
   });
 
   updateRadarChart(dashboardData.leyes[0].boletin);
+}
+
+function setupComparador(lado, tipoDefault) {
+  const tipoSelect = document.getElementById(`tipoLado${lado}`);
+  const valorSelect = document.getElementById(`valorLado${lado}`);
+  tipoSelect.value = tipoDefault;
+  poblarSelectorValor(tipoDefault, valorSelect);
+  tipoSelect.addEventListener("change", () => {
+    poblarSelectorValor(tipoSelect.value, valorSelect);
+    renderComparacion();
+  });
+  valorSelect.addEventListener("change", renderComparacion);
+}
+
+function poblarSelectorValor(tipo, selectEl) {
+  selectEl.innerHTML = "";
+  selectEl.disabled = false;
+
+  if (tipo === "promedio") {
+    const opt = document.createElement("option");
+    opt.value = "__promedio__";
+    opt.textContent = "Promedio de todas las leyes evaluadas";
+    selectEl.appendChild(opt);
+    selectEl.disabled = true;
+    return;
+  }
+
+  if (tipo === "parlamentario") {
+    [...(dashboardData.perfiles_radar_parlamentarios || [])]
+      .sort((a, b) => a.parlamentario.nombre_completo.localeCompare(b.parlamentario.nombre_completo))
+      .forEach(pf => {
+        const opt = document.createElement("option");
+        opt.value = pf.parlamentario.id;
+        opt.textContent = `${pf.parlamentario.nombre_completo} (${pf.parlamentario.partido})`;
+        selectEl.appendChild(opt);
+      });
+    return;
+  }
+
+  if (tipo === "bancada") {
+    [...(dashboardData.perfiles_radar_bancadas || [])]
+      .sort((a, b) => b.total_miembros - a.total_miembros)
+      .forEach(pb => {
+        const opt = document.createElement("option");
+        opt.value = pb.bancada;
+        opt.textContent = `${pb.bancada} (${pb.total_miembros} en catálogo)`;
+        selectEl.appendChild(opt);
+      });
+    return;
+  }
+
+  if (tipo === "ley") {
+    dashboardData.leyes.forEach(ley => {
+      const opt = document.createElement("option");
+      opt.value = ley.boletin;
+      opt.textContent = `[${ley.boletin}] ${ley.titulo}`;
+      selectEl.appendChild(opt);
+    });
+  }
+}
+
+function resolverEntidadRadar(tipo, valor) {
+  if (tipo === "promedio") {
+    return {
+      vector: dashboardData.perfil_promedio_leyes,
+      etiqueta: "Promedio de todas las leyes",
+      detalle: "Promedio simple del vector de impacto de las leyes evaluadas.",
+      esParlamentario: false,
+    };
+  }
+  if (tipo === "parlamentario") {
+    const pf = (dashboardData.perfiles_radar_parlamentarios || []).find(x => x.parlamentario.id === valor);
+    if (!pf) return null;
+    const p = pf.parlamentario;
+    const bancadaTxt = p.bancada && p.bancada !== p.partido ? ` &bull; Bancada: ${p.bancada}` : "";
+    return {
+      vector: pf.vector_promedio,
+      etiqueta: p.nombre_completo,
+      detalle: `${p.camara} &bull; ${p.partido}${bancadaTxt} &bull; ${pf.total_votaciones_computadas}/${dashboardData.resumen.total_leyes} votaciones computadas`,
+      esParlamentario: true,
+      parlamentarioId: p.id,
+    };
+  }
+  if (tipo === "bancada") {
+    const pb = (dashboardData.perfiles_radar_bancadas || []).find(x => x.bancada === valor);
+    if (!pb) return null;
+    return {
+      vector: pb.vector_promedio,
+      etiqueta: pb.bancada,
+      detalle: `Bancada &bull; ${pb.total_miembros} parlamentarios en el catálogo`,
+      esParlamentario: false,
+    };
+  }
+  if (tipo === "ley") {
+    const ley = dashboardData.leyes.find(l => l.boletin === valor);
+    if (!ley) return null;
+    return {
+      vector: ley.vector_impacto,
+      etiqueta: `[${ley.boletin}] ${ley.titulo}`,
+      detalle: ley.justificacion,
+      esParlamentario: false,
+    };
+  }
+  return null;
+}
+
+function renderComparacion() {
+  const tipoA = document.getElementById("tipoLadoA").value;
+  const valorA = document.getElementById("valorLadoA").value;
+  const tipoB = document.getElementById("tipoLadoB").value;
+  const valorB = document.getElementById("valorLadoB").value;
+
+  const entA = resolverEntidadRadar(tipoA, valorA);
+  const entB = resolverEntidadRadar(tipoB, valorB);
+  if (!entA) return;
+
+  const card = document.getElementById("leyInfoCard");
+  card.innerHTML = `
+    <h4 style="color:#10b981;">${entA.etiqueta}</h4>
+    <p>${entA.detalle}</p>
+    ${entB ? `<h4 style="color:#94a3b8;">${entB.etiqueta}</h4><p>${entB.detalle}</p>` : ""}
+    <p style="font-size:0.8rem;">Cada eje es el promedio de <code>voto × valor_del_eje</code> en las leyes votadas (o el vector propio, si el lado es una ley). Cuanto más se parezcan las dos formas, más alineados están.</p>
+  `;
+
+  const datasets = [{
+    label: entA.etiqueta,
+    data: vectorAValores(entA.vector),
+    backgroundColor: "rgba(16, 185, 129, 0.25)",
+    borderColor: "#10b981",
+    pointBackgroundColor: "#34d399",
+    pointBorderColor: "#ffffff",
+    borderWidth: 2.5,
+  }];
+  if (entB) {
+    datasets.push({
+      label: entB.etiqueta,
+      data: vectorAValores(entB.vector),
+      backgroundColor: "rgba(148, 163, 184, 0.12)",
+      borderColor: "#94a3b8",
+      pointBackgroundColor: "#cbd5e1",
+      pointBorderColor: "#ffffff",
+      borderWidth: 2,
+      borderDash: [5, 4],
+    });
+  }
+
+  const ctx = document.getElementById("radarChart").getContext("2d");
+  if (radarChartInstance) radarChartInstance.destroy();
+  radarChartInstance = new Chart(ctx, {
+    type: "radar",
+    data: { labels: LABELS_RADAR, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: -1.0,
+          max: 1.0,
+          ticks: { stepSize: 0.5, color: "#94a3b8", backdropColor: "transparent" },
+          grid: { color: "rgba(51, 65, 85, 0.6)" },
+          angleLines: { color: "rgba(51, 65, 85, 0.6)" },
+          pointLabels: { color: "#f8fafc", font: { size: 12, weight: "bold" } }
+        }
+      },
+      plugins: { legend: { labels: { color: "#f8fafc" } } }
+    }
+  });
+
+  renderTablaVotos([entA, entB].filter(e => e && e.esParlamentario));
 }
 
 function updateRadarChart(boletin) {
@@ -543,102 +684,27 @@ function updateRadarChart(boletin) {
   });
 }
 
-function updateRadarChartParlamentario(parlamentarioId, comparacionValue) {
-  if (!dashboardData || !dashboardData.perfiles_radar_parlamentarios) return;
-  const perfil = dashboardData.perfiles_radar_parlamentarios.find(pf => pf.parlamentario.id === parlamentarioId);
-  if (!perfil) return;
-
-  const esPromedio = comparacionValue === "__promedio__";
-  const vectorComparacion = esPromedio
-    ? dashboardData.perfil_promedio_leyes
-    : (dashboardData.leyes.find(l => l.boletin === comparacionValue) || {}).vector_impacto;
-
-  const nombreComparacion = esPromedio
-    ? "Promedio de todas las leyes"
-    : `Ley ${comparacionValue}`;
-
-  // Tarjeta lateral con la ficha del parlamentario
-  const p = perfil.parlamentario;
-  const card = document.getElementById("leyInfoCard");
-  card.innerHTML = `
-    <h4>${p.nombre_completo}</h4>
-    <p><span class="boletin-tag">${p.camara} &bull; ${p.partido}</span></p>
-    <p><strong>Votaciones computadas:</strong> ${perfil.total_votaciones_computadas} de ${dashboardData.resumen.total_leyes} leyes evaluadas</p>
-    <p><strong>Comparando contra:</strong> ${nombreComparacion}</p>
-    <p style="font-size:0.8rem;">Este radar es el promedio de <code>voto × valor_del_eje</code> en cada ley que la persona votó, eje por eje (sin colapsar en el plano X/Y). Cuanto más se parezcan las dos formas, más alineado está su historial de voto con ese perfil.</p>
-  `;
-
-  const ctx = document.getElementById("radarChart").getContext("2d");
-  if (radarChartInstance) radarChartInstance.destroy();
-
-  radarChartInstance = new Chart(ctx, {
-    type: "radar",
-    data: {
-      labels: LABELS_RADAR,
-      datasets: [
-        {
-          label: p.nombre_completo,
-          data: vectorAValores(perfil.vector_promedio),
-          backgroundColor: "rgba(16, 185, 129, 0.25)",
-          borderColor: "#10b981",
-          pointBackgroundColor: "#34d399",
-          pointBorderColor: "#ffffff",
-          borderWidth: 2.5,
-        },
-        {
-          label: nombreComparacion,
-          data: vectorComparacion ? vectorAValores(vectorComparacion) : EJES_RADAR.map(() => 0),
-          backgroundColor: "rgba(148, 163, 184, 0.12)",
-          borderColor: "#94a3b8",
-          pointBackgroundColor: "#cbd5e1",
-          pointBorderColor: "#ffffff",
-          borderWidth: 2,
-          borderDash: [5, 4],
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        r: {
-          min: -1.0,
-          max: 1.0,
-          ticks: { stepSize: 0.5, color: "#94a3b8", backdropColor: "transparent" },
-          grid: { color: "rgba(51, 65, 85, 0.6)" },
-          angleLines: { color: "rgba(51, 65, 85, 0.6)" },
-          pointLabels: { color: "#f8fafc", font: { size: 12, weight: "bold" } }
-        }
-      },
-      plugins: {
-        legend: { labels: { color: "#f8fafc" } }
-      }
-    }
-  });
-
-  renderTablaVotosParlamentario(parlamentarioId);
-}
-
-function renderTablaVotosParlamentario(parlamentarioId) {
+function renderTablaVotos(entidades) {
   const container = document.getElementById("votosDetailContainer");
+  const thead = document.querySelector("#tablaVotosParlamentario thead tr");
   const tbody = document.querySelector("#tablaVotosParlamentario tbody");
-  if (!dashboardData || !dashboardData.votos_por_parlamentario) {
+
+  if (!dashboardData || !dashboardData.votos_por_parlamentario || entidades.length === 0) {
     container.style.display = "none";
     return;
   }
 
-  const votos = dashboardData.votos_por_parlamentario[parlamentarioId] || {};
+  thead.innerHTML = "<th>Boletín</th><th>Ley</th>" + entidades.map(e => `<th>${e.etiqueta}</th>`).join("");
   tbody.innerHTML = "";
 
   dashboardData.leyes.forEach(ley => {
-    const opcion = votos[ley.boletin] || "Sin registro / no computa";
+    const celdas = entidades.map(e => {
+      const opcion = (dashboardData.votos_por_parlamentario[e.parlamentarioId] || {})[ley.boletin] || "Sin registro / no computa";
+      const colorVoto = opcion === "AFIRMATIVO" ? "#34d399" : opcion === "EN CONTRA" ? "#f87171" : opcion === "ABSTENCION" ? "#fbbf24" : "#94a3b8";
+      return `<td><strong style="color:${colorVoto}">${opcion}</strong></td>`;
+    }).join("");
     const row = document.createElement("tr");
-    const colorVoto = opcion === "AFIRMATIVO" ? "#34d399" : opcion === "EN CONTRA" ? "#f87171" : opcion === "ABSTENCION" ? "#fbbf24" : "#94a3b8";
-    row.innerHTML = `
-      <td><span class="boletin-tag">${ley.boletin}</span></td>
-      <td>${ley.titulo}</td>
-      <td><strong style="color:${colorVoto}">${opcion}</strong></td>
-    `;
+    row.innerHTML = `<td><span class="boletin-tag">${ley.boletin}</span></td><td>${ley.titulo}</td>${celdas}`;
     tbody.appendChild(row);
   });
 
