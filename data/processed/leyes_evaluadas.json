@@ -32,20 +32,33 @@
     "justificacion": "Crea un impuesto específico ad valorem y sobre el margen operativo para grandes mineras (tope de 46.5%). Recauda aprox. US$ 1.350 millones anuales que se transfieren a municipios vulnerables (Fondo de Equidad Territorial) y regiones mineras."
   },
   {
-    "boletin": "14763-05",
-    "titulo": "Pensión Garantizada Universal (PGU)",
+    "boletin": "14588-13",
+    "titulo": "Crea la Pensión Garantizada Universal (PGU)",
     "sectores_afectados": ["Adultos Mayores", "Pensionados", "Hacienda Pública"],
     "vector_impacto": {
       "d1_transferencias": 1.0,
-      "d2_bienes_publicos": 0.5,
-      "d3_derechos_laborales": 0.2,
-      "d4_carga_fiscal": 0.9,
-      "d5_costos_privados": 0.2,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.4,
+      "d4_carga_fiscal": 0.6,
+      "d5_costos_privados": 0.0,
       "d6_burocracia": 0.2
     },
-    "costo_fiscal_anual_clp": 2500000000000.0,
     "beneficiarios_estimados": 2100000,
-    "justificacion": "Aporte monetario mensual directo financiado 100% por el Estado para el 90% de la población mayor de 65 años. Implica un gasto fiscal estructural masivo financiado con reasignaciones y fin de ciertas exenciones."
+    "justificacion": "[Confianza Media] Crea un aporte monetario mensual universal (~$185.000 inicial) para el 90% más vulnerable de personas mayores de 65 años, reemplazando el sistema de Pensión Básica Solidaria y Aporte Previsional Solidario de Vejez. Genera un gasto fiscal permanente y creciente (d4), pero no crea impuestos por sí misma: su financiamiento proviene de una ley separada (boletín 14763-05), votada de forma independiente. La cifra exacta del Informe Financiero DIPRES no se verificó en esta pasada y queda pendiente de sourcing automatizado (Capa 1). Promulgada como Ley 21.419 (29-01-2022). Ley Chile: https://www.bcn.cl/leychile/navegar?idNorma=1171923"
+  },
+  {
+    "boletin": "14763-05",
+    "titulo": "Reduce o elimina exenciones tributarias que indica",
+    "sectores_afectados": ["Prestadores de servicios profesionales", "Empresas constructoras", "Compradores de segunda vivienda o más (DFL2)", "Contribuyentes con ganancias de capital", "Beneficiarios de seguros de vida"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 1.0,
+      "d5_costos_privados": 0.6,
+      "d6_burocracia": 0.2
+    },
+    "justificacion": "[Confianza Alta, fuentes oficiales verificadas: opendata.camara.cl y alertas legales DLA Piper/Cuatrecasas/BBSC] Extiende el IVA a la generalidad de los servicios (antes exentos, salvo salud, educación, transporte y quienes emiten boleta de honorarios), elimina la tasa preferencial de 10% a las ganancias de capital del art. 107 de la Ley de Impuesto a la Renta, reduce transitoriamente y luego elimina el Crédito Especial a Empresas Constructoras (CEEC), quita beneficios tributarios a la compra de una tercera vivienda DFL2 en adelante, y aplica impuesto a la herencia sobre los beneficios de seguros de vida. Su propósito declarado por el Ministerio de Hacienda fue financiar el gasto permanente de la PGU (boletín 14588-13), pero es un proyecto distinto que se vota y clasifica de forma independiente para no duplicar el efecto de esa ley en el cálculo. Promulgada como Ley 21.420 (04-02-2022)."
   },
   {
     "boletin": "15093-13",

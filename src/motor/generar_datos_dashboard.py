@@ -7,6 +7,7 @@ generar_datos_dashboard.py — Pipeline de consolidación y generación de paylo
 """
 
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List
 
@@ -42,6 +43,14 @@ def cargar_parlamentarios() -> List[Parlamentario]:
     return [Parlamentario(**item) for item in data]
 
 
+def _fecha_senado_a_orden(fecha: str) -> datetime:
+    """Convierte una fecha 'DD/MM/YYYY' del Senado a datetime ordenable; sin fecha va al inicio."""
+    try:
+        return datetime.strptime(fecha.strip(), "%d/%m/%Y")
+    except (ValueError, AttributeError):
+        return datetime.min
+
+
 def recolectar_votaciones_emblematicas(leyes: Dict[str, LeyEvaluada]) -> List[Votacion]:
     """
     Recopila las votaciones nominales de Sala para cada boletín en ambas cámaras.
@@ -54,9 +63,10 @@ def recolectar_votaciones_emblematicas(leyes: Dict[str, LeyEvaluada]) -> List[Vo
         # 1. Cámara de Diputados
         vots_camara_meta = obtener_votaciones_por_boletin(boletin)
         if vots_camara_meta:
-            # Seleccionamos la votación final o de aprobación general más representativa
-            # (generalmente la última o penúltima de la tramitación en sala)
-            vot_final = vots_camara_meta[-1]
+            # La API no garantiza orden cronológico en la lista; se elige la
+            # votación con fecha ISO más reciente como la más representativa
+            # del resultado final de la Cámara sobre este boletín.
+            vot_final = max(vots_camara_meta, key=lambda v: v["fecha"])
             print(f"   [Cámara] Descargando votación nominal ID={vot_final['id']}: {vot_final['descripcion'][:60]}...")
             det_c = obtener_detalle_votacion(vot_final["id"])
             if det_c:
@@ -66,7 +76,7 @@ def recolectar_votaciones_emblematicas(leyes: Dict[str, LeyEvaluada]) -> List[Vo
         # 2. Senado
         vots_senado = obtener_votaciones_senado(boletin)
         if vots_senado:
-            vot_s = vots_senado[-1]
+            vot_s = max(vots_senado, key=lambda v: _fecha_senado_a_orden(v.fecha))
             print(f"   [Senado] Obtenida votación nominal con {len(vot_s.votos)} votos: {vot_s.descripcion[:60]}...")
             votaciones_totales.append(vot_s)
 
