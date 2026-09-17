@@ -7,9 +7,11 @@ generar_datos_dashboard.py — Pipeline de consolidación y generación de paylo
 """
 
 import json
+import sys
+import unicodedata
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional, Tuple
 
 from src.config import COLORES_PARTIDOS, PROCESSED_DATA_DIR, VISUALIZADOR_DIR
 from src.extractores.camara import obtener_detalle_votacion, obtener_votaciones_por_boletin
@@ -85,24 +87,69 @@ def recolectar_votaciones_emblematicas(leyes: Dict[str, LeyEvaluada]) -> List[Vo
     return votaciones_totales
 
 
+def _normalizar_texto(texto: str) -> str:
+    """Minúsculas y sin tildes/diacríticos, para comparar nombres de forma robusta."""
+    t = texto.strip().lower()
+    return "".join(c for c in unicodedata.normalize("NFD", t) if unicodedata.category(c) != "Mn")
+
+
+def _parsear_nombre_voto_senado(nombre_voto: str) -> Tuple[str, str]:
+    """
+    El Senado entrega los votos como 'ApellidoPaterno InicialMaterno., Nombre(s)',
+    ej. 'Insulza S., José Miguel'. Devuelve (apellido_paterno, nombre) normalizados.
+    """
+    if "," not in nombre_voto:
+        return ("", _normalizar_texto(nombre_voto))
+    apellidos_parte, nombre_parte = nombre_voto.split(",", 1)
+    palabras_apellido = apellidos_parte.strip().split()
+    apellido_paterno = palabras_apellido[0] if palabras_apellido else ""
+    return (_normalizar_texto(apellido_paterno), _normalizar_texto(nombre_parte))
+
+
 def asociar_votos_a_parlamentarios(
     parlamentarios: List[Parlamentario], votaciones: List[Votacion]
 ) -> List[Parlamentario]:
     """
-    Empareja los nombres registrados en las votaciones oficiales con los IDs de nuestro catálogo.
-    Si un parlamentario oficial votó, actualizamos su ID en la votación para el cruce.
+    Cámara: no se toca nada. `camara.py` ya asigna el Id oficial de
+    opendata.camara.cl a cada voto (`obtener_detalle_votacion`), y el catálogo
+    usa ese mismo Id oficial — el cruce ya es exacto por construcción.
+
+    Senado: la API pública no entrega un Id de parlamentario, solo el nombre en
+    texto ('ApellidoPaterno Inicial., Nombre'). Se cruza por apellido paterno
+    exacto + nombre exacto (normalizados, sin tildes), nunca por substring, y
+    solo se asigna si hay EXACTAMENTE UN candidato del catálogo que calce — una
+    coincidencia ambigua o nula se reporta y no se asigna, para no atribuirle a
+    alguien un voto que no es suyo.
     """
-    # Mapeo de nombres normalizados
+    senadores = [p for p in parlamentarios if p.camara == CamaraTipo.SENADO and p.apellido_paterno]
+
     for vot in votaciones:
+        if vot.camara != CamaraTipo.SENADO:
+            continue
         for v in vot.votos:
-            # Buscar coincidencia difusa en parlamentarios
-            for p in parlamentarios:
-                # Comparamos apellidos principales
-                apellidos_p = p.nombre_completo.lower().split()[1:]
-                apellidos_v = v.nombre_completo.lower()
-                if any(ap in apellidos_v for ap in apellidos_p if len(ap) > 3):
-                    v.parlamentario_id = p.id
-                    break
+            apellido_v, nombre_v = _parsear_nombre_voto_senado(v.nombre_completo)
+            if not apellido_v:
+                continue
+
+            candidatos = [
+                p for p in senadores
+                if _normalizar_texto(p.apellido_paterno) == apellido_v
+                and (
+                    _normalizar_texto(p.nombre) == nombre_v
+                    or _normalizar_texto(p.nombre).split()[0] == nombre_v.split(" ")[0]
+                )
+            ]
+
+            if len(candidatos) == 1:
+                v.parlamentario_id = candidatos[0].id
+            elif len(candidatos) > 1:
+                print(
+                    f"[Aviso] Voto de Senado ambiguo, no se asigna: '{v.nombre_completo}' "
+                    f"calza con {len(candidatos)} parlamentarios del catálogo.",
+                    file=sys.stderr,
+                )
+            # len(candidatos) == 0: no está en nuestro catálogo, se ignora sin aviso
+            # (es el caso esperado para la mayoría de los ~50 senadores).
 
     return parlamentarios
 

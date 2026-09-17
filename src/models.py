@@ -97,6 +97,11 @@ class Parlamentario(BaseModel):
     partido: str = "Independiente"
     bancada: Optional[str] = None
     distrito_o_circunscripcion: Optional[str] = None
+    # Para Cámara, `id` es el Id oficial de opendata.camara.cl (cruce exacto, sin
+    # ambigüedad). Para Senado, no hay Id oficial disponible vía datos abiertos;
+    # `nombre` y `apellido_paterno` se usan para el cruce estructurado por nombre.
+    nombre: Optional[str] = None
+    apellido_paterno: Optional[str] = None
 
 
 class VotoNominal(BaseModel):
