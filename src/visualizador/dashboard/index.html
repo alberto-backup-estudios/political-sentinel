@@ -105,14 +105,45 @@
     <section id="tab-radar6d" class="tab-content">
       <div class="radar-layout">
         <div class="radar-controls">
-          <label for="selectLeyRadar">Seleccionar Proyecto de Ley:</label>
-          <select id="selectLeyRadar"></select>
+          <div class="radar-mode-toggle">
+            <button class="mode-btn active" data-modo="ley">Por Ley</button>
+            <button class="mode-btn" data-modo="parlamentario">Por Parlamentario</button>
+          </div>
+
+          <div id="radarControlLey">
+            <label for="selectLeyRadar">Seleccionar Proyecto de Ley:</label>
+            <select id="selectLeyRadar"></select>
+          </div>
+
+          <div id="radarControlParlamentario" style="display:none;">
+            <label for="selectParlamentarioRadar">Seleccionar Parlamentario:</label>
+            <select id="selectParlamentarioRadar"></select>
+            <label for="selectComparacionRadar">Comparar contra:</label>
+            <select id="selectComparacionRadar"></select>
+          </div>
+
           <div class="ley-info-card" id="leyInfoCard">
             <!-- Dinámico -->
           </div>
         </div>
         <div class="radar-chart-container">
           <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+
+      <div class="votos-detail" id="votosDetailContainer" style="display:none;">
+        <h3>🗳️ Detalle de Votos del Parlamentario en cada Ley Evaluada</h3>
+        <div class="table-responsive">
+          <table id="tablaVotosParlamentario">
+            <thead>
+              <tr>
+                <th>Boletín</th>
+                <th>Ley</th>
+                <th>Voto</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </div>
     </section>

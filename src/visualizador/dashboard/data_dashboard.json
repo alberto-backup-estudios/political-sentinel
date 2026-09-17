@@ -453,6 +453,562 @@
       "total_votaciones_computadas": 8
     }
   ],
+  "perfiles_radar_parlamentarios": [
+    {
+      "parlamentario": {
+        "id": "1",
+        "nombre_completo": "Gonzalo Winter Etcheberry",
+        "camara": "DIPUTADOS",
+        "partido": "Frente Amplio",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 10"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.26,
+        "d2_bienes_publicos": 0.06,
+        "d3_derechos_laborales": 0.14,
+        "d4_carga_fiscal": 0.63,
+        "d5_costos_privados": 0.35,
+        "d6_burocracia": 0.2
+      },
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "2",
+        "nombre_completo": "Karol Cariola Oliva",
+        "camara": "DIPUTADOS",
+        "partido": "Partido Comunista",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 9"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.075,
+        "d2_bienes_publicos": 0.0,
+        "d3_derechos_laborales": 0.375,
+        "d4_carga_fiscal": 0.3625,
+        "d5_costos_privados": 0.5125,
+        "d6_burocracia": 0.35
+      },
+      "total_votaciones_computadas": 4
+    },
+    {
+      "parlamentario": {
+        "id": "3",
+        "nombre_completo": "Daniel Manouchehri Moghadam Kashan Lobos",
+        "camara": "DIPUTADOS",
+        "partido": "Partido Socialista",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 5"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2167,
+        "d2_bienes_publicos": 0.05,
+        "d3_derechos_laborales": 0.25,
+        "d4_carga_fiscal": 0.525,
+        "d5_costos_privados": 0.4083,
+        "d6_burocracia": 0.2667
+      },
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "4",
+        "nombre_completo": "Raúl Soto Mardones",
+        "camara": "DIPUTADOS",
+        "partido": "Partido por la Democracia",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 15"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2167,
+        "d2_bienes_publicos": 0.05,
+        "d3_derechos_laborales": 0.25,
+        "d4_carga_fiscal": 0.525,
+        "d5_costos_privados": 0.4083,
+        "d6_burocracia": 0.2667
+      },
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "5",
+        "nombre_completo": "Alberto Undurraga Vicuña",
+        "camara": "DIPUTADOS",
+        "partido": "Democracia Cristiana",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 8"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.1167,
+        "d2_bienes_publicos": 0.05,
+        "d3_derechos_laborales": 0.25,
+        "d4_carga_fiscal": 0.0417,
+        "d5_costos_privados": 0.225,
+        "d6_burocracia": 0.1
+      },
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "6",
+        "nombre_completo": "Joanna Pérez Olea",
+        "camara": "DIPUTADOS",
+        "partido": "Demócratas",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 21"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2167,
+        "d2_bienes_publicos": 0.05,
+        "d3_derechos_laborales": 0.25,
+        "d4_carga_fiscal": 0.3083,
+        "d5_costos_privados": 0.2917,
+        "d6_burocracia": 0.1333
+      },
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "7",
+        "nombre_completo": "Andrés Longton Herrera",
+        "camara": "DIPUTADOS",
+        "partido": "Renovación Nacional",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 6"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.25,
+        "d2_bienes_publicos": 0.075,
+        "d3_derechos_laborales": 0.375,
+        "d4_carga_fiscal": -0.025,
+        "d5_costos_privados": 0.275,
+        "d6_burocracia": 0.175
+      },
+      "total_votaciones_computadas": 4
+    },
+    {
+      "parlamentario": {
+        "id": "8",
+        "nombre_completo": "Guillermo Ramírez Diez",
+        "camara": "DIPUTADOS",
+        "partido": "Unión Demócrata Independiente",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 11"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.1167,
+        "d2_bienes_publicos": 0.05,
+        "d3_derechos_laborales": 0.0167,
+        "d4_carga_fiscal": 0.0417,
+        "d5_costos_privados": -0.0417,
+        "d6_burocracia": -0.0
+      },
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "9",
+        "nombre_completo": "Francisco Undurraga Gazitúa",
+        "camara": "DIPUTADOS",
+        "partido": "Evópoli",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 11"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.0,
+        "d2_bienes_publicos": 0.0,
+        "d3_derechos_laborales": 0.0,
+        "d4_carga_fiscal": 0.0,
+        "d5_costos_privados": 0.0,
+        "d6_burocracia": 0.0
+      },
+      "total_votaciones_computadas": 0
+    },
+    {
+      "parlamentario": {
+        "id": "10",
+        "nombre_completo": "Agustín Romero Leiva",
+        "camara": "DIPUTADOS",
+        "partido": "Partido Republicano",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 8"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2167,
+        "d2_bienes_publicos": 0.05,
+        "d3_derechos_laborales": 0.25,
+        "d4_carga_fiscal": 0.525,
+        "d5_costos_privados": 0.4083,
+        "d6_burocracia": 0.2667
+      },
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "11",
+        "nombre_completo": "Pamela Jiles Moreno",
+        "camara": "DIPUTADOS",
+        "partido": "Independientes",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 12"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2167,
+        "d2_bienes_publicos": 0.05,
+        "d3_derechos_laborales": 0.25,
+        "d4_carga_fiscal": 0.525,
+        "d5_costos_privados": 0.4083,
+        "d6_burocracia": 0.2667
+      },
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "12",
+        "nombre_completo": "Gaspar Rivas Sánchez",
+        "camara": "DIPUTADOS",
+        "partido": "Partido de la Gente",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 6"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.075,
+        "d2_bienes_publicos": 0.0,
+        "d3_derechos_laborales": 0.375,
+        "d4_carga_fiscal": 0.2,
+        "d5_costos_privados": 0.425,
+        "d6_burocracia": 0.25
+      },
+      "total_votaciones_computadas": 4
+    },
+    {
+      "parlamentario": {
+        "id": "101",
+        "nombre_completo": "Juan Ignacio Latorre Riveros",
+        "camara": "SENADO",
+        "partido": "Frente Amplio",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 6"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.26,
+        "d2_bienes_publicos": 0.06,
+        "d3_derechos_laborales": 0.3,
+        "d4_carga_fiscal": 0.5,
+        "d5_costos_privados": 0.42,
+        "d6_burocracia": 0.24
+      },
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "102",
+        "nombre_completo": "Daniel Núñez Arancibia",
+        "camara": "SENADO",
+        "partido": "Partido Comunista",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 5"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2286,
+        "d2_bienes_publicos": 0.0429,
+        "d3_derechos_laborales": 0.2,
+        "d4_carga_fiscal": 0.5643,
+        "d5_costos_privados": 0.3929,
+        "d6_burocracia": 0.2
+      },
+      "total_votaciones_computadas": 7
+    },
+    {
+      "parlamentario": {
+        "id": "103",
+        "nombre_completo": "José Miguel Insulza Salinas",
+        "camara": "SENADO",
+        "partido": "Partido Socialista",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 1"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2364,
+        "d2_bienes_publicos": 0.0545,
+        "d3_derechos_laborales": 0.2727,
+        "d4_carga_fiscal": 0.3955,
+        "d5_costos_privados": 0.35,
+        "d6_burocracia": 0.1818
+      },
+      "total_votaciones_computadas": 11
+    },
+    {
+      "parlamentario": {
+        "id": "104",
+        "nombre_completo": "Jaime Quintana Leal",
+        "camara": "SENADO",
+        "partido": "Partido por la Democracia",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 11"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.0857,
+        "d2_bienes_publicos": 0.0,
+        "d3_derechos_laborales": 0.2286,
+        "d4_carga_fiscal": 0.1357,
+        "d5_costos_privados": 0.2071,
+        "d6_burocracia": 0.1429
+      },
+      "total_votaciones_computadas": 7
+    },
+    {
+      "parlamentario": {
+        "id": "105",
+        "nombre_completo": "Ximena Rincón González",
+        "camara": "SENADO",
+        "partido": "Demócratas",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 9"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2364,
+        "d2_bienes_publicos": 0.0545,
+        "d3_derechos_laborales": 0.2727,
+        "d4_carga_fiscal": 0.5136,
+        "d5_costos_privados": 0.4136,
+        "d6_burocracia": 0.2545
+      },
+      "total_votaciones_computadas": 11
+    },
+    {
+      "parlamentario": {
+        "id": "106",
+        "nombre_completo": "Francisco Chahuán Chahuán",
+        "camara": "SENADO",
+        "partido": "Renovación Nacional",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 6"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.1,
+        "d2_bienes_publicos": 0.0,
+        "d3_derechos_laborales": 0.5,
+        "d4_carga_fiscal": 0.2667,
+        "d5_costos_privados": 0.5667,
+        "d6_burocracia": 0.3333
+      },
+      "total_votaciones_computadas": 3
+    },
+    {
+      "parlamentario": {
+        "id": "107",
+        "nombre_completo": "Juan Antonio Coloma Correa",
+        "camara": "SENADO",
+        "partido": "Unión Demócrata Independiente",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 9"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.1818,
+        "d2_bienes_publicos": 0.0545,
+        "d3_derechos_laborales": 0.1455,
+        "d4_carga_fiscal": 0.25,
+        "d5_costos_privados": 0.1682,
+        "d6_burocracia": 0.1091
+      },
+      "total_votaciones_computadas": 11
+    },
+    {
+      "parlamentario": {
+        "id": "108",
+        "nombre_completo": "Felipe Kast Sommerhoff",
+        "camara": "SENADO",
+        "partido": "Evópoli",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 11"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.46,
+        "d2_bienes_publicos": 0.12,
+        "d3_derechos_laborales": 0.14,
+        "d4_carga_fiscal": 0.66,
+        "d5_costos_privados": 0.28,
+        "d6_burocracia": 0.12
+      },
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "109",
+        "nombre_completo": "Rojo Edwards Silva",
+        "camara": "SENADO",
+        "partido": "Partido Republicano",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 7"
+      },
+      "vector_promedio": {
+        "d1_transferencias": 0.2,
+        "d2_bienes_publicos": 0.0375,
+        "d3_derechos_laborales": 0.1,
+        "d4_carga_fiscal": 0.3313,
+        "d5_costos_privados": 0.1437,
+        "d6_burocracia": 0.075
+      },
+      "total_votaciones_computadas": 8
+    }
+  ],
+  "perfil_promedio_leyes": {
+    "d1_transferencias": 0.2167,
+    "d2_bienes_publicos": 0.05,
+    "d3_derechos_laborales": 0.25,
+    "d4_carga_fiscal": 0.525,
+    "d5_costos_privados": 0.4083,
+    "d6_burocracia": 0.2667
+  },
+  "votos_por_parlamentario": {
+    "1": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15170-05": "AFIRMATIVO"
+    },
+    "2": {
+      "11179-13": "EN CONTRA",
+      "12093-08": "EN CONTRA",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "3": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "AFIRMATIVO"
+    },
+    "4": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "AFIRMATIVO"
+    },
+    "5": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "AFIRMATIVO"
+    },
+    "6": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "7": {
+      "11179-13": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO"
+    },
+    "8": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "AFIRMATIVO"
+    },
+    "9": {},
+    "10": {
+      "11179-13": "EN CONTRA",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "11": {
+      "11179-13": "EN CONTRA",
+      "12093-08": "EN CONTRA",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "12": {
+      "11179-13": "EN CONTRA",
+      "12093-08": "EN CONTRA",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "101": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO"
+    },
+    "102": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15170-05": "AFIRMATIVO"
+    },
+    "103": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "104": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "105": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "106": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO"
+    },
+    "107": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    },
+    "108": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO"
+    },
+    "109": {
+      "11179-13": "AFIRMATIVO",
+      "12093-08": "AFIRMATIVO",
+      "14588-13": "AFIRMATIVO",
+      "14763-05": "AFIRMATIVO",
+      "15093-13": "AFIRMATIVO",
+      "15170-05": "EN CONTRA"
+    }
+  },
   "bancadas_metricas": [
     {
       "partido": "Frente Amplio",

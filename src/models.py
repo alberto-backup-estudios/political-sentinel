@@ -144,6 +144,14 @@ class PosicionamientoParlamentario(BaseModel):
     total_votaciones_computadas: int
 
 
+class PerfilRadarParlamentario(BaseModel):
+    """Perfil del parlamentario en las 6 dimensiones sin colapsar en X/Y, para
+    comparar su radar directamente contra el radar de una ley o el promedio del corpus."""
+    parlamentario: Parlamentario
+    vector_promedio: VectorImpacto
+    total_votaciones_computadas: int
+
+
 class MetricasBancada(BaseModel):
     partido: str
     x_centroide: float

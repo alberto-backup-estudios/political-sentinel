@@ -25,6 +25,8 @@ from src.models import (
 )
 from src.motor.calculo_cuadrantes import (
     calcular_metricas_bancada,
+    calcular_perfil_promedio_leyes,
+    calcular_perfil_radar_parlamentario,
     calcular_posicionamiento_parlamentario,
 )
 
@@ -124,6 +126,22 @@ def compilar_dashboard():
         pos = calcular_posicionamiento_parlamentario(p, votaciones, leyes_map)
         posiciones.append(pos)
 
+    # Calcular perfiles de radar (6 ejes sin colapsar) y el promedio del corpus de leyes
+    perfiles_radar = [
+        calcular_perfil_radar_parlamentario(p, votaciones, leyes_map) for p in parlamentarios
+    ]
+    perfil_promedio_leyes = calcular_perfil_promedio_leyes(leyes_map)
+
+    # Detalle de voto por parlamentario y boletín, para el detalle de apoyo del radar
+    votos_por_parlamentario: Dict[str, Dict[str, str]] = {p.id: {} for p in parlamentarios}
+    ids_catalogo = set(votos_por_parlamentario.keys())
+    for votacion in votaciones:
+        if not votacion.boletin:
+            continue
+        for v in votacion.votos:
+            if v.parlamentario_id in ids_catalogo:
+                votos_por_parlamentario[v.parlamentario_id][votacion.boletin] = v.opcion.value
+
     # Agrupar por partido y calcular centroides y elipses
     partidos_map: Dict[str, List[PosicionamientoParlamentario]] = {}
     for pos in posiciones:
@@ -139,6 +157,9 @@ def compilar_dashboard():
     payload = {
         "leyes": [ley.model_dump() for ley in leyes_map.values()],
         "parlamentarios_posicionados": [pos.model_dump() for pos in posiciones],
+        "perfiles_radar_parlamentarios": [pf.model_dump() for pf in perfiles_radar],
+        "perfil_promedio_leyes": perfil_promedio_leyes.model_dump(),
+        "votos_por_parlamentario": votos_por_parlamentario,
         "bancadas_metricas": [b.model_dump() for b in bancadas_metricas],
         "colores_partidos": COLORES_PARTIDOS,
         "resumen": {

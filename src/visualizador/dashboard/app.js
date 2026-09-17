@@ -387,20 +387,79 @@ function renderBancadasTable() {
 }
 
 // TAB 2: RADAR 6D
+const EJES_RADAR = ["d1_transferencias", "d2_bienes_publicos", "d3_derechos_laborales", "d4_carga_fiscal", "d5_costos_privados", "d6_burocracia"];
+const LABELS_RADAR = ["D1: Transferencias", "D2: Bienes Públicos", "D3: Derechos Laborales", "D4: Carga Fiscal", "D5: Costos Privados", "D6: Burocracia"];
+
+function vectorAValores(vi) {
+  return EJES_RADAR.map(eje => vi[eje]);
+}
+
 function renderRadar6D() {
   if (!dashboardData || !dashboardData.leyes) return;
-  const select = document.getElementById("selectLeyRadar");
-  select.innerHTML = "";
 
+  // Modo "Por Ley"
+  const selectLey = document.getElementById("selectLeyRadar");
+  selectLey.innerHTML = "";
   dashboardData.leyes.forEach((ley, idx) => {
     const opt = document.createElement("option");
     opt.value = ley.boletin;
     opt.textContent = `[${ley.boletin}] ${ley.titulo}`;
     if (idx === 0) opt.selected = true;
-    select.appendChild(opt);
+    selectLey.appendChild(opt);
+  });
+  selectLey.addEventListener("change", () => updateRadarChart(selectLey.value));
+
+  // Modo "Por Parlamentario"
+  const selectParl = document.getElementById("selectParlamentarioRadar");
+  selectParl.innerHTML = "";
+  if (dashboardData.perfiles_radar_parlamentarios) {
+    [...dashboardData.perfiles_radar_parlamentarios]
+      .sort((a, b) => a.parlamentario.nombre_completo.localeCompare(b.parlamentario.nombre_completo))
+      .forEach((pf, idx) => {
+        const opt = document.createElement("option");
+        opt.value = pf.parlamentario.id;
+        opt.textContent = `${pf.parlamentario.nombre_completo} (${pf.parlamentario.partido})`;
+        if (idx === 0) opt.selected = true;
+        selectParl.appendChild(opt);
+      });
+  }
+
+  const selectComp = document.getElementById("selectComparacionRadar");
+  selectComp.innerHTML = "";
+  const optPromedio = document.createElement("option");
+  optPromedio.value = "__promedio__";
+  optPromedio.textContent = "Promedio de todas las leyes evaluadas";
+  optPromedio.selected = true;
+  selectComp.appendChild(optPromedio);
+  dashboardData.leyes.forEach(ley => {
+    const opt = document.createElement("option");
+    opt.value = ley.boletin;
+    opt.textContent = `Ley: [${ley.boletin}] ${ley.titulo}`;
+    selectComp.appendChild(opt);
   });
 
-  select.addEventListener("change", () => updateRadarChart(select.value));
+  const actualizarModoParlamentario = () => updateRadarChartParlamentario(selectParl.value, selectComp.value);
+  selectParl.addEventListener("change", actualizarModoParlamentario);
+  selectComp.addEventListener("change", actualizarModoParlamentario);
+
+  // Toggle de modo
+  const modeButtons = document.querySelectorAll(".mode-btn");
+  modeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      modeButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const esLey = btn.dataset.modo === "ley";
+      document.getElementById("radarControlLey").style.display = esLey ? "" : "none";
+      document.getElementById("radarControlParlamentario").style.display = esLey ? "none" : "";
+      document.getElementById("votosDetailContainer").style.display = esLey ? "none" : "";
+      if (esLey) {
+        updateRadarChart(selectLey.value);
+      } else {
+        actualizarModoParlamentario();
+      }
+    });
+  });
+
   updateRadarChart(dashboardData.leyes[0].boletin);
 }
 
@@ -482,6 +541,108 @@ function updateRadarChart(boletin) {
       }
     }
   });
+}
+
+function updateRadarChartParlamentario(parlamentarioId, comparacionValue) {
+  if (!dashboardData || !dashboardData.perfiles_radar_parlamentarios) return;
+  const perfil = dashboardData.perfiles_radar_parlamentarios.find(pf => pf.parlamentario.id === parlamentarioId);
+  if (!perfil) return;
+
+  const esPromedio = comparacionValue === "__promedio__";
+  const vectorComparacion = esPromedio
+    ? dashboardData.perfil_promedio_leyes
+    : (dashboardData.leyes.find(l => l.boletin === comparacionValue) || {}).vector_impacto;
+
+  const nombreComparacion = esPromedio
+    ? "Promedio de todas las leyes"
+    : `Ley ${comparacionValue}`;
+
+  // Tarjeta lateral con la ficha del parlamentario
+  const p = perfil.parlamentario;
+  const card = document.getElementById("leyInfoCard");
+  card.innerHTML = `
+    <h4>${p.nombre_completo}</h4>
+    <p><span class="boletin-tag">${p.camara} &bull; ${p.partido}</span></p>
+    <p><strong>Votaciones computadas:</strong> ${perfil.total_votaciones_computadas} de ${dashboardData.resumen.total_leyes} leyes evaluadas</p>
+    <p><strong>Comparando contra:</strong> ${nombreComparacion}</p>
+    <p style="font-size:0.8rem;">Este radar es el promedio de <code>voto × valor_del_eje</code> en cada ley que la persona votó, eje por eje (sin colapsar en el plano X/Y). Cuanto más se parezcan las dos formas, más alineado está su historial de voto con ese perfil.</p>
+  `;
+
+  const ctx = document.getElementById("radarChart").getContext("2d");
+  if (radarChartInstance) radarChartInstance.destroy();
+
+  radarChartInstance = new Chart(ctx, {
+    type: "radar",
+    data: {
+      labels: LABELS_RADAR,
+      datasets: [
+        {
+          label: p.nombre_completo,
+          data: vectorAValores(perfil.vector_promedio),
+          backgroundColor: "rgba(16, 185, 129, 0.25)",
+          borderColor: "#10b981",
+          pointBackgroundColor: "#34d399",
+          pointBorderColor: "#ffffff",
+          borderWidth: 2.5,
+        },
+        {
+          label: nombreComparacion,
+          data: vectorComparacion ? vectorAValores(vectorComparacion) : EJES_RADAR.map(() => 0),
+          backgroundColor: "rgba(148, 163, 184, 0.12)",
+          borderColor: "#94a3b8",
+          pointBackgroundColor: "#cbd5e1",
+          pointBorderColor: "#ffffff",
+          borderWidth: 2,
+          borderDash: [5, 4],
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: -1.0,
+          max: 1.0,
+          ticks: { stepSize: 0.5, color: "#94a3b8", backdropColor: "transparent" },
+          grid: { color: "rgba(51, 65, 85, 0.6)" },
+          angleLines: { color: "rgba(51, 65, 85, 0.6)" },
+          pointLabels: { color: "#f8fafc", font: { size: 12, weight: "bold" } }
+        }
+      },
+      plugins: {
+        legend: { labels: { color: "#f8fafc" } }
+      }
+    }
+  });
+
+  renderTablaVotosParlamentario(parlamentarioId);
+}
+
+function renderTablaVotosParlamentario(parlamentarioId) {
+  const container = document.getElementById("votosDetailContainer");
+  const tbody = document.querySelector("#tablaVotosParlamentario tbody");
+  if (!dashboardData || !dashboardData.votos_por_parlamentario) {
+    container.style.display = "none";
+    return;
+  }
+
+  const votos = dashboardData.votos_por_parlamentario[parlamentarioId] || {};
+  tbody.innerHTML = "";
+
+  dashboardData.leyes.forEach(ley => {
+    const opcion = votos[ley.boletin] || "Sin registro / no computa";
+    const row = document.createElement("tr");
+    const colorVoto = opcion === "AFIRMATIVO" ? "#34d399" : opcion === "EN CONTRA" ? "#f87171" : opcion === "ABSTENCION" ? "#fbbf24" : "#94a3b8";
+    row.innerHTML = `
+      <td><span class="boletin-tag">${ley.boletin}</span></td>
+      <td>${ley.titulo}</td>
+      <td><strong style="color:${colorVoto}">${opcion}</strong></td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  container.style.display = "";
 }
 
 // TAB 3: CATALOGO DE LEYES

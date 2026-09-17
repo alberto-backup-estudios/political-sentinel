@@ -17,11 +17,22 @@ from src.models import (
     LeyEvaluada,
     MetricasBancada,
     Parlamentario,
+    PerfilRadarParlamentario,
     PosicionamientoParlamentario,
+    VectorImpacto,
     Votacion,
     VotoNominal,
     clasificar_cuadrante,
     valor_numerico_voto,
+)
+
+EJES_VECTOR_IMPACTO = (
+    "d1_transferencias",
+    "d2_bienes_publicos",
+    "d3_derechos_laborales",
+    "d4_carga_fiscal",
+    "d5_costos_privados",
+    "d6_burocracia",
 )
 
 
@@ -87,6 +98,66 @@ def calcular_posicionamiento_parlamentario(
         nombre_cuadrante=nombre_cuad,
         total_votaciones_computadas=votaciones_computadas,
     )
+
+
+def calcular_perfil_radar_parlamentario(
+    parlamentario: Parlamentario,
+    votaciones: List[Votacion],
+    leyes_map: Dict[str, LeyEvaluada],
+) -> PerfilRadarParlamentario:
+    """
+    Calcula el promedio ponderado por voto de cada uno de los 6 ejes POR SEPARADO
+    (sin agruparlos en X/Y), para poder comparar el radar de un parlamentario
+    directamente contra el radar de una ley específica o contra el promedio del
+    corpus de leyes evaluadas.
+    """
+    sumas = {eje: 0.0 for eje in EJES_VECTOR_IMPACTO}
+    votaciones_computadas = 0
+
+    for votacion in votaciones:
+        if not votacion.boletin or votacion.boletin not in leyes_map:
+            continue
+
+        impacto = leyes_map[votacion.boletin].vector_impacto
+        voto = next((v for v in votacion.votos if v.parlamentario_id == parlamentario.id), None)
+        if not voto:
+            continue
+
+        v_val = valor_numerico_voto(voto.opcion)
+        if v_val is None:
+            continue
+
+        for eje in EJES_VECTOR_IMPACTO:
+            sumas[eje] += v_val * getattr(impacto, eje)
+        votaciones_computadas += 1
+
+    if votaciones_computadas > 0:
+        promedio = {
+            eje: round(max(-1.0, min(1.0, sumas[eje] / votaciones_computadas)), 4)
+            for eje in EJES_VECTOR_IMPACTO
+        }
+    else:
+        promedio = {eje: 0.0 for eje in EJES_VECTOR_IMPACTO}
+
+    return PerfilRadarParlamentario(
+        parlamentario=parlamentario,
+        vector_promedio=VectorImpacto(**promedio),
+        total_votaciones_computadas=votaciones_computadas,
+    )
+
+
+def calcular_perfil_promedio_leyes(leyes_map: Dict[str, LeyEvaluada]) -> VectorImpacto:
+    """Promedio simple del vector de impacto de todas las leyes evaluadas -
+    el radar 'de referencia' contra el que se puede comparar a un parlamentario."""
+    leyes = list(leyes_map.values())
+    if not leyes:
+        return VectorImpacto(**{eje: 0.0 for eje in EJES_VECTOR_IMPACTO})
+
+    promedio = {
+        eje: round(sum(getattr(ley.vector_impacto, eje) for ley in leyes) / len(leyes), 4)
+        for eje in EJES_VECTOR_IMPACTO
+    }
+    return VectorImpacto(**promedio)
 
 
 def calcular_metricas_bancada(

@@ -370,6 +370,54 @@ tr:hover {
   margin-bottom: 0.75rem;
 }
 
+.radar-mode-toggle {
+  display: flex;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.3rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.mode-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-btn:hover {
+  color: var(--text-main);
+}
+
+.mode-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.radar-controls select {
+  width: 100%;
+}
+
+.votos-detail {
+  margin-top: 2rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.votos-detail h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
 /* CARDS GRID */
 .cards-grid {
   display: grid;
