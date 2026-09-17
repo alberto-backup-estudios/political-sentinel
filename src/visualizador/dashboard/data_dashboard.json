@@ -47,45 +47,46 @@
       "boletin": "14588-13",
       "titulo": "Crea la Pensión Garantizada Universal (PGU)",
       "sectores_afectados": [
-        "Adultos Mayores",
-        "Pensionados",
-        "Hacienda Pública"
+        "Adultos mayores (65+)",
+        "Población vulnerable (90% más pobre)",
+        "Sistema previsional",
+        "Beneficiarios de PBS y APS"
       ],
       "vector_impacto": {
         "d1_transferencias": 1.0,
-        "d2_bienes_publicos": 0.0,
-        "d3_derechos_laborales": 0.4,
-        "d4_carga_fiscal": 0.6,
+        "d2_bienes_publicos": 0.3,
+        "d3_derechos_laborales": 0.0,
+        "d4_carga_fiscal": 0.8,
         "d5_costos_privados": 0.0,
-        "d6_burocracia": 0.2
+        "d6_burocracia": 0.0
       },
       "costo_fiscal_anual_clp": null,
       "recaudacion_estimada_clp": null,
       "beneficiarios_estimados": 2100000,
-      "justificacion": "[Confianza Media] Crea un aporte monetario mensual universal (~$185.000 inicial) para el 90% más vulnerable de personas mayores de 65 años, reemplazando el sistema de Pensión Básica Solidaria y Aporte Previsional Solidario de Vejez. Genera un gasto fiscal permanente y creciente (d4), pero no crea impuestos por sí misma: su financiamiento proviene de una ley separada (boletín 14763-05), votada de forma independiente. La cifra exacta del Informe Financiero DIPRES no se verificó en esta pasada y queda pendiente de sourcing automatizado (Capa 1). Promulgada como Ley 21.419 (29-01-2022). Ley Chile: https://www.bcn.cl/leychile/navegar?idNorma=1171923"
+      "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre evidencia DIPRES verificada, revisado] Crea un aporte monetario mensual universal (~$185.000 inicial) para el 90% más vulnerable de personas mayores de 65 años, reemplazando el sistema de Pensión Básica Solidaria (PBS) y Aporte Previsional Solidario de Vejez (APS); transferencia recurrente y ampliada respecto del sistema anterior (d1). Según los Informes Financieros DIPRES N°162 (21-12-2021) y N°119 (20-09-2021) asociados a este boletín, genera un gasto público NUEVO y PERMANENTE de aprox. 0.95% del PIB hacia 2050, superior al gasto que reemplaza — no es una sustitución neutra (d4). No crea impuestos por sí misma: su financiamiento proviene de una ley separada (boletín 14763-05), votada de forma independiente, cuyo mecanismo tributario no se le atribuye a esta ley. No impone costos ni trámites al sector privado (d5/d6=0); unifica PBS y APS en un solo beneficio. Promulgada como Ley 21.419 (29-01-2022)."
     },
     {
       "boletin": "14763-05",
       "titulo": "Reduce o elimina exenciones tributarias que indica",
       "sectores_afectados": [
-        "Prestadores de servicios profesionales",
-        "Empresas constructoras",
-        "Compradores de segunda vivienda o más (DFL2)",
-        "Contribuyentes con ganancias de capital",
-        "Beneficiarios de seguros de vida"
+        "Inversionistas y personas con ganancias de capital",
+        "Sector construcción (empresas constructoras)",
+        "Compradores de vivienda (tercera propiedad en adelante)",
+        "Proveedores de servicios generales",
+        "Contribuyentes con herencias y beneficiarios de seguros de vida"
       ],
       "vector_impacto": {
         "d1_transferencias": 0.0,
         "d2_bienes_publicos": 0.0,
         "d3_derechos_laborales": 0.0,
-        "d4_carga_fiscal": 1.0,
-        "d5_costos_privados": 0.6,
+        "d4_carga_fiscal": 0.9,
+        "d5_costos_privados": 0.4,
         "d6_burocracia": 0.2
       },
       "costo_fiscal_anual_clp": null,
       "recaudacion_estimada_clp": null,
       "beneficiarios_estimados": null,
-      "justificacion": "[Confianza Alta, fuentes oficiales verificadas: opendata.camara.cl y alertas legales DLA Piper/Cuatrecasas/BBSC] Extiende el IVA a la generalidad de los servicios (antes exentos, salvo salud, educación, transporte y quienes emiten boleta de honorarios), elimina la tasa preferencial de 10% a las ganancias de capital del art. 107 de la Ley de Impuesto a la Renta, reduce transitoriamente y luego elimina el Crédito Especial a Empresas Constructoras (CEEC), quita beneficios tributarios a la compra de una tercera vivienda DFL2 en adelante, y aplica impuesto a la herencia sobre los beneficios de seguros de vida. Su propósito declarado por el Ministerio de Hacienda fue financiar el gasto permanente de la PGU (boletín 14588-13), pero es un proyecto distinto que se vota y clasifica de forma independiente para no duplicar el efecto de esa ley en el cálculo. Promulgada como Ley 21.420 (04-02-2022)."
+      "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes oficiales verificadas: opendata.camara.cl y alertas legales DLA Piper/Cuatrecasas/BBSC, revisado] Elimina la tasa preferencial de 10% a las ganancias de capital del art. 107 LIR, reduce y luego elimina el Crédito Especial a Empresas Constructoras (CEEC) en el IVA, retira beneficios tributarios a la compra de una tercera vivienda DFL2 en adelante, extiende el IVA a los servicios en general (antes exentos, salvo salud, educación, transporte y boleta de honorarios), y aplica impuesto a la herencia sobre los beneficios de seguros de vida — cada eliminación de exención aumenta la recaudación permanentemente (d4). Genera costos de cumplimiento a constructoras y nuevos proveedores de servicios gravados con IVA (d5), y obligaciones de registro/facturación asociadas (d6). Su propósito declarado por el Ministerio de Hacienda fue financiar el gasto permanente de la PGU (boletín 14588-13), pero es un proyecto distinto que se vota y clasifica de forma independiente para no duplicar el efecto de esa ley en el cálculo. Promulgada como Ley 21.420 (04-02-2022)."
     },
     {
       "boletin": "15093-13",
@@ -140,8 +141,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 10"
       },
-      "x": 0.58,
-      "y": 0.32,
+      "x": 0.56,
+      "y": 0.3133,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 5
@@ -170,8 +171,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 5"
       },
-      "x": 0.5556,
-      "y": 0.3222,
+      "x": 0.5389,
+      "y": 0.3167,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -185,8 +186,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 15"
       },
-      "x": 0.5556,
-      "y": 0.3222,
+      "x": 0.5389,
+      "y": 0.3167,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -200,8 +201,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 8"
       },
-      "x": 0.0,
-      "y": 0.0444,
+      "x": -0.0167,
+      "y": 0.0389,
       "cuadrante": "II",
       "nombre_cuadrante": "II. Populismo Fiscal",
       "total_votaciones_computadas": 6
@@ -215,8 +216,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 21"
       },
-      "x": 0.2556,
-      "y": 0.1889,
+      "x": 0.2389,
+      "y": 0.1833,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -230,8 +231,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 6"
       },
-      "x": 0.1167,
-      "y": 0.275,
+      "x": 0.1417,
+      "y": 0.2667,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 4
@@ -245,8 +246,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 11"
       },
-      "x": -0.1222,
-      "y": -0.0556,
+      "x": -0.1389,
+      "y": -0.0611,
       "cuadrante": "III",
       "nombre_cuadrante": "III. Liberalismo Clásico / Pro-Mercado",
       "total_votaciones_computadas": 6
@@ -275,8 +276,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 8"
       },
-      "x": 0.5556,
-      "y": 0.3222,
+      "x": 0.5389,
+      "y": 0.3167,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -290,8 +291,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Distrito 12"
       },
-      "x": 0.5556,
-      "y": 0.3222,
+      "x": 0.5389,
+      "y": 0.3167,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 6
@@ -320,8 +321,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 6"
       },
-      "x": 0.4867,
-      "y": 0.3067,
+      "x": 0.4667,
+      "y": 0.3,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 5
@@ -335,8 +336,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 5"
       },
-      "x": 0.5762,
-      "y": 0.3333,
+      "x": 0.5619,
+      "y": 0.3286,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 7
@@ -350,8 +351,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 1"
       },
-      "x": 0.3606,
-      "y": 0.2424,
+      "x": 0.3424,
+      "y": 0.2364,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 11
@@ -380,8 +381,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 9"
       },
-      "x": 0.5242,
-      "y": 0.3152,
+      "x": 0.5061,
+      "y": 0.3091,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 11
@@ -410,8 +411,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 9"
       },
-      "x": 0.1545,
-      "y": 0.1091,
+      "x": 0.1364,
+      "y": 0.103,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 11
@@ -425,8 +426,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 11"
       },
-      "x": 0.4533,
-      "y": 0.3333,
+      "x": 0.4333,
+      "y": 0.32,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 5
@@ -440,8 +441,8 @@
         "bancada": null,
         "distrito_o_circunscripcion": "Circunscripción 7"
       },
-      "x": 0.2417,
-      "y": 0.1583,
+      "x": 0.2292,
+      "y": 0.1542,
       "cuadrante": "I",
       "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
       "total_votaciones_computadas": 8
@@ -450,8 +451,8 @@
   "bancadas_metricas": [
     {
       "partido": "Frente Amplio",
-      "x_centroide": 0.5333,
-      "y_centroide": 0.3134,
+      "x_centroide": 0.5133,
+      "y_centroide": 0.3066,
       "sigma_x": 0.066,
       "sigma_y": 0.0094,
       "sigma_xy": 0.0006,
@@ -463,47 +464,47 @@
     },
     {
       "partido": "Partido Comunista",
-      "x_centroide": 0.5965,
-      "y_centroide": 0.35,
-      "sigma_x": 0.0286,
-      "sigma_y": 0.0236,
-      "sigma_xy": 0.0007,
-      "disciplina_id": 0.9629,
+      "x_centroide": 0.5893,
+      "y_centroide": 0.3477,
+      "sigma_x": 0.0387,
+      "sigma_y": 0.0269,
+      "sigma_xy": 0.001,
+      "disciplina_id": 0.9528,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.0371,
+      "elipse_semieje_mayor": 0.0472,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -140.49
+      "elipse_angulo_grados": -145.19
     },
     {
       "partido": "Partido Socialista",
-      "x_centroide": 0.4581,
-      "y_centroide": 0.2823,
-      "sigma_x": 0.1379,
-      "sigma_y": 0.0564,
-      "sigma_xy": 0.0078,
-      "disciplina_id": 0.851,
+      "x_centroide": 0.4406,
+      "y_centroide": 0.2765,
+      "sigma_x": 0.1389,
+      "sigma_y": 0.0568,
+      "sigma_xy": 0.0079,
+      "disciplina_id": 0.8499,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.149,
+      "elipse_semieje_mayor": 0.1501,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -157.74
+      "elipse_angulo_grados": -157.77
     },
     {
       "partido": "Partido por la Democracia",
-      "x_centroide": 0.385,
-      "y_centroide": 0.242,
-      "sigma_x": 0.2413,
-      "sigma_y": 0.1133,
-      "sigma_xy": 0.0274,
-      "disciplina_id": 0.7334,
+      "x_centroide": 0.3766,
+      "y_centroide": 0.2393,
+      "sigma_x": 0.2295,
+      "sigma_y": 0.1095,
+      "sigma_xy": 0.0251,
+      "disciplina_id": 0.7457,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2666,
+      "elipse_semieje_mayor": 0.2543,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -154.84
+      "elipse_angulo_grados": -154.5
     },
     {
       "partido": "Democracia Cristiana",
-      "x_centroide": 0.0,
-      "y_centroide": 0.0444,
+      "x_centroide": -0.0167,
+      "y_centroide": 0.0389,
       "sigma_x": 0.0,
       "sigma_y": 0.0,
       "sigma_xy": 0.0,
@@ -515,73 +516,73 @@
     },
     {
       "partido": "Demócratas",
-      "x_centroide": 0.3899,
-      "y_centroide": 0.252,
-      "sigma_x": 0.1899,
-      "sigma_y": 0.0893,
-      "sigma_xy": 0.017,
-      "disciplina_id": 0.7901,
+      "x_centroide": 0.3725,
+      "y_centroide": 0.2462,
+      "sigma_x": 0.1889,
+      "sigma_y": 0.089,
+      "sigma_xy": 0.0168,
+      "disciplina_id": 0.7912,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2099,
+      "elipse_semieje_mayor": 0.2088,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -154.82
+      "elipse_angulo_grados": -154.79
     },
     {
       "partido": "Renovación Nacional",
-      "x_centroide": 0.3195,
-      "y_centroide": 0.3153,
-      "sigma_x": 0.2867,
-      "sigma_y": 0.057,
-      "sigma_xy": 0.0163,
-      "disciplina_id": 0.7077,
+      "x_centroide": 0.3319,
+      "y_centroide": 0.3112,
+      "sigma_x": 0.2691,
+      "sigma_y": 0.0629,
+      "sigma_xy": 0.0169,
+      "disciplina_id": 0.7237,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2923,
+      "elipse_semieje_mayor": 0.2763,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -168.76
+      "elipse_angulo_grados": -166.85
     },
     {
       "partido": "Unión Demócrata Independiente",
-      "x_centroide": 0.0161,
-      "y_centroide": 0.0268,
-      "sigma_x": 0.1957,
-      "sigma_y": 0.1165,
-      "sigma_xy": 0.0228,
-      "disciplina_id": 0.7723,
+      "x_centroide": -0.0013,
+      "y_centroide": 0.0209,
+      "sigma_x": 0.1947,
+      "sigma_y": 0.116,
+      "sigma_xy": 0.0226,
+      "disciplina_id": 0.7734,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2277,
+      "elipse_semieje_mayor": 0.2266,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -149.24
+      "elipse_angulo_grados": -149.2
     },
     {
       "partido": "Evópoli",
-      "x_centroide": 0.2266,
-      "y_centroide": 0.1666,
-      "sigma_x": 0.3205,
-      "sigma_y": 0.2357,
-      "sigma_xy": 0.0755,
-      "disciplina_id": 0.6021,
+      "x_centroide": 0.2167,
+      "y_centroide": 0.16,
+      "sigma_x": 0.3064,
+      "sigma_y": 0.2263,
+      "sigma_xy": 0.0693,
+      "disciplina_id": 0.6191,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.3979,
+      "elipse_semieje_mayor": 0.3809,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -143.67
+      "elipse_angulo_grados": -143.55
     },
     {
       "partido": "Partido Republicano",
-      "x_centroide": 0.3987,
-      "y_centroide": 0.2402,
-      "sigma_x": 0.222,
-      "sigma_y": 0.1159,
-      "sigma_xy": 0.0257,
-      "disciplina_id": 0.7496,
+      "x_centroide": 0.3841,
+      "y_centroide": 0.2354,
+      "sigma_x": 0.219,
+      "sigma_y": 0.1149,
+      "sigma_xy": 0.0252,
+      "disciplina_id": 0.7527,
       "total_miembros": 2,
-      "elipse_semieje_mayor": 0.2504,
+      "elipse_semieje_mayor": 0.2473,
       "elipse_semieje_menor": 0.02,
-      "elipse_angulo_grados": -152.43
+      "elipse_angulo_grados": -152.31
     },
     {
       "partido": "Independientes",
-      "x_centroide": 0.5556,
-      "y_centroide": 0.3222,
+      "x_centroide": 0.5389,
+      "y_centroide": 0.3167,
       "sigma_x": 0.0,
       "sigma_y": 0.0,
       "sigma_xy": 0.0,

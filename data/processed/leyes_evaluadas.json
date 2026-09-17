@@ -34,31 +34,31 @@
   {
     "boletin": "14588-13",
     "titulo": "Crea la Pensión Garantizada Universal (PGU)",
-    "sectores_afectados": ["Adultos Mayores", "Pensionados", "Hacienda Pública"],
+    "sectores_afectados": ["Adultos mayores (65+)", "Población vulnerable (90% más pobre)", "Sistema previsional", "Beneficiarios de PBS y APS"],
     "vector_impacto": {
       "d1_transferencias": 1.0,
-      "d2_bienes_publicos": 0.0,
-      "d3_derechos_laborales": 0.4,
-      "d4_carga_fiscal": 0.6,
+      "d2_bienes_publicos": 0.3,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 0.8,
       "d5_costos_privados": 0.0,
-      "d6_burocracia": 0.2
+      "d6_burocracia": 0.0
     },
     "beneficiarios_estimados": 2100000,
-    "justificacion": "[Confianza Media] Crea un aporte monetario mensual universal (~$185.000 inicial) para el 90% más vulnerable de personas mayores de 65 años, reemplazando el sistema de Pensión Básica Solidaria y Aporte Previsional Solidario de Vejez. Genera un gasto fiscal permanente y creciente (d4), pero no crea impuestos por sí misma: su financiamiento proviene de una ley separada (boletín 14763-05), votada de forma independiente. La cifra exacta del Informe Financiero DIPRES no se verificó en esta pasada y queda pendiente de sourcing automatizado (Capa 1). Promulgada como Ley 21.419 (29-01-2022). Ley Chile: https://www.bcn.cl/leychile/navegar?idNorma=1171923"
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre evidencia DIPRES verificada, revisado] Crea un aporte monetario mensual universal (~$185.000 inicial) para el 90% más vulnerable de personas mayores de 65 años, reemplazando el sistema de Pensión Básica Solidaria (PBS) y Aporte Previsional Solidario de Vejez (APS); transferencia recurrente y ampliada respecto del sistema anterior (d1). Según los Informes Financieros DIPRES N°162 (21-12-2021) y N°119 (20-09-2021) asociados a este boletín, genera un gasto público NUEVO y PERMANENTE de aprox. 0.95% del PIB hacia 2050, superior al gasto que reemplaza — no es una sustitución neutra (d4). No crea impuestos por sí misma: su financiamiento proviene de una ley separada (boletín 14763-05), votada de forma independiente, cuyo mecanismo tributario no se le atribuye a esta ley. No impone costos ni trámites al sector privado (d5/d6=0); unifica PBS y APS en un solo beneficio. Promulgada como Ley 21.419 (29-01-2022)."
   },
   {
     "boletin": "14763-05",
     "titulo": "Reduce o elimina exenciones tributarias que indica",
-    "sectores_afectados": ["Prestadores de servicios profesionales", "Empresas constructoras", "Compradores de segunda vivienda o más (DFL2)", "Contribuyentes con ganancias de capital", "Beneficiarios de seguros de vida"],
+    "sectores_afectados": ["Inversionistas y personas con ganancias de capital", "Sector construcción (empresas constructoras)", "Compradores de vivienda (tercera propiedad en adelante)", "Proveedores de servicios generales", "Contribuyentes con herencias y beneficiarios de seguros de vida"],
     "vector_impacto": {
       "d1_transferencias": 0.0,
       "d2_bienes_publicos": 0.0,
       "d3_derechos_laborales": 0.0,
-      "d4_carga_fiscal": 1.0,
-      "d5_costos_privados": 0.6,
+      "d4_carga_fiscal": 0.9,
+      "d5_costos_privados": 0.4,
       "d6_burocracia": 0.2
     },
-    "justificacion": "[Confianza Alta, fuentes oficiales verificadas: opendata.camara.cl y alertas legales DLA Piper/Cuatrecasas/BBSC] Extiende el IVA a la generalidad de los servicios (antes exentos, salvo salud, educación, transporte y quienes emiten boleta de honorarios), elimina la tasa preferencial de 10% a las ganancias de capital del art. 107 de la Ley de Impuesto a la Renta, reduce transitoriamente y luego elimina el Crédito Especial a Empresas Constructoras (CEEC), quita beneficios tributarios a la compra de una tercera vivienda DFL2 en adelante, y aplica impuesto a la herencia sobre los beneficios de seguros de vida. Su propósito declarado por el Ministerio de Hacienda fue financiar el gasto permanente de la PGU (boletín 14588-13), pero es un proyecto distinto que se vota y clasifica de forma independiente para no duplicar el efecto de esa ley en el cálculo. Promulgada como Ley 21.420 (04-02-2022)."
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes oficiales verificadas: opendata.camara.cl y alertas legales DLA Piper/Cuatrecasas/BBSC, revisado] Elimina la tasa preferencial de 10% a las ganancias de capital del art. 107 LIR, reduce y luego elimina el Crédito Especial a Empresas Constructoras (CEEC) en el IVA, retira beneficios tributarios a la compra de una tercera vivienda DFL2 en adelante, extiende el IVA a los servicios en general (antes exentos, salvo salud, educación, transporte y boleta de honorarios), y aplica impuesto a la herencia sobre los beneficios de seguros de vida — cada eliminación de exención aumenta la recaudación permanentemente (d4). Genera costos de cumplimiento a constructoras y nuevos proveedores de servicios gravados con IVA (d5), y obligaciones de registro/facturación asociadas (d6). Su propósito declarado por el Ministerio de Hacienda fue financiar el gasto permanente de la PGU (boletín 14588-13), pero es un proyecto distinto que se vota y clasifica de forma independiente para no duplicar el efecto de esa ley en el cálculo. Promulgada como Ley 21.420 (04-02-2022)."
   },
   {
     "boletin": "15093-13",
