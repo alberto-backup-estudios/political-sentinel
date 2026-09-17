@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Political Sentinel — Inteligencia Legislativa y Mapas del Congreso de Chile</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">⚖️</div>
+        <div>
+          <h1>Political Sentinel</h1>
+          <p class="tagline">Inteligencia Legislativa &bull; Mapeo Empírico del Congreso de Chile</p>
+        </div>
+      </div>
+      <div class="stats-bar" id="statsBar">
+        <!-- Generado dinámicamente -->
+      </div>
+    </div>
+    <nav class="nav-tabs">
+      <button class="nav-btn active" data-tab="plano2d">🗺️ Plano Cartesiano 2D</button>
+      <button class="nav-btn" data-tab="radar6d">🕸️ Radar Huella de la Ley (6D)</button>
+      <button class="nav-btn" data-tab="leyes">📋 Leyes Evaluadas</button>
+      <button class="nav-btn" data-tab="metodologia">📐 Metodología & Fórmulas</button>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <!-- TAB 1: PLANO CARTESIANO 2D -->
+    <section id="tab-plano2d" class="tab-content active">
+      <div class="controls-panel">
+        <div class="filter-group">
+          <label for="filtroCamara">Cámara:</label>
+          <select id="filtroCamara">
+            <option value="TODAS">Ambas Cámaras (Diputados y Senado)</option>
+            <option value="DIPUTADOS">Cámara de Diputadas y Diputados</option>
+            <option value="SENADO">Senado de la República</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filtroPartido">Bancada / Partido:</label>
+          <select id="filtroPartido">
+            <option value="TODOS">Todos los Partidos</option>
+          </select>
+        </div>
+        <div class="filter-group toggle-group">
+          <label><input type="checkbox" id="checkElipses" checked> Mostrar Elipses de Bancada</label>
+          <label><input type="checkbox" id="checkNombres" checked> Mostrar Nombres</label>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="chart-wrapper">
+          <div class="quadrant-legend-bar">
+            <span class="q-badge q2">Cuadrante II: Populismo Fiscal</span>
+            <span class="q-badge q1">Cuadrante I: Socialdemocracia</span>
+          </div>
+          <div class="canvas-container">
+            <canvas id="planoChart"></canvas>
+          </div>
+          <div class="quadrant-legend-bar">
+            <span class="q-badge q3">Cuadrante III: Liberalismo Pro-Mercado</span>
+            <span class="q-badge q4">Cuadrante IV: Estatismo Burocrático</span>
+          </div>
+        </div>
+
+        <aside class="detail-sidebar" id="detailSidebar">
+          <div class="sidebar-header">
+            <h3>Ficha del Parlamentario</h3>
+            <span class="badge" id="sideBadge">Selecciona un punto</span>
+          </div>
+          <div class="sidebar-body" id="sideContent">
+            <p class="placeholder-text">Haz clic en cualquier punto del plano cartesiano para ver su ficha biográfica, coordenadas y desglose de votos nominales en las leyes emblemáticas.</p>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Tabla resumen de bancadas -->
+      <div class="bancadas-summary">
+        <h3>🏛️ Métricas de Cohesión y Disciplina Partidaria</h3>
+        <div class="table-responsive">
+          <table id="tablaBancadas">
+            <thead>
+              <tr>
+                <th>Partido / Bancada</th>
+                <th>Miembros</th>
+                <th>Centroide (X, Y)</th>
+                <th>Cuadrante Predominante</th>
+                <th>Índice Disciplina (ID_P)</th>
+                <th>Dispersión</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: RADAR 6D -->
+    <section id="tab-radar6d" class="tab-content">
+      <div class="radar-layout">
+        <div class="radar-controls">
+          <label for="selectLeyRadar">Seleccionar Proyecto de Ley:</label>
+          <select id="selectLeyRadar"></select>
+          <div class="ley-info-card" id="leyInfoCard">
+            <!-- Dinámico -->
+          </div>
+        </div>
+        <div class="radar-chart-container">
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: LISTADO DE LEYES EVALUADAS -->
+    <section id="tab-leyes" class="tab-content">
+      <h2>Catálogo de Proyectos Emblemáticos Evaluados (2022–2026)</h2>
+      <p class="subtitle">Clasificación cuantitativa en 6 dimensiones basada en Informes Financieros DIPRES e Informes de Productividad CNEP.</p>
+      <div class="cards-grid" id="cardsLeyes">
+        <!-- Dinámico -->
+      </div>
+    </section>
+
+    <!-- TAB 4: METODOLOGÍA -->
+    <section id="tab-metodologia" class="tab-content">
+      <div class="methodology-card">
+        <h2>Metodología Formal de Political Sentinel</h2>
+        <p>Political Sentinel elimina las apreciaciones subjetivas evaluando el comportamiento legislativo en dos macro-ejes ortogonales:</p>
+        
+        <div class="math-columns">
+          <div class="math-box">
+            <h3>Eje X: Extracción y Carga Económica</h3>
+            <p>Mide la propensión a votar a favor de mayores impuestos, costos privados y trabas burocráticas:</p>
+            <code>X_i = (1/|V_i|) &Sigma; v_{i,l} &middot; (w4&middot;d4 + w5&middot;d5 + w6&middot;d6) / (w4 + w5 + w6)</code>
+            <ul>
+              <li><strong>d4:</strong> Carga Fiscal y Tributaria</li>
+              <li><strong>d5:</strong> Costos de Cumplimiento al Privado</li>
+              <li><strong>d6:</strong> Carga Burocrática (Permisología)</li>
+            </ul>
+          </div>
+
+          <div class="math-box">
+            <h3>Eje Y: Bienestar y Protección Social</h3>
+            <p>Mide la propensión a votar a favor de subsidios directos, bienes públicos y derechos laborales:</p>
+            <code>Y_i = (1/|V_i|) &Sigma; v_{i,l} &middot; (w1&middot;d1 + w2&middot;d2 + w3&middot;d3) / (w1 + w2 + w3)</code>
+            <ul>
+              <li><strong>d1:</strong> Transferencias y Ayuda Monetaria Directa</li>
+              <li><strong>d2:</strong> Acceso a Bienes Públicos (Salud, Educación)</li>
+              <li><strong>d3:</strong> Derechos y Protección Laboral</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="quadrants-guide">
+          <h3>Los 4 Cuadrantes Políticos</h3>
+          <div class="q-grid">
+            <div class="q-item q1">
+              <h4>Cuadrante I: Socialdemocracia / Estado Social (X &gt; 0, Y &gt; 0)</h4>
+              <p>Respalda programas de bienestar y derechos sociales, y apoya los tributos y regulaciones para financiarlos de forma responsable.</p>
+            </div>
+            <div class="q-item q2">
+              <h4>Cuadrante II: Populismo Fiscal (X &le; 0, Y &gt; 0)</h4>
+              <p>Vota consistentemente a favor de bonos y aumentos de gasto, pero rechaza sistemáticamente cualquier impuesto o costo fiscal.</p>
+            </div>
+            <div class="q-item q3">
+              <h4>Cuadrante III: Liberalismo Pro-Mercado (X &le; 0, Y &le; 0)</h4>
+              <p>Rechaza alzas impositivas y trabas regulatorias, defendiendo que el crecimiento privado y el empleo resuelvan las necesidades sociales.</p>
+            </div>
+            <div class="q-item q4">
+              <h4>Cuadrante IV: Estatismo Burocrático (X &gt; 0, Y &le; 0)</h4>
+              <p>Apoya cargas fiscales y trámites que aumentan el aparato público sin generar un retorno social directo y tangible a las personas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Political Sentinel &bull; Código abierto y datos públicos del Congreso Nacional de Chile &bull; 2026</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

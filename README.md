@@ -54,16 +54,31 @@ El sistema aprovecha datos abiertos oficiales del Congreso Nacional de Chile:
 ## 📂 Estructura del Repositorio
 
 ```
-Political-sentinel/
+political-sentinel/
 ├── README.md                   # Descripción general y guía rápida
 ├── INSTRUCCIONES_OTRO_PC.md    # Guía para configurar y sincronizar en el segundo PC
 ├── conversacion_completa.md    # Registro íntegro del diseño conceptual y acuerdos
 ├── metodologia_y_mapas.md      # Marco matemático, índices y diseño de cuadrantes
 ├── requirements.txt            # Dependencias Python
+├── iniciar_dashboard.bat       # Levanta un servidor local y abre el dashboard
 ├── schemas/
-│   └── taxonomia_leyes.json    # Schema JSON estructurado para clasificación de proyectos
-└── src/
-    └── extractor_camara.py     # Script extractor de votaciones nominales de la Cámara
+│   └── taxonomia_leyes.json    # Schema JSON para clasificar proyectos de ley en 6D
+├── data/
+│   ├── raw/                    # Caché local de respuestas XML (ignorado por git, regenerable)
+│   └── processed/              # Datasets consolidados: leyes evaluadas y catálogo de parlamentarios
+├── src/
+│   ├── config.py                        # Rutas, URLs de los WS y parámetros globales
+│   ├── models.py                        # Modelos Pydantic y lógica de clasificación de votos/cuadrantes
+│   ├── extractores/
+│   │   ├── camara.py                    # Extractor Cámara de Diputadas y Diputados
+│   │   └── senado.py                    # Extractor Senado
+│   ├── motor/
+│   │   ├── calculo_cuadrantes.py        # Coordenadas (X,Y), centroides, elipses, disciplina
+│   │   └── generar_datos_dashboard.py   # Pipeline que compila data_dashboard.json
+│   └── visualizador/
+│       └── dashboard/                   # Dashboard estático (HTML/CSS/JS + Chart.js)
+└── tests/
+    └── test_calculo_cuadrantes.py
 ```
 
 ---
@@ -76,7 +91,17 @@ Political-sentinel/
 
 ### Instalación y Prueba
 ```bash
-cd Political-sentinel
+cd political-sentinel
 pip install -r requirements.txt
-python src/extractor_camara.py
+python -m unittest discover -s tests -t .
+python -m src.motor.generar_datos_dashboard
+```
+
+### Ver el Dashboard
+```bash
+iniciar_dashboard.bat
+```
+o manualmente:
+```bash
+python -m http.server 8000 --directory src/visualizador/dashboard
 ```

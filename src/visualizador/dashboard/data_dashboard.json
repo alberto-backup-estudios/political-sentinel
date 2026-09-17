@@ -1,0 +1,606 @@
+{
+  "leyes": [
+    {
+      "boletin": "11179-13",
+      "titulo": "Ley de 40 Horas: Reduce la jornada laboral ordinaria",
+      "sectores_afectados": [
+        "Comercio",
+        "Industria",
+        "Servicios",
+        "Pymes"
+      ],
+      "vector_impacto": {
+        "d1_transferencias": 0.0,
+        "d2_bienes_publicos": 0.0,
+        "d3_derechos_laborales": 0.9,
+        "d4_carga_fiscal": 0.0,
+        "d5_costos_privados": 0.8,
+        "d6_burocracia": 0.3
+      },
+      "costo_fiscal_anual_clp": 0.0,
+      "recaudacion_estimada_clp": null,
+      "beneficiarios_estimados": 4700000,
+      "justificacion": "Reduce la jornada laboral semanal de 45 a 40 horas con gradualidad de 5 años. Otorga mayor descanso a los trabajadores (alta protección laboral), pero impone costos de adecuación de turnos y aumentos en costo laboral por hora para los empleadores."
+    },
+    {
+      "boletin": "12093-08",
+      "titulo": "Royalty Minero: Compensación al Estado por minería de cobre y litio",
+      "sectores_afectados": [
+        "Gran Minería",
+        "Gobiernos Regionales",
+        "Municipios"
+      ],
+      "vector_impacto": {
+        "d1_transferencias": 0.7,
+        "d2_bienes_publicos": 0.6,
+        "d3_derechos_laborales": 0.0,
+        "d4_carga_fiscal": 1.0,
+        "d5_costos_privados": 0.9,
+        "d6_burocracia": 0.4
+      },
+      "costo_fiscal_anual_clp": null,
+      "recaudacion_estimada_clp": 1250000000000.0,
+      "beneficiarios_estimados": 302,
+      "justificacion": "Crea un impuesto específico ad valorem y sobre el margen operativo para grandes mineras (tope de 46.5%). Recauda aprox. US$ 1.350 millones anuales que se transfieren a municipios vulnerables (Fondo de Equidad Territorial) y regiones mineras."
+    },
+    {
+      "boletin": "14763-05",
+      "titulo": "Pensión Garantizada Universal (PGU)",
+      "sectores_afectados": [
+        "Adultos Mayores",
+        "Pensionados",
+        "Hacienda Pública"
+      ],
+      "vector_impacto": {
+        "d1_transferencias": 1.0,
+        "d2_bienes_publicos": 0.5,
+        "d3_derechos_laborales": 0.2,
+        "d4_carga_fiscal": 0.9,
+        "d5_costos_privados": 0.2,
+        "d6_burocracia": 0.2
+      },
+      "costo_fiscal_anual_clp": 2500000000000.0,
+      "recaudacion_estimada_clp": null,
+      "beneficiarios_estimados": 2100000,
+      "justificacion": "Aporte monetario mensual directo financiado 100% por el Estado para el 90% de la población mayor de 65 años. Implica un gasto fiscal estructural masivo financiado con reasignaciones y fin de ciertas exenciones."
+    },
+    {
+      "boletin": "15093-13",
+      "titulo": "Ley Karin: Prevención, investigación y sanción del acoso laboral",
+      "sectores_afectados": [
+        "Empresas transversales",
+        "Sector Público",
+        "Trabajadores"
+      ],
+      "vector_impacto": {
+        "d1_transferencias": 0.0,
+        "d2_bienes_publicos": 0.0,
+        "d3_derechos_laborales": 1.0,
+        "d4_carga_fiscal": 0.0,
+        "d5_costos_privados": 0.7,
+        "d6_burocracia": 0.6
+      },
+      "costo_fiscal_anual_clp": null,
+      "recaudacion_estimada_clp": null,
+      "beneficiarios_estimados": 5500000,
+      "justificacion": "Fortalece las garantías contra el acoso laboral, sexual y violencia en el trabajo. Exige a todas las empresas elaborar protocolos de prevención, procedimientos de denuncia formal y sanciones, aumentando costos de compliance y supervisión de la Dirección del Trabajo."
+    },
+    {
+      "boletin": "15170-05",
+      "titulo": "Reforma Tributaria / Pacto Fiscal (Votación Idea de Legislar)",
+      "sectores_afectados": [
+        "Personas de altos ingresos",
+        "Empresas",
+        "Inversionistas"
+      ],
+      "vector_impacto": {
+        "d1_transferencias": 0.5,
+        "d2_bienes_publicos": 0.7,
+        "d3_derechos_laborales": 0.0,
+        "d4_carga_fiscal": 1.0,
+        "d5_costos_privados": 0.9,
+        "d6_burocracia": 0.8
+      },
+      "costo_fiscal_anual_clp": null,
+      "recaudacion_estimada_clp": 3200000000000.0,
+      "beneficiarios_estimados": null,
+      "justificacion": "Proyecto emblemático de reforma estructural que buscaba recaudar 3.6% del PIB mediante impuesto a la riqueza, desintegración del régimen tributario y norma antielusión con mayores facultades al SII. Fue rechazado en la votación general en la Cámara."
+    }
+  ],
+  "parlamentarios_posicionados": [
+    {
+      "parlamentario": {
+        "id": "1",
+        "nombre_completo": "Gonzalo Winter Etcheberry",
+        "camara": "DIPUTADOS",
+        "partido": "Frente Amplio",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 10"
+      },
+      "x": 0.58,
+      "y": 0.4067,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "2",
+        "nombre_completo": "Karol Cariola Oliva",
+        "camara": "DIPUTADOS",
+        "partido": "Partido Comunista",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 9"
+      },
+      "x": 0.58,
+      "y": 0.4067,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "3",
+        "nombre_completo": "Daniel Manouchehri Moghadam Kashan Lobos",
+        "camara": "DIPUTADOS",
+        "partido": "Partido Socialista",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 5"
+      },
+      "x": 0.58,
+      "y": 0.4067,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "4",
+        "nombre_completo": "Raúl Soto Mardones",
+        "camara": "DIPUTADOS",
+        "partido": "Partido por la Democracia",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 15"
+      },
+      "x": 0.58,
+      "y": 0.4067,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "5",
+        "nombre_completo": "Alberto Undurraga Vicuña",
+        "camara": "DIPUTADOS",
+        "partido": "Democracia Cristiana",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 8"
+      },
+      "x": -0.4,
+      "y": -0.2,
+      "cuadrante": "III",
+      "nombre_cuadrante": "III. Liberalismo Clásico / Pro-Mercado",
+      "total_votaciones_computadas": 4
+    },
+    {
+      "parlamentario": {
+        "id": "6",
+        "nombre_completo": "Joanna Pérez Olea",
+        "camara": "DIPUTADOS",
+        "partido": "Demócratas",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 21"
+      },
+      "x": 0.22,
+      "y": 0.2467,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "7",
+        "nombre_completo": "Andrés Longton Herrera",
+        "camara": "DIPUTADOS",
+        "partido": "Renovación Nacional",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 6"
+      },
+      "x": 0.125,
+      "y": 0.15,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 4
+    },
+    {
+      "parlamentario": {
+        "id": "8",
+        "nombre_completo": "Guillermo Ramírez Diez",
+        "camara": "DIPUTADOS",
+        "partido": "Unión Demócrata Independiente",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 11"
+      },
+      "x": 0.1467,
+      "y": 0.1867,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "9",
+        "nombre_completo": "Francisco Undurraga Gazitúa",
+        "camara": "DIPUTADOS",
+        "partido": "Evópoli",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 11"
+      },
+      "x": 0.0,
+      "y": 0.0,
+      "cuadrante": "III",
+      "nombre_cuadrante": "III. Liberalismo Clásico / Pro-Mercado",
+      "total_votaciones_computadas": 0
+    },
+    {
+      "parlamentario": {
+        "id": "10",
+        "nombre_completo": "Agustín Romero Leiva",
+        "camara": "DIPUTADOS",
+        "partido": "Partido Republicano",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 8"
+      },
+      "x": 0.58,
+      "y": 0.4067,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "11",
+        "nombre_completo": "Pamela Jiles Moreno",
+        "camara": "DIPUTADOS",
+        "partido": "Independientes",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 12"
+      },
+      "x": 0.58,
+      "y": 0.4067,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "12",
+        "nombre_completo": "Gaspar Rivas Sánchez",
+        "camara": "DIPUTADOS",
+        "partido": "Partido de la Gente",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Distrito 6"
+      },
+      "x": 0.2167,
+      "y": 0.1667,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 2
+    },
+    {
+      "parlamentario": {
+        "id": "101",
+        "nombre_completo": "Juan Ignacio Latorre Riveros",
+        "camara": "SENADO",
+        "partido": "Frente Amplio",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 6"
+      },
+      "x": 0.2778,
+      "y": 0.2944,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "102",
+        "nombre_completo": "Daniel Núñez Arancibia",
+        "camara": "SENADO",
+        "partido": "Partido Comunista",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 5"
+      },
+      "x": 0.6,
+      "y": 0.4056,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 6
+    },
+    {
+      "parlamentario": {
+        "id": "103",
+        "nombre_completo": "José Miguel Insulza Salinas",
+        "camara": "SENADO",
+        "partido": "Partido Socialista",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 1"
+      },
+      "x": 0.3444,
+      "y": 0.3185,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 9
+    },
+    {
+      "parlamentario": {
+        "id": "104",
+        "nombre_completo": "Jaime Quintana Leal",
+        "camara": "SENADO",
+        "partido": "Partido por la Democracia",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 11"
+      },
+      "x": 0.22,
+      "y": 0.2,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 5
+    },
+    {
+      "parlamentario": {
+        "id": "105",
+        "nombre_completo": "Ximena Rincón González",
+        "camara": "SENADO",
+        "partido": "Demócratas",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 9"
+      },
+      "x": 0.5444,
+      "y": 0.4074,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 9
+    },
+    {
+      "parlamentario": {
+        "id": "106",
+        "nombre_completo": "Francisco Chahuán Chahuán",
+        "camara": "SENADO",
+        "partido": "Renovación Nacional",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 6"
+      },
+      "x": 0.5222,
+      "y": 0.3556,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 3
+    },
+    {
+      "parlamentario": {
+        "id": "107",
+        "nombre_completo": "Juan Antonio Coloma Correa",
+        "camara": "SENADO",
+        "partido": "Unión Demócrata Independiente",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 9"
+      },
+      "x": 0.0074,
+      "y": 0.1074,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 9
+    },
+    {
+      "parlamentario": {
+        "id": "108",
+        "nombre_completo": "Felipe Kast Sommerhoff",
+        "camara": "SENADO",
+        "partido": "Evópoli",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 11"
+      },
+      "x": 0.4,
+      "y": 0.4333,
+      "cuadrante": "I",
+      "nombre_cuadrante": "I. Socialdemocracia / Estado Social",
+      "total_votaciones_computadas": 2
+    },
+    {
+      "parlamentario": {
+        "id": "109",
+        "nombre_completo": "Rojo Edwards Silva",
+        "camara": "SENADO",
+        "partido": "Partido Republicano",
+        "bancada": null,
+        "distrito_o_circunscripcion": "Circunscripción 7"
+      },
+      "x": -0.1714,
+      "y": -0.0095,
+      "cuadrante": "III",
+      "nombre_cuadrante": "III. Liberalismo Clásico / Pro-Mercado",
+      "total_votaciones_computadas": 7
+    }
+  ],
+  "bancadas_metricas": [
+    {
+      "partido": "Frente Amplio",
+      "x_centroide": 0.4289,
+      "y_centroide": 0.3506,
+      "sigma_x": 0.2137,
+      "sigma_y": 0.0794,
+      "sigma_xy": 0.017,
+      "disciplina_id": 0.772,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.228,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": -159.61
+    },
+    {
+      "partido": "Partido Comunista",
+      "x_centroide": 0.59,
+      "y_centroide": 0.4062,
+      "sigma_x": 0.0141,
+      "sigma_y": 0.0008,
+      "sigma_xy": -0.0,
+      "disciplina_id": 0.9858,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.02,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": 176.85
+    },
+    {
+      "partido": "Partido Socialista",
+      "x_centroide": 0.4622,
+      "y_centroide": 0.3626,
+      "sigma_x": 0.1666,
+      "sigma_y": 0.0624,
+      "sigma_xy": 0.0104,
+      "disciplina_id": 0.8221,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.1779,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": -159.48
+    },
+    {
+      "partido": "Partido por la Democracia",
+      "x_centroide": 0.4,
+      "y_centroide": 0.3034,
+      "sigma_x": 0.2546,
+      "sigma_y": 0.1462,
+      "sigma_xy": 0.0372,
+      "disciplina_id": 0.7065,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.2935,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": -150.14
+    },
+    {
+      "partido": "Democracia Cristiana",
+      "x_centroide": -0.4,
+      "y_centroide": -0.2,
+      "sigma_x": 0.0,
+      "sigma_y": 0.0,
+      "sigma_xy": 0.0,
+      "disciplina_id": 1.0,
+      "total_miembros": 1,
+      "elipse_semieje_mayor": 0.02,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": 0.0
+    },
+    {
+      "partido": "Demócratas",
+      "x_centroide": 0.3822,
+      "y_centroide": 0.3271,
+      "sigma_x": 0.2294,
+      "sigma_y": 0.1136,
+      "sigma_xy": 0.0261,
+      "disciplina_id": 0.744,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.256,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": -153.65
+    },
+    {
+      "partido": "Renovación Nacional",
+      "x_centroide": 0.3236,
+      "y_centroide": 0.2528,
+      "sigma_x": 0.2809,
+      "sigma_y": 0.1454,
+      "sigma_xy": 0.0408,
+      "disciplina_id": 0.6837,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.3163,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": -152.63
+    },
+    {
+      "partido": "Unión Demócrata Independiente",
+      "x_centroide": 0.077,
+      "y_centroide": 0.1471,
+      "sigma_x": 0.0985,
+      "sigma_y": 0.0561,
+      "sigma_xy": 0.0055,
+      "disciplina_id": 0.8867,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.1133,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": -150.35
+    },
+    {
+      "partido": "Evópoli",
+      "x_centroide": 0.2,
+      "y_centroide": 0.2167,
+      "sigma_x": 0.2828,
+      "sigma_y": 0.3064,
+      "sigma_xy": 0.0867,
+      "disciplina_id": 0.583,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.417,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": 47.29
+    },
+    {
+      "partido": "Partido Republicano",
+      "x_centroide": 0.2043,
+      "y_centroide": 0.1986,
+      "sigma_x": 0.5313,
+      "sigma_y": 0.2943,
+      "sigma_xy": 0.1564,
+      "disciplina_id": 0.3926,
+      "total_miembros": 2,
+      "elipse_semieje_mayor": 0.6074,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": -151.02
+    },
+    {
+      "partido": "Independientes",
+      "x_centroide": 0.58,
+      "y_centroide": 0.4067,
+      "sigma_x": 0.0,
+      "sigma_y": 0.0,
+      "sigma_xy": 0.0,
+      "disciplina_id": 1.0,
+      "total_miembros": 1,
+      "elipse_semieje_mayor": 0.02,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": 0.0
+    },
+    {
+      "partido": "Partido de la Gente",
+      "x_centroide": 0.2167,
+      "y_centroide": 0.1667,
+      "sigma_x": 0.0,
+      "sigma_y": 0.0,
+      "sigma_xy": 0.0,
+      "disciplina_id": 1.0,
+      "total_miembros": 1,
+      "elipse_semieje_mayor": 0.02,
+      "elipse_semieje_menor": 0.02,
+      "elipse_angulo_grados": 0.0
+    }
+  ],
+  "colores_partidos": {
+    "Partido Comunista": "#D32F2F",
+    "Frente Amplio": "#E91E63",
+    "Partido Socialista": "#C2185B",
+    "Partido por la Democracia": "#FF9800",
+    "Democracia Cristiana": "#009688",
+    "Demócratas": "#00BCD4",
+    "Amarillos por Chile": "#FFEB3B",
+    "Renovación Nacional": "#1976D2",
+    "Unión Demócrata Independiente": "#0D47A1",
+    "Evópoli": "#00E676",
+    "Partido Republicano": "#1A237E",
+    "Partido de la Gente": "#795548",
+    "Independientes": "#9E9E9E"
+  },
+  "resumen": {
+    "total_leyes": 5,
+    "total_parlamentarios": 21,
+    "total_bancadas": 12,
+    "votaciones_procesadas": 9
+  }
+}

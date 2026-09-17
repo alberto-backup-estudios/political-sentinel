@@ -1,4 +1,4 @@
-﻿# Entornos virtuales
+# Entornos virtuales
 venv/
 .venv/
 env/
@@ -27,3 +27,6 @@ Desktop.ini
 *.tmp
 temp/
 cache/
+data/raw/
+.pytest_cache/
+
