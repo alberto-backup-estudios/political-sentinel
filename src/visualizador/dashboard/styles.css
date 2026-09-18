@@ -291,6 +291,59 @@ select {
   font-weight: 700;
 }
 
+.confianza-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+}
+
+.confianza-tag {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.confianza-box p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.confianza-sigma {
+  margin-top: 0.35rem !important;
+  font-family: monospace;
+}
+
+.votos-detalle .table-responsive {
+  max-height: 260px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.tabla-votos-detalle {
+  font-size: 0.78rem;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tabla-votos-detalle th, .tabla-votos-detalle td {
+  padding: 0.4rem 0.5rem;
+  word-wrap: break-word;
+}
+
+.tabla-votos-detalle th:first-child, .tabla-votos-detalle td:first-child {
+  width: 52%;
+}
+
+tr.clickable-row {
+  cursor: pointer;
+}
+
 /* BANCADAS SUMMARY TABLE */
 .bancadas-summary {
   margin-top: 2rem;

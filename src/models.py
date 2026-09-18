@@ -162,6 +162,17 @@ class PosicionamientoParlamentario(BaseModel):
     razon_confianza: str = ""
 
 
+class DetalleVotoParlamentario(BaseModel):
+    """Aporte de UNA votación específica a la posición (x, y) de un parlamentario.
+    Permite auditar visualmente de dónde viene su sigma_x/sigma_y."""
+    boletin: str
+    titulo_ley: str
+    fecha: str
+    opcion: str
+    aporte_x: float
+    aporte_y: float
+
+
 class PerfilRadarParlamentario(BaseModel):
     """Perfil del parlamentario en las 6 dimensiones sin colapsar en X/Y, para
     comparar su radar directamente contra el radar de una ley o el promedio del corpus."""

@@ -17,6 +17,7 @@ from src.models import (
     clasificar_cuadrante,
 )
 from src.motor.calculo_cuadrantes import (
+    calcular_detalle_votos_parlamentario,
     calcular_metricas_bancada,
     calcular_posicionamiento_parlamentario,
 )
@@ -179,6 +180,46 @@ class TestCalculoCuadrantes(unittest.TestCase):
         self.assertEqual(pos.sigma_x, 0.0)
         self.assertEqual(pos.error_estandar, 0.0)
         self.assertEqual(pos.nivel_confianza, "Alta")
+
+    def test_detalle_votos_coincide_con_agregado(self):
+        """El detalle voto a voto debe promediar exactamente a lo que reporta
+        calcular_posicionamiento_parlamentario (mismo criterio de inclusion)."""
+        parl = Parlamentario(id="7", nombre_completo="Diputado Detalle", camara=CamaraTipo.DIPUTADOS)
+        leyes = {
+            "0001-01": self.ley_pensiones,
+            "impuestos": LeyEvaluada(
+                boletin="impuestos", titulo="Aumento Impuestos",
+                vector_impacto=VectorImpacto(
+                    d1_transferencias=0.0, d2_bienes_publicos=0.0, d3_derechos_laborales=0.0,
+                    d4_carga_fiscal=1.0, d5_costos_privados=0.5, d6_burocracia=0.5,
+                ),
+            ),
+        }
+        votaciones = [
+            Votacion(
+                id=301, camara=CamaraTipo.DIPUTADOS, fecha="2026-01-01", boletin="0001-01",
+                descripcion="Pensiones", resultado="APROBADO",
+                votos=[VotoNominal(parlamentario_id="7", nombre_completo=parl.nombre_completo, opcion=OpcionVoto.AFIRMATIVO)],
+            ),
+            Votacion(
+                id=302, camara=CamaraTipo.DIPUTADOS, fecha="2026-01-02", boletin="impuestos",
+                descripcion="Impuestos", resultado="RECHAZADO",
+                votos=[VotoNominal(parlamentario_id="7", nombre_completo=parl.nombre_completo, opcion=OpcionVoto.EN_CONTRA)],
+            ),
+            Votacion(
+                id=303, camara=CamaraTipo.DIPUTADOS, fecha="2026-01-03", boletin="no-evaluada",
+                descripcion="Ley sin clasificar", resultado="APROBADO",
+                votos=[VotoNominal(parlamentario_id="7", nombre_completo=parl.nombre_completo, opcion=OpcionVoto.AFIRMATIVO)],
+            ),
+        ]
+
+        pos = calcular_posicionamiento_parlamentario(parl, votaciones, leyes)
+        detalle = calcular_detalle_votos_parlamentario(parl, votaciones, leyes)
+
+        self.assertEqual(len(detalle), pos.total_votaciones_computadas)
+        self.assertEqual({d.boletin for d in detalle}, {"0001-01", "impuestos"})
+        self.assertAlmostEqual(sum(d.aporte_x for d in detalle) / len(detalle), pos.x, places=3)
+        self.assertAlmostEqual(sum(d.aporte_y for d in detalle) / len(detalle), pos.y, places=3)
 
     def test_metricas_bancada_cohesion(self):
         """Una bancada con votos idénticos debe tener disciplina máxima (ID_P = 1.0)."""

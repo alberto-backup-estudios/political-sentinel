@@ -22,6 +22,7 @@ from src.config import (
 )
 from src.models import (
     CuadranteInfo,
+    DetalleVotoParlamentario,
     LeyEvaluada,
     MetricasBancada,
     Parlamentario,
@@ -76,6 +77,38 @@ def _voto_es_del_periodo_del_parlamentario(votacion: Votacion, parlamentario: Pa
     return fecha_a_periodo(votacion.fecha) == parlamentario.periodo
 
 
+def _iter_votos_computables(
+    parlamentario: Parlamentario,
+    votaciones: List[Votacion],
+    leyes_map: Dict[str, LeyEvaluada],
+):
+    """Itera las votaciones de 'votaciones' que SÍ computan en la base activa de
+    este parlamentario (ley evaluada, período correcto, voto activo emitido).
+    Compartido por calcular_posicionamiento_parlamentario y
+    calcular_detalle_votos_parlamentario para que ambos usen exactamente el
+    mismo criterio de inclusión."""
+    for votacion in votaciones:
+        # Solo computamos si la votación está asociada a una ley evaluada
+        if not votacion.boletin or votacion.boletin not in leyes_map:
+            continue
+        if not _voto_es_del_periodo_del_parlamentario(votacion, parlamentario):
+            continue
+
+        ley = leyes_map[votacion.boletin]
+
+        # Buscar el voto del parlamentario en esta votación
+        voto = next((v for v in votacion.votos if v.parlamentario_id == parlamentario.id), None)
+        if not voto:
+            continue
+
+        v_val = valor_numerico_voto(voto.opcion)
+        if v_val is None:
+            # Ausente, Pareo, Dispensado no computan en base activa
+            continue
+
+        yield votacion, ley, voto, v_val
+
+
 def calcular_posicionamiento_parlamentario(
     parlamentario: Parlamentario,
     votaciones: List[Votacion],
@@ -93,26 +126,8 @@ def calcular_posicionamiento_parlamentario(
     aportes_x: List[float] = []
     aportes_y: List[float] = []
 
-    for votacion in votaciones:
-        # Solo computamos si la votación está asociada a una ley evaluada
-        if not votacion.boletin or votacion.boletin not in leyes_map:
-            continue
-        if not _voto_es_del_periodo_del_parlamentario(votacion, parlamentario):
-            continue
-
-        ley = leyes_map[votacion.boletin]
+    for _votacion, ley, _voto, v_val in _iter_votos_computables(parlamentario, votaciones, leyes_map):
         impacto = ley.vector_impacto
-
-        # Buscar el voto del parlamentario en esta votación
-        voto = next((v for v in votacion.votos if v.parlamentario_id == parlamentario.id), None)
-        if not voto:
-            continue
-
-        v_val = valor_numerico_voto(voto.opcion)
-        if v_val is None:
-            # Ausente, Pareo, Dispensado no computan en base activa
-            continue
-
         c_x = impacto.componente_x_ley(w4, w5, w6)
         c_y = impacto.componente_y_ley(w1, w2, w3)
 
@@ -149,6 +164,41 @@ def calcular_posicionamiento_parlamentario(
         nivel_confianza=nivel_confianza,
         razon_confianza=razon_confianza,
     )
+
+
+def calcular_detalle_votos_parlamentario(
+    parlamentario: Parlamentario,
+    votaciones: List[Votacion],
+    leyes_map: Dict[str, LeyEvaluada],
+    pesos: Optional[Dict[str, float]] = None,
+) -> List[DetalleVotoParlamentario]:
+    """
+    Desglosa, votación por votación, el aporte individual de este parlamentario
+    a (x, y) — el mismo conjunto de votos que agrega calcular_posicionamiento_parlamentario,
+    pero sin promediar. Permite auditar de dónde sale su sigma_x/sigma_y.
+    """
+    w = pesos or DEFAULT_WEIGHTS
+    w1, w2, w3 = w["w1"], w["w2"], w["w3"]
+    w4, w5, w6 = w["w4"], w["w5"], w["w6"]
+
+    detalle: List[DetalleVotoParlamentario] = []
+    for votacion, ley, voto, v_val in _iter_votos_computables(parlamentario, votaciones, leyes_map):
+        impacto = ley.vector_impacto
+        c_x = impacto.componente_x_ley(w4, w5, w6)
+        c_y = impacto.componente_y_ley(w1, w2, w3)
+
+        detalle.append(
+            DetalleVotoParlamentario(
+                boletin=votacion.boletin,
+                titulo_ley=ley.titulo,
+                fecha=votacion.fecha,
+                opcion=voto.opcion.value,
+                aporte_x=round(v_val * c_x, 4),
+                aporte_y=round(v_val * c_y, 4),
+            )
+        )
+
+    return detalle
 
 
 def _calcular_confianza_posicionamiento(

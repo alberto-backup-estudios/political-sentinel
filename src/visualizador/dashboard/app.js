@@ -305,6 +305,8 @@ function updatePlanoChart() {
   renderPlano2D();
 }
 
+const COLOR_CONFIANZA = { Alta: "#10b981", Media: "#f59e0b", Baja: "#ef4444" };
+
 function mostrarDetalleParlamentario(pos) {
   const p = pos.parlamentario;
   const badge = document.getElementById("sideBadge");
@@ -312,6 +314,21 @@ function mostrarDetalleParlamentario(pos) {
 
   badge.textContent = pos.cuadrante;
   badge.className = `badge q-${pos.cuadrante.toLowerCase()}`;
+
+  const colorConf = COLOR_CONFIANZA[pos.nivel_confianza] || DEFAULT_COLOR;
+  const clave = `${p.id}::${p.periodo}`;
+  const detalle = (dashboardData.detalle_votos_parlamentarios || {})[clave] || [];
+
+  const filasVotos = detalle.length
+    ? detalle.map(d => `
+        <tr>
+          <td>${d.titulo_ley}</td>
+          <td>${d.opcion}</td>
+          <td style="color: ${d.aporte_x > 0 ? '#ef4444' : (d.aporte_x < 0 ? '#3b82f6' : '#94a3b8')}">${d.aporte_x}</td>
+          <td style="color: ${d.aporte_y > 0 ? '#10b981' : (d.aporte_y < 0 ? '#f59e0b' : '#94a3b8')}">${d.aporte_y}</td>
+        </tr>
+      `).join("")
+    : `<tr><td colspan="4" style="color:#94a3b8;">Sin votaciones computadas.</td></tr>`;
 
   content.innerHTML = `
     <div class="parl-card">
@@ -339,9 +356,25 @@ function mostrarDetalleParlamentario(pos) {
         </div>
       </div>
 
-      <div style="font-size: 0.85rem; color: #94a3b8; line-height: 1.4;">
+      <div class="confianza-box" style="border-left-color: ${colorConf};">
+        <span class="confianza-tag" style="color: ${colorConf};">Confianza ${pos.nivel_confianza}</span>
+        <p>${pos.razon_confianza || ""}</p>
+        ${pos.sigma_x !== null && pos.sigma_x !== undefined ? `<p class="confianza-sigma">&sigma;x = ${pos.sigma_x} &middot; &sigma;y = ${pos.sigma_y} &middot; Error estándar = ${pos.error_estandar}</p>` : ""}
+      </div>
+
+      <div style="font-size: 0.85rem; color: #94a3b8; line-height: 1.4; margin-bottom: 1rem;">
         <p><strong>Diagnóstico de Comportamiento:</strong></p>
         <p>${obtenerDiagnosticoCuadrante(pos.x, pos.y)}</p>
+      </div>
+
+      <div class="votos-detalle">
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0.5rem;"><strong>Desglose voto a voto (aporte a X / Y):</strong></p>
+        <div class="table-responsive">
+          <table class="tabla-votos-detalle">
+            <thead><tr><th>Ley</th><th>Voto</th><th title="Aporte al Eje X">X</th><th title="Aporte al Eje Y">Y</th></tr></thead>
+            <tbody>${filasVotos}</tbody>
+          </table>
+        </div>
       </div>
     </div>
   `;
@@ -382,8 +415,63 @@ function renderBancadasTable() {
         <td><strong style="color: ${b.disciplina_id > 0.8 ? '#10b981' : '#f59e0b'}">${(b.disciplina_id * 100).toFixed(1)}%</strong></td>
         <td>&sigma; = ${disp}</td>
       `;
+      row.className = "clickable-row";
+      row.title = "Ver detalle de dispersión de esta bancada";
+      row.addEventListener("click", () => mostrarDetalleBancada(b));
       tbody.appendChild(row);
     });
+}
+
+function mostrarDetalleBancada(b) {
+  // Filtra el plano cartesiano a esta bancada y muestra su detalle en el panel lateral.
+  const selectPartido = document.getElementById("filtroPartido");
+  if ([...selectPartido.options].some(o => o.value === b.bancada)) {
+    selectPartido.value = b.bancada;
+    updatePlanoChart();
+  }
+
+  const miembros = getFilteredParlamentarios()
+    .filter(p => (p.parlamentario.bancada || p.parlamentario.partido) === b.bancada)
+    .sort((a, c) => a.x - c.x);
+
+  const disp = Math.sqrt(Math.pow(b.sigma_x, 2) + Math.pow(b.sigma_y, 2)).toFixed(3);
+  const cuad = (b.x_centroide > 0 ? (b.y_centroide > 0 ? "I" : "IV") : (b.y_centroide > 0 ? "II" : "III"));
+
+  const badge = document.getElementById("sideBadge");
+  const content = document.getElementById("sideContent");
+  badge.textContent = `Cuadrante ${cuad}`;
+  badge.className = `badge q-${cuad.toLowerCase()}`;
+
+  const filasMiembros = miembros.map(p => `
+    <tr>
+      <td>${p.parlamentario.nombre_completo}</td>
+      <td><code>(${p.x}, ${p.y})</code></td>
+      <td style="color: ${COLOR_CONFIANZA[p.nivel_confianza] || DEFAULT_COLOR}">${p.nivel_confianza}</td>
+    </tr>
+  `).join("");
+
+  content.innerHTML = `
+    <div class="parl-card">
+      <h4>${b.bancada}</h4>
+      <div class="parl-meta">${b.total_miembros} miembros &bull; Dispersión entre personas (no voto a voto): &sigma; = ${disp}</div>
+
+      <div class="coord-box">
+        <div class="coord-item"><span>Centroide (X, Y):</span><span class="coord-val">(${b.x_centroide}, ${b.y_centroide})</span></div>
+        <div class="coord-item"><span>Índice de Disciplina (ID_P):</span><strong style="color: ${b.disciplina_id > 0.8 ? '#10b981' : '#f59e0b'}">${(b.disciplina_id * 100).toFixed(1)}%</strong></div>
+        <div class="coord-item"><span>&sigma;x / &sigma;y:</span><span>${b.sigma_x} / ${b.sigma_y}</span></div>
+      </div>
+
+      <div class="votos-detalle">
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0.5rem;"><strong>Miembros (posición individual y confianza):</strong></p>
+        <div class="table-responsive">
+          <table class="tabla-votos-detalle">
+            <thead><tr><th>Parlamentario</th><th>(X, Y)</th><th>Confianza</th></tr></thead>
+            <tbody>${filasMiembros}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 // TAB 2: RADAR 6D

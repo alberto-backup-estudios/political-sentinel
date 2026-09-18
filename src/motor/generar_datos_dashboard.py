@@ -26,6 +26,7 @@ from src.models import (
     VotoNominal,
 )
 from src.motor.calculo_cuadrantes import (
+    calcular_detalle_votos_parlamentario,
     calcular_metricas_bancada,
     calcular_perfil_promedio_leyes,
     calcular_perfil_radar_bancada,
@@ -192,6 +193,16 @@ def compilar_dashboard():
     ]
     perfil_promedio_leyes = calcular_perfil_promedio_leyes(leyes_map)
 
+    # Desglose voto a voto del aporte a (x, y) de cada parlamentario, para poder
+    # auditar en el dashboard de dónde sale su sigma_x/sigma_y/nivel_confianza.
+    # Misma clave "id::periodo" que votos_por_parlamentario (ver más abajo).
+    detalle_votos_parlamentarios: Dict[str, List[dict]] = {
+        f"{p.id}::{p.periodo}": [
+            d.model_dump() for d in calcular_detalle_votos_parlamentario(p, votaciones, leyes_map)
+        ]
+        for p in parlamentarios
+    }
+
     # Detalle de voto por parlamentario y boletín, para el detalle de apoyo del radar.
     # Se indexa por (Id oficial, período) -> "id::periodo": el mismo Id de Cámara puede
     # reaparecer en más de un período si la persona fue reelecta, con un registro de
@@ -255,6 +266,7 @@ def compilar_dashboard():
         "perfiles_radar_bancadas": perfiles_radar_bancadas,
         "perfil_promedio_leyes": perfil_promedio_leyes.model_dump(),
         "votos_por_parlamentario": votos_por_parlamentario,
+        "detalle_votos_parlamentarios": detalle_votos_parlamentarios,
         "bancadas_metricas": [b.model_dump() for b in bancadas_metricas],
         "colores_bancadas": COLORES_BANCADAS,
         "resumen": {
