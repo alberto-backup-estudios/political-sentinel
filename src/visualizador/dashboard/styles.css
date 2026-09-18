@@ -525,6 +525,49 @@ tr:hover {
   color: #38bdf8;
 }
 
+.radar-axes-guide {
+  margin: 1.5rem 0 2rem;
+}
+
+.axis-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.axis-item {
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-left: 3px solid transparent;
+}
+
+.axis-item.eje-y { border-left-color: #10b981; }
+.axis-item.eje-x { border-left-color: #ef4444; }
+
+.axis-item .axis-tag {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin-bottom: 0.4rem;
+}
+
+.axis-item h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.axis-item p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
 .q-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
