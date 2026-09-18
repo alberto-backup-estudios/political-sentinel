@@ -153,6 +153,13 @@ class PosicionamientoParlamentario(BaseModel):
     cuadrante: str
     nombre_cuadrante: str
     total_votaciones_computadas: int
+    # Dispersión de los aportes individuales de cada voto a (x, y) — no la
+    # dispersión entre personas de una bancada (esa es MetricasBancada).
+    sigma_x: Optional[float] = None
+    sigma_y: Optional[float] = None
+    error_estandar: Optional[float] = None
+    nivel_confianza: str = "Baja"
+    razon_confianza: str = ""
 
 
 class PerfilRadarParlamentario(BaseModel):

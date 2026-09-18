@@ -138,6 +138,48 @@ class TestCalculoCuadrantes(unittest.TestCase):
         pos = calcular_posicionamiento_parlamentario(parl_periodo_actual, [votacion_periodo_anterior], self.leyes_map)
         self.assertEqual(pos.total_votaciones_computadas, 0)
 
+    def test_confianza_baja_con_pocas_votaciones(self):
+        """Menos votaciones que el umbral mínimo -> confianza Baja."""
+        parl = Parlamentario(id="4", nombre_completo="Diputado Nuevo", camara=CamaraTipo.DIPUTADOS)
+        votacion = Votacion(
+            id=103, camara=CamaraTipo.DIPUTADOS, fecha="2026-03-01", boletin="0001-01",
+            descripcion="Votación única", resultado="APROBADO",
+            votos=[VotoNominal(parlamentario_id="4", nombre_completo=parl.nombre_completo, opcion=OpcionVoto.AFIRMATIVO)],
+        )
+
+        pos = calcular_posicionamiento_parlamentario(parl, [votacion], self.leyes_map)
+        self.assertEqual(pos.total_votaciones_computadas, 1)
+        self.assertEqual(pos.nivel_confianza, "Baja")
+        self.assertEqual(pos.sigma_x, 0.0)
+        self.assertEqual(pos.sigma_y, 0.0)
+
+    def test_confianza_sin_votaciones(self):
+        """Sin votaciones computadas -> sigma y error estándar quedan en None."""
+        parl = Parlamentario(id="5", nombre_completo="Diputado Sin Votos", camara=CamaraTipo.DIPUTADOS)
+        pos = calcular_posicionamiento_parlamentario(parl, [], self.leyes_map)
+        self.assertEqual(pos.total_votaciones_computadas, 0)
+        self.assertEqual(pos.nivel_confianza, "Baja")
+        self.assertIsNone(pos.sigma_x)
+        self.assertIsNone(pos.error_estandar)
+
+    def test_confianza_alta_con_muchas_votaciones_consistentes(self):
+        """Muchas votaciones idénticas (aporte constante) -> sigma=0, confianza Alta."""
+        parl = Parlamentario(id="6", nombre_completo="Diputado Consistente", camara=CamaraTipo.DIPUTADOS)
+        votaciones = [
+            Votacion(
+                id=200 + i, camara=CamaraTipo.DIPUTADOS, fecha="2026-03-01", boletin="0001-01",
+                descripcion="Votación repetida", resultado="APROBADO",
+                votos=[VotoNominal(parlamentario_id="6", nombre_completo=parl.nombre_completo, opcion=OpcionVoto.AFIRMATIVO)],
+            )
+            for i in range(25)
+        ]
+
+        pos = calcular_posicionamiento_parlamentario(parl, votaciones, self.leyes_map)
+        self.assertEqual(pos.total_votaciones_computadas, 25)
+        self.assertEqual(pos.sigma_x, 0.0)
+        self.assertEqual(pos.error_estandar, 0.0)
+        self.assertEqual(pos.nivel_confianza, "Alta")
+
     def test_metricas_bancada_cohesion(self):
         """Una bancada con votos idénticos debe tener disciplina máxima (ID_P = 1.0)."""
         p1 = Parlamentario(id="1", nombre_completo="A", camara=CamaraTipo.DIPUTADOS, partido="Partido A")

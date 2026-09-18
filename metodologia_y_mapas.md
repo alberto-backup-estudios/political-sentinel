@@ -60,6 +60,26 @@ Donde:
   * $Y_i > 0$: Alto respaldo a programas de bienestar, bonos y protección laboral.
   * $Y_i < 0$: Oposición a la expansión del gasto social directo y regulaciones laborales.
 
+### Confianza del Posicionamiento Individual
+
+$X_i, Y_i$ son el promedio de los aportes $(v \cdot c_x, v \cdot c_y)$ de cada votación
+computada. Esa media es poco confiable cuando se basa en pocas votaciones o cuando
+los aportes individuales están muy dispersos entre sí (no confundir con $\sigma_X,
+\sigma_Y$ de la Sección 4, que mide dispersión *entre personas* de una bancada; aquí
+se mide dispersión *entre votos* de la misma persona):
+
+$$\sigma_{x,i} = \text{desv. estándar}(v \cdot c_x), \qquad \sigma_{y,i} = \text{desv. estándar}(v \cdot c_y)$$
+
+$$EE_i = \frac{\sqrt{\sigma_{x,i}^2 + \sigma_{y,i}^2}}{\sqrt{n_i}}$$
+
+donde $n_i$ es `total_votaciones_computadas`. El nivel de confianza (Alta/Media/Baja)
+se asigna según $n_i$ y $EE_i$ (umbrales en `src/config.py`):
+
+* **Baja**: $n_i$ < `UMBRAL_VOTACIONES_CONFIANZA_MEDIA` (posición no representativa).
+* **Media**: $n_i$ < `UMBRAL_VOTACIONES_CONFIANZA_ALTA` o $EE_i$ >
+  `UMBRAL_ERROR_ESTANDAR_CONFIANZA_ALTA`.
+* **Alta**: en caso contrario.
+
 ---
 
 ## 4. Agregación de Bancadas y Partidos Políticos

@@ -12,7 +12,14 @@ from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 import numpy as np
 
-from src.config import DEFAULT_ELLIPSE_CONFIDENCE_K, DEFAULT_WEIGHTS, PERIODOS_LEGISLATIVOS
+from src.config import (
+    DEFAULT_ELLIPSE_CONFIDENCE_K,
+    DEFAULT_WEIGHTS,
+    PERIODOS_LEGISLATIVOS,
+    UMBRAL_ERROR_ESTANDAR_CONFIANZA_ALTA,
+    UMBRAL_VOTACIONES_CONFIANZA_ALTA,
+    UMBRAL_VOTACIONES_CONFIANZA_MEDIA,
+)
 from src.models import (
     CuadranteInfo,
     LeyEvaluada,
@@ -83,9 +90,8 @@ def calcular_posicionamiento_parlamentario(
     w1, w2, w3 = w["w1"], w["w2"], w["w3"]
     w4, w5, w6 = w["w4"], w["w5"], w["w6"]
 
-    suma_x = 0.0
-    suma_y = 0.0
-    votaciones_computadas = 0
+    aportes_x: List[float] = []
+    aportes_y: List[float] = []
 
     for votacion in votaciones:
         # Solo computamos si la votación está asociada a una ley evaluada
@@ -110,13 +116,14 @@ def calcular_posicionamiento_parlamentario(
         c_x = impacto.componente_x_ley(w4, w5, w6)
         c_y = impacto.componente_y_ley(w1, w2, w3)
 
-        suma_x += v_val * c_x
-        suma_y += v_val * c_y
-        votaciones_computadas += 1
+        aportes_x.append(v_val * c_x)
+        aportes_y.append(v_val * c_y)
+
+    votaciones_computadas = len(aportes_x)
 
     if votaciones_computadas > 0:
-        x_final = max(-1.0, min(1.0, suma_x / votaciones_computadas))
-        y_final = max(-1.0, min(1.0, suma_y / votaciones_computadas))
+        x_final = max(-1.0, min(1.0, sum(aportes_x) / votaciones_computadas))
+        y_final = max(-1.0, min(1.0, sum(aportes_y) / votaciones_computadas))
     else:
         x_final = 0.0
         y_final = 0.0
@@ -125,6 +132,10 @@ def calcular_posicionamiento_parlamentario(
     nombre_cuad = cuad_enum.value
     cuad_code = cuad_enum.value.split(".")[0].strip()
 
+    sigma_x, sigma_y, error_estandar, nivel_confianza, razon_confianza = (
+        _calcular_confianza_posicionamiento(aportes_x, aportes_y, votaciones_computadas)
+    )
+
     return PosicionamientoParlamentario(
         parlamentario=parlamentario,
         x=round(x_final, 4),
@@ -132,7 +143,44 @@ def calcular_posicionamiento_parlamentario(
         cuadrante=cuad_code,
         nombre_cuadrante=nombre_cuad,
         total_votaciones_computadas=votaciones_computadas,
+        sigma_x=sigma_x,
+        sigma_y=sigma_y,
+        error_estandar=error_estandar,
+        nivel_confianza=nivel_confianza,
+        razon_confianza=razon_confianza,
     )
+
+
+def _calcular_confianza_posicionamiento(
+    aportes_x: List[float], aportes_y: List[float], n: int
+) -> Tuple[Optional[float], Optional[float], Optional[float], str, str]:
+    """
+    Mide qué tan confiable es la posición (x, y) de UN parlamentario, a partir de
+    la dispersión de sus aportes voto a voto (no de la dispersión entre personas
+    de una bancada, que calcula calcular_metricas_bancada).
+    """
+    if n == 0:
+        return None, None, None, "Baja", "Sin votaciones computadas."
+
+    if n < 2:
+        sigma_x, sigma_y = 0.0, 0.0
+    else:
+        sigma_x = float(np.std(aportes_x, ddof=1))
+        sigma_y = float(np.std(aportes_y, ddof=1))
+
+    error_estandar = math.sqrt(sigma_x**2 + sigma_y**2) / math.sqrt(n)
+
+    if n < UMBRAL_VOTACIONES_CONFIANZA_MEDIA:
+        nivel = "Baja"
+        razon = f"Solo {n} votaciones computadas: posición no representativa."
+    elif n < UMBRAL_VOTACIONES_CONFIANZA_ALTA or error_estandar > UMBRAL_ERROR_ESTANDAR_CONFIANZA_ALTA:
+        nivel = "Media"
+        razon = f"{n} votaciones computadas, error estándar {error_estandar:.4f}: posición razonable pero con margen de incertidumbre."
+    else:
+        nivel = "Alta"
+        razon = f"{n} votaciones computadas, error estándar {error_estandar:.4f}: posición estadísticamente estable."
+
+    return round(sigma_x, 4), round(sigma_y, 4), round(error_estandar, 4), nivel, razon
 
 
 def calcular_perfil_radar_parlamentario(

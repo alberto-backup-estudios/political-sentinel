@@ -36,6 +36,12 @@ DEFAULT_WEIGHTS = {
 # k=1.0 representa aproximadamente el 68% de confianza (1 desviación estándar)
 DEFAULT_ELLIPSE_CONFIDENCE_K = 1.0
 
+# Umbrales de Confianza del Posicionamiento Individual de un Parlamentario
+# (según cantidad de votaciones computadas y error estándar de su posición (x,y))
+UMBRAL_VOTACIONES_CONFIANZA_MEDIA = 5
+UMBRAL_VOTACIONES_CONFIANZA_ALTA = 20
+UMBRAL_ERROR_ESTANDAR_CONFIANZA_ALTA = 0.15
+
 # Períodos legislativos (fecha inicio, fecha término) - Cámara de Diputadas y Diputados.
 # Fuente: retornarPeriodosLegislativos de opendata.camara.cl (Confianza Alta).
 # El Senado NO se renueva por período completo (términos de 8 años escalonados);
