@@ -125,5 +125,117 @@
       "d6_burocracia": -0.8
     },
     "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Ministerio de Economía, Senado, DiarioConstitucional, revisado] Ley 21.770 (aprobada 01-07-2025, mensaje ingresado enero de 2024). Reduce entre 30% y 70% los tiempos de tramitación de más de 380 permisos sectoriales. Introduce silencio administrativo positivo (si la autoridad no responde a tiempo, el permiso se otorga automáticamente), principio de proporcionalidad según nivel de riesgo del proyecto, y una plataforma digital única (SUPER) con plazos máximos de 25-120 días. Es el primer caso del corpus de desregulación pro-crecimiento (Regla 5 del clasificador): no toca ningún tributo (d4=0) — el efecto directo del texto es reducir costos y trámites (d5/d6 negativos), no aumentar recaudación futura vía crecimiento económico especulativo."
+  },
+  {
+    "boletin": "12475-13",
+    "titulo": "Regula el contrato de los trabajadores que desarrollan labores en plataformas digitales de servicios",
+    "sectores_afectados": ["Empresas de plataformas digitales de servicios (delivery, reparto, transporte de pasajeros)", "Trabajadores de plataformas digitales (repartidores, conductores de apps)", "Dirección del Trabajo"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.65,
+      "d4_carga_fiscal": 0.15,
+      "d5_costos_privados": 0.55,
+      "d6_burocracia": 0.45
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: DLA Piper, Dirección del Trabajo, revisado] Ley 21.431 (publicada 11-03-2022, vigente desde 01-09-2022). Modifica el Código del Trabajo creando la categoría de trabajadores de plataformas digitales (dependientes e independientes), con contrato escrito obligatorio, tarifas e incentivos transparentes en pesos chilenos, y fiscalización de la Dirección del Trabajo con facultades para exigir el código fuente de la aplicación."
+  },
+  {
+    "boletin": "13191-12",
+    "titulo": "Fija Ley Marco de Cambio Climático",
+    "sectores_afectados": ["Energía", "Industria manufacturera", "Transporte", "Agricultura", "Minería", "Sector público (organismos del Estado)"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 0.0,
+      "d5_costos_privados": 0.6,
+      "d6_burocracia": 0.7
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: UNEP LEAP, Observatorio Ley de Cambio Climático, revisado] Ley 21.455 (publicada 13-06-2022). Fija meta de neutralidad de gases de efecto invernadero a 2050. Crea Planes Sectoriales de Mitigación (presupuesto de emisiones máximo por sector), Planes de Adaptación y reporte obligatorio de emisiones vía RETC. No crea impuestos ni transferencias — el costo recae en obligaciones de reporte y cumplimiento a sectores emisores regulados."
+  },
+  {
+    "boletin": "11144-07",
+    "titulo": "Regula la protección y el tratamiento de los datos personales y crea la Agencia de Protección de Datos Personales",
+    "sectores_afectados": ["Tecnología y plataformas digitales", "Comercio electrónico", "Instituciones financieras", "Sector público", "Telecomunicaciones", "Salud y seguros"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.5,
+      "d4_carga_fiscal": 0.3,
+      "d5_costos_privados": 0.7,
+      "d6_burocracia": 0.8
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: BCN, Carey, EMOL, revisado] Ley 21.719 (publicada 13-12-2024, vigente desde 01-12-2026). Crea la Agencia de Protección de Datos Personales (nuevo organismo público autónomo, gasto fiscal permanente → d4), reemplazando la Ley 19.628 de 1999. Otorga derechos de portabilidad, eliminación y oposición (d3). Impone políticas de privacidad, consentimiento y gobernanza de datos obligatorios a empresas y órganos públicos, con multas de hasta 20.000 UTM."
+  },
+  {
+    "boletin": "9404-12",
+    "titulo": "Crea el Servicio de Biodiversidad y Áreas Protegidas y el Sistema Nacional de Áreas Protegidas",
+    "sectores_afectados": ["Minería", "Acuicultura", "Silvicultura", "Energías renovables", "Turismo", "Pesca", "Agricultura"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.35,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 0.4,
+      "d5_costos_privados": 0.55,
+      "d6_burocracia": 0.65
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Carey, Ministerio de Medio Ambiente, revisado] Ley 21.600 'Ley Para la Naturaleza' (publicada 06-09-2023). Crea el Servicio de Biodiversidad y Áreas Protegidas (SBAP, nuevo servicio público con presupuesto fiscal recurrente → d4) y el Sistema Nacional de Áreas Protegidas (d2). Impone nuevas exigencias de evaluación y autorización a concesiones industriales dentro o cerca de áreas protegidas (minería, acuicultura, silvicultura, turismo)."
+  },
+  {
+    "boletin": "14570-05",
+    "titulo": "Regula a los proveedores de servicios financieros por medios digitales (Fintech) y habilita la implementación del Sistema de Finanzas Abiertas (Open Banking)",
+    "sectores_afectados": ["Instituciones financieras (bancos, fintech, cooperativas)", "Proveedores de servicios financieros digitales", "Clientes de servicios financieros", "Comisión para el Mercado Financiero"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.3,
+      "d4_carga_fiscal": 0.0,
+      "d5_costos_privados": 0.5,
+      "d6_burocracia": 0.4
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: CMF, Carey, Montt Group, revisado] Ley 21.521 'Ley Fintec' (publicada 04-01-2023). Regula proveedores fintech y habilita el Sistema de Finanzas Abiertas (Open Banking), obligando a instituciones financieras a compartir datos de clientes con su consentimiento. Impone costos técnicos y de cumplimiento a la banca establecida (d5/d6), aunque reduce barreras de entrada para nuevos competidores fintech — efecto compensatorio que el modelo explicitó al no llevar d6 más alto."
+  },
+  {
+    "boletin": "13204-07",
+    "titulo": "Sistematiza los delitos económicos y atentados contra el medio ambiente, modifica diversos cuerpos legales que tipifican delitos contra el orden socioeconómico (Ley de Delitos Económicos)",
+    "sectores_afectados": ["Sector financiero", "Sector tributario", "Empresas en general", "Directivos y ejecutivos de empresas", "Sector ambiental"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 0.0,
+      "d5_costos_privados": 0.8,
+      "d6_burocracia": 0.6
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: BCN, vLex, JDF Jara del Favero, revisado] Ley 21.595 (publicada 17-08-2023, mociones refundidas 13.204-07 y 13.205-07 — se usa 13.204-07 como boletín de referencia porque es el que registra las votaciones de Sala en opendata.camara.cl; 13.205-07 quedó sin votaciones propias tras la fusión). Sistematiza los delitos económicos en 4 categorías (financieros, tributarios, laborales, ambientales), con penas y multas mucho más severas, y amplía sustancialmente la responsabilidad penal de las personas jurídicas. No crea tributos ni transferencias — aumenta drásticamente el riesgo legal y las exigencias de compliance para empresas y directivos."
+  },
+  {
+    "boletin": "17508-05",
+    "titulo": "Reajusta el monto del ingreso mínimo mensual, la asignación familiar y maternal, el subsidio único familiar, y modifica otras leyes que indica",
+    "sectores_afectados": ["Empleadores (todas las empresas e instituciones)", "Trabajadores asalariados", "Familias de menores ingresos", "Pymes"],
+    "vector_impacto": {
+      "d1_transferencias": 0.7,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.6,
+      "d4_carga_fiscal": 0.4,
+      "d5_costos_privados": 0.8,
+      "d6_burocracia": 0.0
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Ministerio de Hacienda, Ministerio del Trabajo, revisado] Ley 21.751 (Senado aprobó por unanimidad 28-05-2025). Reajusta el ingreso mínimo mensual de $510.636 a $529.000 (mayo 2025) y $539.000 (enero 2026) — costo laboral directo para empleadores (d5), amplía el piso de protección laboral (d3). Reajusta también la asignación familiar/maternal y el subsidio único familiar — transferencias directas financiadas con presupuesto público (d1/d4)."
+  },
+  {
+    "boletin": "18216-05",
+    "titulo": "Para la reconstrucción nacional y el desarrollo económico y social (Ley de Reconstrucción / \"Ley Miscelánea\")",
+    "sectores_afectados": ["Empresas (Primera Categoría)", "Personas naturales con ingresos del capital", "Empleadores del sector privado", "Adultos mayores (65+) propietarios de inmuebles"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": -0.75,
+      "d5_costos_privados": -0.5,
+      "d6_burocracia": 0.0
+    },
+    "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Garrigues, NSS Legal, Diario Financiero, revisado] Boletín 18.216-05, despachado por el Congreso el 04-08-2026. Reduce gradualmente el impuesto de Primera Categoría de 27% a 23% (2026-2029), restablece la integración total con el Impuesto Global Complementario (crédito 100% desde 2029), y exime de contribuciones de bienes raíces a mayores de 65 años — reducciones ciertas y directas de recaudación fiscal (d4 negativo). Crea un crédito tributario al empleo de 15% de la remuneración bruta, que reduce el costo de contratar (d5 negativo). Primer caso del corpus de recorte tributario directo — sin efecto especulativo de crecimiento económico atribuido a d4, siguiendo la misma lógica que la Regla 5 aplica al caso inverso."
   }
 ]
