@@ -237,5 +237,75 @@
       "d6_burocracia": 0.0
     },
     "justificacion": "[Confianza Alta — clasificado con Claude Haiku 4.5 sobre fuentes verificadas: Garrigues, NSS Legal, Diario Financiero, revisado] Boletín 18.216-05, despachado por el Congreso el 04-08-2026. Reduce gradualmente el impuesto de Primera Categoría de 27% a 23% (2026-2029), restablece la integración total con el Impuesto Global Complementario (crédito 100% desde 2029), y exime de contribuciones de bienes raíces a mayores de 65 años — reducciones ciertas y directas de recaudación fiscal (d4 negativo). Crea un crédito tributario al empleo de 15% de la remuneración bruta, que reduce el costo de contratar (d5 negativo). Primer caso del corpus de recorte tributario directo — sin efecto especulativo de crecimiento económico atribuido a d4, siguiendo la misma lógica que la Regla 5 aplica al caso inverso."
+  },
+  {
+    "boletin": "10783-04",
+    "titulo": "Sobre Educación Superior (incluye Gratuidad)",
+    "sectores_afectados": ["Educación superior", "Estudiantes de pregrado presencial", "Instituciones de educación superior sin fines de lucro", "Familias en el 60% de menores ingresos", "Instituciones de educación superior con fines de lucro"],
+    "vector_impacto": {
+      "d1_transferencias": 0.8,
+      "d2_bienes_publicos": 0.85,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 0.75,
+      "d5_costos_privados": -0.3,
+      "d6_burocracia": 0.6
+    },
+    "justificacion": "[Confianza Media — clasificado con Claude Haiku 4.5 sobre resumen verificado de fuentes secundarias (BCN, portal Beneficios Estudiantiles); no se leyó el texto legal completo artículo por artículo] Ley 21.091, publicada 29-05-2018 (Boletín 10.783-04). Crea la gratuidad en educación superior: pago de arancel y matrícula por el Estado, sin límite de cupos, para estudiantes de pregrado presencial del 60% de menores ingresos en instituciones acreditadas y adscritas sin fines de lucro (transferencia en especie, d1; expansión de acceso, d2). Genera un compromiso de gasto público permanente y creciente, sin tope de cupos (d4). Crea nueva estructura de fiscalización y acreditación institucional — Subsecretaría y Superintendencia de Educación Superior (d6). Instituciones con fines de lucro quedan excluidas del sistema de gratuidad (d5 levemente negativo)."
+  },
+  {
+    "boletin": "9835-13",
+    "titulo": "Moderniza el Sistema de Relaciones Laborales (Reforma Laboral)",
+    "sectores_afectados": ["Relaciones laborales", "Empresas (todas las industrias)", "Trabajadores sindicalizados", "Sindicatos"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.4,
+      "d4_carga_fiscal": 0.0,
+      "d5_costos_privados": 0.2,
+      "d6_burocracia": 0.1
+    },
+    "justificacion": "[Confianza Media — clasificado con Claude Haiku 4.5 sobre resumen verificado de fuentes secundarias (Cooperativa.cl, T13, UDD); no se leyó el texto legal completo artículo por artículo] Ley 20.940, publicada 08-09-2016 (Boletín 9.835-13). El Tribunal Constitucional (fallo mayo 2016) declaró inconstitucional la titularidad sindical exclusiva y la extensión automática de beneficios a trabajadores no sindicalizados — ninguna de las dos integra el texto final promulgado. Lo que sí quedó vigente y se clasifica aquí: derecho a la información sindical (empresas deben entregar información financiera y de remuneraciones a sindicatos) y habilitación de la negociación colectiva interempresa, antes prohibida (d3 moderado, no el máximo de la ambición original del proyecto). Genera un costo administrativo de cumplimiento para las empresas (d5, d6 menores). No crea transferencias ni gasto fiscal (d1=d4=0)."
+  },
+  {
+    "boletin": "12008-13",
+    "titulo": "Regula el Trabajo a Distancia y Teletrabajo",
+    "sectores_afectados": ["Empresas de todos los sectores con empleados en modalidad de trabajo a distancia o teletrabajo", "Trabajadores en teletrabajo", "Dirección del Trabajo"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.8,
+      "d4_carga_fiscal": 0.1,
+      "d5_costos_privados": 0.7,
+      "d6_burocracia": 0.5
+    },
+    "justificacion": "[Confianza Media — clasificado con Claude Haiku 4.5 sobre resumen verificado de fuentes secundarias (Carey Abogados, Dirección del Trabajo); no se leyó el texto legal completo artículo por artículo] Ley 21.220, publicada 26-03-2020, vigente desde 01-04-2020 (Boletín 12.008-13). Crea el derecho a la desconexión (mínimo 12 horas continuas sin obligación de responder comunicaciones laborales) y protecciones de salud/seguridad en el lugar remoto (d3 alto). Obliga al empleador a proporcionar todas las herramientas y cubrir todos los gastos operacionales de la modalidad remota — el trabajador no puede asumir costos no reembolsables (d5 alto). Exige registrar el acuerdo ante la Dirección del Trabajo dentro de 15 días hábiles (d6). Sin transferencias ni gasto fiscal directo relevante (d1=0, d4 mínimo)."
+  },
+  {
+    "boletin": "14277-31",
+    "titulo": "Concede un Ingreso Familiar de Emergencia (IFE) por Covid-19",
+    "sectores_afectados": ["Hogares vulnerables y de clase media afectados por la pandemia Covid-19", "Familias inscritas en el Registro Social de Hogares"],
+    "vector_impacto": {
+      "d1_transferencias": 1.0,
+      "d2_bienes_publicos": 0.0,
+      "d3_derechos_laborales": 0.0,
+      "d4_carga_fiscal": 0.5,
+      "d5_costos_privados": 0.0,
+      "d6_burocracia": 0.0
+    },
+    "justificacion": "[Confianza Media — clasificado con Claude Haiku 4.5 sobre resumen verificado de fuentes secundarias (Wikipedia, Microjuris); no se leyó el texto legal completo artículo por artículo] Ley 21.230, publicada 14-05-2020 (Boletín 14.277-31). Crea una transferencia monetaria directa del Estado a hogares según número de integrantes y calificación socioeconómica en el Registro Social de Hogares; en su lanzamiento (23-05-2020) benefició a más de 4,5 millones de personas (d1 máximo). Es un beneficio de emergencia transitorio, asociado al estado de excepción constitucional por catástrofe (Covid-19) — no una transferencia permanente, por lo que d4 se modera a +0.5 en vez de +1.0. Sin efecto en d2, d3, d5 o d6."
+  },
+  {
+    "boletin": "15896-11",
+    "titulo": "Ley Corta de Isapres",
+    "sectores_afectados": ["Isapres y aseguradoras privadas de salud", "Afiliados a isapres", "Beneficiarios de Fonasa", "Superintendencia de Salud"],
+    "vector_impacto": {
+      "d1_transferencias": 0.0,
+      "d2_bienes_publicos": 0.3,
+      "d3_derechos_laborales": 0.4,
+      "d4_carga_fiscal": 0.0,
+      "d5_costos_privados": -0.2,
+      "d6_burocracia": 0.2
+    },
+    "justificacion": "[Confianza Media — clasificado con Claude Haiku 4.5 sobre resumen verificado de fuentes secundarias (gob.cl, prensa especializada en salud); no se leyó el texto legal completo artículo por artículo] Ley 21.674 (2024, Boletín 15.896-11). Obliga a isapres a presentar planes de pago para devolver excedentes cobrados en exceso por aplicación retroactiva de fallos judiciales sobre la tabla de factores de riesgo, sin contabilizarlos como parte de sus indicadores de solvencia (evita colapso de la industria). Suspende el cobro del factor de riesgo a menores de 2 años. Permite a Fonasa crear una Modalidad de Cobertura Complementaria con seguros privados voluntarios (d2 moderado). Refuerza la protección del afiliado frente a cobros excesivos (d3 moderado). No crea impuestos ni gasto fiscal nuevo — la cotización adicional es voluntaria, no tributaria (d4=0). Otorga nuevas atribuciones de fiscalización a la Superintendencia de Salud (d6). Nota: NO es una expansión clásica de bienes públicos — es una ley correctiva de una crisis de solvencia del sistema privado de salud; su efecto sobre d2/d5 es mixto, no un beneficio social directo puro."
   }
 ]
