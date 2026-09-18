@@ -8,10 +8,11 @@ Implementa el marco de metodologia_y_mapas.md:
 """
 
 import math
+from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 import numpy as np
 
-from src.config import DEFAULT_ELLIPSE_CONFIDENCE_K, DEFAULT_WEIGHTS
+from src.config import DEFAULT_ELLIPSE_CONFIDENCE_K, DEFAULT_WEIGHTS, PERIODOS_LEGISLATIVOS
 from src.models import (
     CuadranteInfo,
     LeyEvaluada,
@@ -36,6 +37,38 @@ EJES_VECTOR_IMPACTO = (
 )
 
 
+def fecha_a_periodo(fecha: str) -> Optional[str]:
+    """Determina a qué período legislativo (PERIODOS_LEGISLATIVOS) corresponde una
+    fecha de votación. Acepta ISO ('2022-01-26T14:55:15') o Senado ('24/01/2022')."""
+    fecha = (fecha or "").strip()
+    dt = None
+    for parser in (
+        lambda s: datetime.fromisoformat(s.split("T")[0]),
+        lambda s: datetime.strptime(s, "%d/%m/%Y"),
+    ):
+        try:
+            dt = parser(fecha)
+            break
+        except ValueError:
+            continue
+    if dt is None:
+        return None
+
+    for nombre_periodo, (ini, fin) in PERIODOS_LEGISLATIVOS.items():
+        if datetime.fromisoformat(ini) <= dt <= datetime.fromisoformat(fin):
+            return nombre_periodo
+    return None
+
+
+def _voto_es_del_periodo_del_parlamentario(votacion: Votacion, parlamentario: Parlamentario) -> bool:
+    """Si el parlamentario tiene período asignado, la votación debe caer en ese mismo
+    período (evita que un mismo Id oficial reelecto en otro período -Cámara- acumule
+    votos de un período que no le corresponde a ese registro del catálogo)."""
+    if not parlamentario.periodo:
+        return True
+    return fecha_a_periodo(votacion.fecha) == parlamentario.periodo
+
+
 def calcular_posicionamiento_parlamentario(
     parlamentario: Parlamentario,
     votaciones: List[Votacion],
@@ -57,6 +90,8 @@ def calcular_posicionamiento_parlamentario(
     for votacion in votaciones:
         # Solo computamos si la votación está asociada a una ley evaluada
         if not votacion.boletin or votacion.boletin not in leyes_map:
+            continue
+        if not _voto_es_del_periodo_del_parlamentario(votacion, parlamentario):
             continue
 
         ley = leyes_map[votacion.boletin]
@@ -116,6 +151,8 @@ def calcular_perfil_radar_parlamentario(
 
     for votacion in votaciones:
         if not votacion.boletin or votacion.boletin not in leyes_map:
+            continue
+        if not _voto_es_del_periodo_del_parlamentario(votacion, parlamentario):
             continue
 
         impacto = leyes_map[votacion.boletin].vector_impacto

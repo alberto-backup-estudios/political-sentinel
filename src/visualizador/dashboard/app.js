@@ -461,12 +461,15 @@ function poblarSelectorValor(tipo, selectEl) {
   }
 
   if (tipo === "parlamentario") {
+    // value = "id::periodo": el mismo Id oficial de Cámara puede reaparecer en más
+    // de un período (reelección), con partido/bancada distintos por período.
     [...(dashboardData.perfiles_radar_parlamentarios || [])]
       .sort((a, b) => a.parlamentario.nombre_completo.localeCompare(b.parlamentario.nombre_completo))
       .forEach(pf => {
         const opt = document.createElement("option");
-        opt.value = pf.parlamentario.id;
-        opt.textContent = `${pf.parlamentario.nombre_completo} (${pf.parlamentario.partido})`;
+        opt.value = `${pf.parlamentario.id}::${pf.parlamentario.periodo}`;
+        const periodoTxt = pf.parlamentario.periodo ? ` [${pf.parlamentario.periodo}]` : "";
+        opt.textContent = `${pf.parlamentario.nombre_completo} (${pf.parlamentario.partido})${periodoTxt}`;
         selectEl.appendChild(opt);
       });
     return;
@@ -504,16 +507,18 @@ function resolverEntidadRadar(tipo, valor) {
     };
   }
   if (tipo === "parlamentario") {
-    const pf = (dashboardData.perfiles_radar_parlamentarios || []).find(x => x.parlamentario.id === valor);
+    const pf = (dashboardData.perfiles_radar_parlamentarios || [])
+      .find(x => `${x.parlamentario.id}::${x.parlamentario.periodo}` === valor);
     if (!pf) return null;
     const p = pf.parlamentario;
     const bancadaTxt = p.bancada && p.bancada !== p.partido ? ` &bull; Bancada: ${p.bancada}` : "";
+    const periodoTxt = p.periodo ? ` &bull; Período ${p.periodo}` : "";
     return {
       vector: pf.vector_promedio,
       etiqueta: p.nombre_completo,
-      detalle: `${p.camara} &bull; ${p.partido}${bancadaTxt} &bull; ${pf.total_votaciones_computadas}/${dashboardData.resumen.total_leyes} votaciones computadas`,
+      detalle: `${p.camara} &bull; ${p.partido}${bancadaTxt}${periodoTxt} &bull; ${pf.total_votaciones_computadas}/${dashboardData.resumen.total_leyes} votaciones computadas`,
       esParlamentario: true,
-      parlamentarioId: p.id,
+      parlamentarioId: `${p.id}::${p.periodo}`,
     };
   }
   if (tipo === "bancada") {

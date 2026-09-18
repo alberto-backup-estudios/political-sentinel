@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from src.config import COLORES_BANCADAS, PERIODOS_LEGISLATIVOS, PROCESSED_DATA_DIR, VISUALIZADOR_DIR
+from src.config import COLORES_BANCADAS, PROCESSED_DATA_DIR, VISUALIZADOR_DIR
 from src.extractores.camara import obtener_detalle_votacion, obtener_votaciones_por_boletin
 from src.extractores.senado import obtener_votaciones_senado
 from src.models import (
@@ -31,6 +31,7 @@ from src.motor.calculo_cuadrantes import (
     calcular_perfil_radar_bancada,
     calcular_perfil_radar_parlamentario,
     calcular_posicionamiento_parlamentario,
+    fecha_a_periodo,
 )
 
 
@@ -88,29 +89,6 @@ def recolectar_votaciones_emblematicas(leyes: Dict[str, LeyEvaluada]) -> List[Vo
     return votaciones_totales
 
 
-def _fecha_a_periodo(fecha: str) -> Optional[str]:
-    """Determina a qué período legislativo (PERIODOS_LEGISLATIVOS) corresponde una
-    fecha de votación. Acepta ISO ('2022-01-26T14:55:15') o Senado ('24/01/2022')."""
-    fecha = (fecha or "").strip()
-    dt = None
-    for parser in (
-        lambda s: datetime.fromisoformat(s.split("T")[0]),
-        lambda s: datetime.strptime(s, "%d/%m/%Y"),
-    ):
-        try:
-            dt = parser(fecha)
-            break
-        except ValueError:
-            continue
-    if dt is None:
-        return None
-
-    for nombre_periodo, (ini, fin) in PERIODOS_LEGISLATIVOS.items():
-        if datetime.fromisoformat(ini) <= dt <= datetime.fromisoformat(fin):
-            return nombre_periodo
-    return None
-
-
 def _normalizar_texto(texto: str) -> str:
     """Minúsculas y sin tildes/diacríticos, para comparar nombres de forma robusta."""
     t = texto.strip().lower()
@@ -156,7 +134,7 @@ def asociar_votos_a_parlamentarios(
         if vot.camara != CamaraTipo.SENADO:
             continue
 
-        periodo_voto = _fecha_a_periodo(vot.fecha)
+        periodo_voto = fecha_a_periodo(vot.fecha)
         senadores_del_periodo = (
             [p for p in senadores if p.periodo == periodo_voto] if periodo_voto else senadores
         )
@@ -214,15 +192,30 @@ def compilar_dashboard():
     ]
     perfil_promedio_leyes = calcular_perfil_promedio_leyes(leyes_map)
 
-    # Detalle de voto por parlamentario y boletín, para el detalle de apoyo del radar
-    votos_por_parlamentario: Dict[str, Dict[str, str]] = {p.id: {} for p in parlamentarios}
-    ids_catalogo = set(votos_por_parlamentario.keys())
+    # Detalle de voto por parlamentario y boletín, para el detalle de apoyo del radar.
+    # Se indexa por (Id oficial, período) -> "id::periodo": el mismo Id de Cámara puede
+    # reaparecer en más de un período si la persona fue reelecta, con un registro de
+    # catálogo distinto por período (partido/bancada pueden variar).
+    clave_por_id_periodo: Dict[Tuple[str, Optional[str]], str] = {}
+    votos_por_parlamentario: Dict[str, Dict[str, str]] = {}
+    for p in parlamentarios:
+        clave = f"{p.id}::{p.periodo}"
+        clave_por_id_periodo[(p.id, p.periodo)] = clave
+        votos_por_parlamentario[clave] = {}
+
     for votacion in votaciones:
         if not votacion.boletin:
             continue
+        periodo_votacion = fecha_a_periodo(votacion.fecha)
         for v in votacion.votos:
-            if v.parlamentario_id in ids_catalogo:
-                votos_por_parlamentario[v.parlamentario_id][votacion.boletin] = v.opcion.value
+            clave = clave_por_id_periodo.get((v.parlamentario_id, periodo_votacion))
+            if clave is None:
+                # Sin match exacto de período: si el Id solo aparece una vez en el
+                # catálogo (caso normal, sin reelección), igual se asigna.
+                candidatos = [k for (pid, _per), k in clave_por_id_periodo.items() if pid == v.parlamentario_id]
+                clave = candidatos[0] if len(candidatos) == 1 else None
+            if clave is not None:
+                votos_por_parlamentario[clave][votacion.boletin] = v.opcion.value
 
     # Agrupar por bancada (comité parlamentario) y calcular centroides y elipses.
     # Se agrupa por bancada -no por partido legal- porque con el catálogo completo

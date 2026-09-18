@@ -121,6 +121,23 @@ class TestCalculoCuadrantes(unittest.TestCase):
         self.assertEqual(pos.x, 0.0)
         self.assertEqual(pos.y, 0.0)
 
+    def test_reeleccion_no_mezcla_votos_de_otro_periodo(self):
+        """Un mismo Id oficial de Cámara reelecto en otro período (dos registros de
+        catálogo, mismo id, distinto periodo) no debe computar votos de un período
+        que no le corresponde a ese registro."""
+        parl_periodo_actual = Parlamentario(
+            id="500", nombre_completo="Diputado Reelecto", camara=CamaraTipo.DIPUTADOS,
+            periodo="2022-2026",
+        )
+        votacion_periodo_anterior = Votacion(
+            id=201, camara=CamaraTipo.DIPUTADOS, fecha="2019-05-01", boletin="0001-01",
+            descripcion="Votación de un período distinto", resultado="APROBADO",
+            votos=[VotoNominal(parlamentario_id="500", nombre_completo="Diputado Reelecto", opcion=OpcionVoto.AFIRMATIVO)],
+        )
+
+        pos = calcular_posicionamiento_parlamentario(parl_periodo_actual, [votacion_periodo_anterior], self.leyes_map)
+        self.assertEqual(pos.total_votaciones_computadas, 0)
+
     def test_metricas_bancada_cohesion(self):
         """Una bancada con votos idénticos debe tener disciplina máxima (ID_P = 1.0)."""
         p1 = Parlamentario(id="1", nombre_completo="A", camara=CamaraTipo.DIPUTADOS, partido="Partido A")
