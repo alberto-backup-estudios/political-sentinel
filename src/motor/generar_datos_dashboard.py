@@ -194,7 +194,7 @@ def compilar_dashboard():
     perfil_promedio_leyes = calcular_perfil_promedio_leyes(leyes_map)
 
     # Desglose voto a voto del aporte a (x, y) de cada parlamentario, para poder
-    # auditar en el dashboard de dónde sale su sigma_x/sigma_y/nivel_confianza.
+    # auditar en el dashboard de dónde sale su sigma_x/sigma_y/nivel_confianza por eje.
     # Misma clave "id::periodo" que votos_por_parlamentario (ver más abajo).
     detalle_votos_parlamentarios: Dict[str, List[dict]] = {
         f"{p.id}::{p.periodo}": [

@@ -315,17 +315,24 @@ function mostrarDetalleParlamentario(pos) {
   badge.textContent = pos.cuadrante;
   badge.className = `badge q-${pos.cuadrante.toLowerCase()}`;
 
-  const colorConf = COLOR_CONFIANZA[pos.nivel_confianza] || DEFAULT_COLOR;
+  const colorConfX = COLOR_CONFIANZA[pos.nivel_confianza_x] || DEFAULT_COLOR;
+  const colorConfY = COLOR_CONFIANZA[pos.nivel_confianza_y] || DEFAULT_COLOR;
   const clave = `${p.id}::${p.periodo}`;
   const detalle = (dashboardData.detalle_votos_parlamentarios || {})[clave] || [];
+
+  const celdaAporte = (valor, relevante, colorPos, colorNeg) => {
+    if (!relevante) return `<span style="color:#475569;" title="Esta ley no aporta a este eje — no entra en su promedio">—</span>`;
+    const color = valor > 0 ? colorPos : (valor < 0 ? colorNeg : "#94a3b8");
+    return `<span style="color:${color};">${valor}</span>`;
+  };
 
   const filasVotos = detalle.length
     ? detalle.map(d => `
         <tr>
           <td>${d.titulo_ley}</td>
           <td>${d.opcion}</td>
-          <td style="color: ${d.aporte_x > 0 ? '#ef4444' : (d.aporte_x < 0 ? '#3b82f6' : '#94a3b8')}">${d.aporte_x}</td>
-          <td style="color: ${d.aporte_y > 0 ? '#10b981' : (d.aporte_y < 0 ? '#f59e0b' : '#94a3b8')}">${d.aporte_y}</td>
+          <td>${celdaAporte(d.aporte_x, d.relevante_x, '#ef4444', '#3b82f6')}</td>
+          <td>${celdaAporte(d.aporte_y, d.relevante_y, '#10b981', '#f59e0b')}</td>
         </tr>
       `).join("")
     : `<tr><td colspan="4" style="color:#94a3b8;">Sin votaciones computadas.</td></tr>`;
@@ -351,15 +358,22 @@ function mostrarDetalleParlamentario(pos) {
           <strong>${pos.nombre_cuadrante}</strong>
         </div>
         <div class="coord-item">
-          <span>Votaciones Computadas:</span>
+          <span>Votaciones Computadas (total):</span>
           <span>${pos.total_votaciones_computadas}</span>
         </div>
       </div>
 
-      <div class="confianza-box" style="border-left-color: ${colorConf};">
-        <span class="confianza-tag" style="color: ${colorConf};">Confianza ${pos.nivel_confianza}</span>
-        <p>${pos.razon_confianza || ""}</p>
-        ${pos.sigma_x !== null && pos.sigma_x !== undefined ? `<p class="confianza-sigma">&sigma;x = ${pos.sigma_x} &middot; &sigma;y = ${pos.sigma_y} &middot; Error estándar = ${pos.error_estandar}</p>` : ""}
+      <div class="confianza-grid">
+        <div class="confianza-box" style="border-left-color: ${colorConfX};">
+          <span class="confianza-tag" style="color: ${colorConfX};">Eje X — Confianza ${pos.nivel_confianza_x}</span>
+          <p>${pos.razon_confianza_x || ""}</p>
+          ${pos.sigma_x !== null && pos.sigma_x !== undefined ? `<p class="confianza-sigma">n=${pos.votaciones_relevantes_x} &middot; &sigma; = ${pos.sigma_x} &middot; EE = ${pos.error_estandar_x}</p>` : ""}
+        </div>
+        <div class="confianza-box" style="border-left-color: ${colorConfY};">
+          <span class="confianza-tag" style="color: ${colorConfY};">Eje Y — Confianza ${pos.nivel_confianza_y}</span>
+          <p>${pos.razon_confianza_y || ""}</p>
+          ${pos.sigma_y !== null && pos.sigma_y !== undefined ? `<p class="confianza-sigma">n=${pos.votaciones_relevantes_y} &middot; &sigma; = ${pos.sigma_y} &middot; EE = ${pos.error_estandar_y}</p>` : ""}
+        </div>
       </div>
 
       <div style="font-size: 0.85rem; color: #94a3b8; line-height: 1.4; margin-bottom: 1rem;">
@@ -368,7 +382,8 @@ function mostrarDetalleParlamentario(pos) {
       </div>
 
       <div class="votos-detalle">
-        <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0.5rem;"><strong>Desglose voto a voto (aporte a X / Y):</strong></p>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0.25rem;"><strong>Desglose voto a voto (aporte a X / Y):</strong></p>
+        <p style="font-size: 0.72rem; color: #64748b; margin-bottom: 0.5rem;">"—" = esta ley no aporta a ese eje (no entra en su promedio ni en su confianza).</p>
         <div class="table-responsive">
           <table class="tabla-votos-detalle">
             <thead><tr><th>Ley</th><th>Voto</th><th title="Aporte al Eje X">X</th><th title="Aporte al Eje Y">Y</th></tr></thead>
@@ -446,7 +461,8 @@ function mostrarDetalleBancada(b) {
     <tr>
       <td>${p.parlamentario.nombre_completo}</td>
       <td><code>(${p.x}, ${p.y})</code></td>
-      <td style="color: ${COLOR_CONFIANZA[p.nivel_confianza] || DEFAULT_COLOR}">${p.nivel_confianza}</td>
+      <td style="color: ${COLOR_CONFIANZA[p.nivel_confianza_x] || DEFAULT_COLOR}">${p.nivel_confianza_x}</td>
+      <td style="color: ${COLOR_CONFIANZA[p.nivel_confianza_y] || DEFAULT_COLOR}">${p.nivel_confianza_y}</td>
     </tr>
   `).join("");
 
@@ -465,7 +481,7 @@ function mostrarDetalleBancada(b) {
         <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0.5rem;"><strong>Miembros (posición individual y confianza):</strong></p>
         <div class="table-responsive">
           <table class="tabla-votos-detalle">
-            <thead><tr><th>Parlamentario</th><th>(X, Y)</th><th>Confianza</th></tr></thead>
+            <thead><tr><th>Parlamentario</th><th>(X, Y)</th><th>Conf. X</th><th>Conf. Y</th></tr></thead>
             <tbody>${filasMiembros}</tbody>
           </table>
         </div>

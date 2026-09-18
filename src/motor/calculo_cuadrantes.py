@@ -123,32 +123,40 @@ def calcular_posicionamiento_parlamentario(
     w1, w2, w3 = w["w1"], w["w2"], w["w3"]
     w4, w5, w6 = w["w4"], w["w5"], w["w6"]
 
+    # X e Y se acumulan en listas SEPARADAS: una ley que no aporta nada a un eje
+    # (su componente de ese eje es 0, ej. una ley 100% tributaria no aporta a Y) no
+    # entra al promedio de ese eje, para no diluirlo con ceros que no reflejan
+    # comportamiento de voto real en esa dimensión.
     aportes_x: List[float] = []
     aportes_y: List[float] = []
+    votaciones_computadas = 0
 
     for _votacion, ley, _voto, v_val in _iter_votos_computables(parlamentario, votaciones, leyes_map):
         impacto = ley.vector_impacto
         c_x = impacto.componente_x_ley(w4, w5, w6)
         c_y = impacto.componente_y_ley(w1, w2, w3)
 
-        aportes_x.append(v_val * c_x)
-        aportes_y.append(v_val * c_y)
+        votaciones_computadas += 1
+        if c_x != 0:
+            aportes_x.append(v_val * c_x)
+        if c_y != 0:
+            aportes_y.append(v_val * c_y)
 
-    votaciones_computadas = len(aportes_x)
+    votaciones_relevantes_x = len(aportes_x)
+    votaciones_relevantes_y = len(aportes_y)
 
-    if votaciones_computadas > 0:
-        x_final = max(-1.0, min(1.0, sum(aportes_x) / votaciones_computadas))
-        y_final = max(-1.0, min(1.0, sum(aportes_y) / votaciones_computadas))
-    else:
-        x_final = 0.0
-        y_final = 0.0
+    x_final = max(-1.0, min(1.0, sum(aportes_x) / votaciones_relevantes_x)) if votaciones_relevantes_x else 0.0
+    y_final = max(-1.0, min(1.0, sum(aportes_y) / votaciones_relevantes_y)) if votaciones_relevantes_y else 0.0
 
     cuad_enum = clasificar_cuadrante(x_final, y_final)
     nombre_cuad = cuad_enum.value
     cuad_code = cuad_enum.value.split(".")[0].strip()
 
-    sigma_x, sigma_y, error_estandar, nivel_confianza, razon_confianza = (
-        _calcular_confianza_posicionamiento(aportes_x, aportes_y, votaciones_computadas)
+    sigma_x, error_estandar_x, nivel_confianza_x, razon_confianza_x = (
+        _calcular_confianza_eje(aportes_x, votaciones_relevantes_x)
+    )
+    sigma_y, error_estandar_y, nivel_confianza_y, razon_confianza_y = (
+        _calcular_confianza_eje(aportes_y, votaciones_relevantes_y)
     )
 
     return PosicionamientoParlamentario(
@@ -158,11 +166,16 @@ def calcular_posicionamiento_parlamentario(
         cuadrante=cuad_code,
         nombre_cuadrante=nombre_cuad,
         total_votaciones_computadas=votaciones_computadas,
+        votaciones_relevantes_x=votaciones_relevantes_x,
+        votaciones_relevantes_y=votaciones_relevantes_y,
         sigma_x=sigma_x,
         sigma_y=sigma_y,
-        error_estandar=error_estandar,
-        nivel_confianza=nivel_confianza,
-        razon_confianza=razon_confianza,
+        error_estandar_x=error_estandar_x,
+        error_estandar_y=error_estandar_y,
+        nivel_confianza_x=nivel_confianza_x,
+        nivel_confianza_y=nivel_confianza_y,
+        razon_confianza_x=razon_confianza_x,
+        razon_confianza_y=razon_confianza_y,
     )
 
 
@@ -195,42 +208,41 @@ def calcular_detalle_votos_parlamentario(
                 opcion=voto.opcion.value,
                 aporte_x=round(v_val * c_x, 4),
                 aporte_y=round(v_val * c_y, 4),
+                relevante_x=(c_x != 0),
+                relevante_y=(c_y != 0),
             )
         )
 
     return detalle
 
 
-def _calcular_confianza_posicionamiento(
-    aportes_x: List[float], aportes_y: List[float], n: int
-) -> Tuple[Optional[float], Optional[float], Optional[float], str, str]:
+def _calcular_confianza_eje(
+    aportes: List[float], n: int
+) -> Tuple[Optional[float], Optional[float], str, str]:
     """
-    Mide qué tan confiable es la posición (x, y) de UN parlamentario, a partir de
-    la dispersión de sus aportes voto a voto (no de la dispersión entre personas
-    de una bancada, que calcula calcular_metricas_bancada).
+    Mide qué tan confiable es la posición de UN parlamentario en UN eje (X o Y por
+    separado), a partir de la dispersión de sus aportes voto a voto EN ESE EJE — no
+    la dispersión entre personas de una bancada (esa la calcula calcular_metricas_bancada).
+    `n` y `aportes` deben venir ya filtrados a solo las votaciones relevantes para
+    este eje (ver calcular_posicionamiento_parlamentario).
     """
     if n == 0:
-        return None, None, None, "Baja", "Sin votaciones computadas."
+        return None, None, "Baja", "Sin votaciones relevantes para este eje."
 
-    if n < 2:
-        sigma_x, sigma_y = 0.0, 0.0
-    else:
-        sigma_x = float(np.std(aportes_x, ddof=1))
-        sigma_y = float(np.std(aportes_y, ddof=1))
-
-    error_estandar = math.sqrt(sigma_x**2 + sigma_y**2) / math.sqrt(n)
+    sigma = 0.0 if n < 2 else float(np.std(aportes, ddof=1))
+    error_estandar = sigma / math.sqrt(n)
 
     if n < UMBRAL_VOTACIONES_CONFIANZA_MEDIA:
         nivel = "Baja"
-        razon = f"Solo {n} votaciones computadas: posición no representativa."
+        razon = f"Solo {n} votaciones relevantes para este eje: posición no representativa."
     elif n < UMBRAL_VOTACIONES_CONFIANZA_ALTA or error_estandar > UMBRAL_ERROR_ESTANDAR_CONFIANZA_ALTA:
         nivel = "Media"
-        razon = f"{n} votaciones computadas, error estándar {error_estandar:.4f}: posición razonable pero con margen de incertidumbre."
+        razon = f"{n} votaciones relevantes, error estándar {error_estandar:.4f}: posición razonable pero con margen de incertidumbre."
     else:
         nivel = "Alta"
-        razon = f"{n} votaciones computadas, error estándar {error_estandar:.4f}: posición estadísticamente estable."
+        razon = f"{n} votaciones relevantes, error estándar {error_estandar:.4f}: posición estadísticamente estable."
 
-    return round(sigma_x, 4), round(sigma_y, 4), round(error_estandar, 4), nivel, razon
+    return round(sigma, 4), round(error_estandar, 4), nivel, razon
 
 
 def calcular_perfil_radar_parlamentario(

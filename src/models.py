@@ -152,25 +152,40 @@ class PosicionamientoParlamentario(BaseModel):
     y: float
     cuadrante: str
     nombre_cuadrante: str
+    # Total de votaciones computadas (actividad general: votó y la ley está evaluada),
+    # independiente de si esa ley aporta o no a X o a Y.
     total_votaciones_computadas: int
+    # X e Y se promedian cada uno SOLO sobre las votaciones cuya ley aporta algo a ESE
+    # eje (d4/d5/d6 != 0 para X; d1/d2/d3 != 0 para Y) — evita que una ley irrelevante
+    # para Y (pero computada) diluya el promedio de Y de todos por igual. Ver
+    # metodologia_y_mapas.md sección "Confianza del Posicionamiento Individual".
+    votaciones_relevantes_x: int = 0
+    votaciones_relevantes_y: int = 0
     # Dispersión de los aportes individuales de cada voto a (x, y) — no la
-    # dispersión entre personas de una bancada (esa es MetricasBancada).
+    # dispersión entre personas de una bancada (esa es MetricasBancada). Cada eje se
+    # calcula sobre su propio subconjunto de votaciones relevantes.
     sigma_x: Optional[float] = None
     sigma_y: Optional[float] = None
-    error_estandar: Optional[float] = None
-    nivel_confianza: str = "Baja"
-    razon_confianza: str = ""
+    error_estandar_x: Optional[float] = None
+    error_estandar_y: Optional[float] = None
+    nivel_confianza_x: str = "Baja"
+    nivel_confianza_y: str = "Baja"
+    razon_confianza_x: str = ""
+    razon_confianza_y: str = ""
 
 
 class DetalleVotoParlamentario(BaseModel):
     """Aporte de UNA votación específica a la posición (x, y) de un parlamentario.
-    Permite auditar visualmente de dónde viene su sigma_x/sigma_y."""
+    Permite auditar visualmente de dónde viene su sigma_x/sigma_y. relevante_x/y indica
+    si esta ley entra en el promedio de ese eje (ver PosicionamientoParlamentario)."""
     boletin: str
     titulo_ley: str
     fecha: str
     opcion: str
     aporte_x: float
     aporte_y: float
+    relevante_x: bool
+    relevante_y: bool
 
 
 class PerfilRadarParlamentario(BaseModel):

@@ -37,13 +37,23 @@ $$v_{i, l} = \begin{cases}
 
 Para proyectar el comportamiento en el **Plano Cartesiano de Posicionamiento**, se agrupan las 6 dimensiones en dos macro-ejes:
 
+**Denominadores independientes por eje.** $X_i$ e $Y_i$ NO comparten el mismo
+denominador: cada uno se promedia solo sobre las votaciones cuya ley aporta algo a
+*ese* eje ($c_{x,l} \neq 0$ para X; $c_{y,l} \neq 0$ para Y). Una ley 100% tributaria
+(no aporta nada a $D_1/D_2/D_3$) simplemente no entra al promedio de $Y_i$ — no lo
+diluye con un cero que no refleja ningún comportamiento de voto en esa dimensión, ni
+tampoco entra a su cálculo de confianza (sección siguiente). Es habitual que
+$n_{x,i} \neq n_{y,i}$ para el mismo parlamentario.
+
 ### Eje X: Carga e Intervención Económica
 Mide la propensión del legislador a apoyar la extracción de recursos y trabas al sector privado:
 
-$$X_i = \frac{1}{|\mathcal{V}_i|} \sum_{l \in \mathcal{V}_i} v_{i, l} \cdot \left( \frac{w_4 d_{4, l} + w_5 d_{5, l} + w_6 d_{6, l}}{w_4 + w_5 + w_6} \right)$$
+$$c_{x,l} = \frac{w_4 d_{4, l} + w_5 d_{5, l} + w_6 d_{6, l}}{w_4 + w_5 + w_6}, \qquad \mathcal{V}_{x,i} = \{ l \in \mathcal{V}_i : c_{x,l} \neq 0 \}$$
+
+$$X_i = \frac{1}{|\mathcal{V}_{x,i}|} \sum_{l \in \mathcal{V}_{x,i}} v_{i, l} \cdot c_{x,l}$$
 
 Donde:
-* $\mathcal{V}_i$ es el conjunto de votaciones en las que participó el parlamentario $i$.
+* $\mathcal{V}_i$ es el conjunto de votaciones en las que participó el parlamentario $i$; $\mathcal{V}_{x,i} \subseteq \mathcal{V}_i$ es el subconjunto relevante para X.
 * $w_4, w_5, w_6$ son ponderadores relativos de importancia (por defecto $w_k = 1$).
 * Rango: $X_i \in [-1, 1]$.
   * $X_i > 0$: Pro-intervención fiscal y regulatoria.
@@ -52,7 +62,9 @@ Donde:
 ### Eje Y: Bienestar y Protección Social
 Mide la propensión del legislador a apoyar transferencias monetarias, servicios públicos y derechos laborales:
 
-$$Y_i = \frac{1}{|\mathcal{V}_i|} \sum_{l \in \mathcal{V}_i} v_{i, l} \cdot \left( \frac{w_1 d_{1, l} + w_2 d_{2, l} + w_3 d_{3, l}}{w_1 + w_2 + w_3} \right)$$
+$$c_{y,l} = \frac{w_1 d_{1, l} + w_2 d_{2, l} + w_3 d_{3, l}}{w_1 + w_2 + w_3}, \qquad \mathcal{V}_{y,i} = \{ l \in \mathcal{V}_i : c_{y,l} \neq 0 \}$$
+
+$$Y_i = \frac{1}{|\mathcal{V}_{y,i}|} \sum_{l \in \mathcal{V}_{y,i}} v_{i, l} \cdot c_{y,l}$$
 
 Donde:
 * $w_1, w_2, w_3$ son ponderadores relativos (por defecto $w_k = 1$).
@@ -60,23 +72,21 @@ Donde:
   * $Y_i > 0$: Alto respaldo a programas de bienestar, bonos y protección laboral.
   * $Y_i < 0$: Oposición a la expansión del gasto social directo y regulaciones laborales.
 
-### Confianza del Posicionamiento Individual
+### Confianza del Posicionamiento Individual (por eje)
 
-$X_i, Y_i$ son el promedio de los aportes $(v \cdot c_x, v \cdot c_y)$ de cada votación
-computada. Esa media es poco confiable cuando se basa en pocas votaciones o cuando
-los aportes individuales están muy dispersos entre sí (no confundir con $\sigma_X,
-\sigma_Y$ de la Sección 4, que mide dispersión *entre personas* de una bancada; aquí
-se mide dispersión *entre votos* de la misma persona):
+Cada eje tiene su propia confianza, calculada solo sobre su propio subconjunto
+relevante ($\mathcal{V}_{x,i}$ o $\mathcal{V}_{y,i}$) — no se mezclan (no confundir
+con $\sigma_X, \sigma_Y$ de la Sección 4, que mide dispersión *entre personas* de una
+bancada; aquí se mide dispersión *entre votos* de la misma persona, eje por eje):
 
-$$\sigma_{x,i} = \text{desv. estándar}(v \cdot c_x), \qquad \sigma_{y,i} = \text{desv. estándar}(v \cdot c_y)$$
+$$\sigma_{x,i} = \text{desv. estándar}(\{v_{i,l} \cdot c_{x,l}\}_{l \in \mathcal{V}_{x,i}}), \qquad EE_{x,i} = \frac{\sigma_{x,i}}{\sqrt{n_{x,i}}}$$
 
-$$EE_i = \frac{\sqrt{\sigma_{x,i}^2 + \sigma_{y,i}^2}}{\sqrt{n_i}}$$
+(análogo para $\sigma_{y,i}$, $EE_{y,i}$ sobre $\mathcal{V}_{y,i}$), donde $n_{x,i} = |\mathcal{V}_{x,i}|$.
+El nivel de confianza (Alta/Media/Baja) de cada eje se asigna según su propio $n$ y $EE$
+(umbrales en `src/config.py`):
 
-donde $n_i$ es `total_votaciones_computadas`. El nivel de confianza (Alta/Media/Baja)
-se asigna según $n_i$ y $EE_i$ (umbrales en `src/config.py`):
-
-* **Baja**: $n_i$ < `UMBRAL_VOTACIONES_CONFIANZA_MEDIA` (posición no representativa).
-* **Media**: $n_i$ < `UMBRAL_VOTACIONES_CONFIANZA_ALTA` o $EE_i$ >
+* **Baja**: $n$ < `UMBRAL_VOTACIONES_CONFIANZA_MEDIA` (posición no representativa).
+* **Media**: $n$ < `UMBRAL_VOTACIONES_CONFIANZA_ALTA` o $EE$ >
   `UMBRAL_ERROR_ESTANDAR_CONFIANZA_ALTA`.
 * **Alta**: en caso contrario.
 

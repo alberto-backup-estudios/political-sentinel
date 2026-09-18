@@ -150,7 +150,8 @@ class TestCalculoCuadrantes(unittest.TestCase):
 
         pos = calcular_posicionamiento_parlamentario(parl, [votacion], self.leyes_map)
         self.assertEqual(pos.total_votaciones_computadas, 1)
-        self.assertEqual(pos.nivel_confianza, "Baja")
+        self.assertEqual(pos.nivel_confianza_x, "Baja")
+        self.assertEqual(pos.nivel_confianza_y, "Baja")
         self.assertEqual(pos.sigma_x, 0.0)
         self.assertEqual(pos.sigma_y, 0.0)
 
@@ -159,9 +160,10 @@ class TestCalculoCuadrantes(unittest.TestCase):
         parl = Parlamentario(id="5", nombre_completo="Diputado Sin Votos", camara=CamaraTipo.DIPUTADOS)
         pos = calcular_posicionamiento_parlamentario(parl, [], self.leyes_map)
         self.assertEqual(pos.total_votaciones_computadas, 0)
-        self.assertEqual(pos.nivel_confianza, "Baja")
+        self.assertEqual(pos.nivel_confianza_x, "Baja")
+        self.assertEqual(pos.nivel_confianza_y, "Baja")
         self.assertIsNone(pos.sigma_x)
-        self.assertIsNone(pos.error_estandar)
+        self.assertIsNone(pos.error_estandar_x)
 
     def test_confianza_alta_con_muchas_votaciones_consistentes(self):
         """Muchas votaciones idénticas (aporte constante) -> sigma=0, confianza Alta."""
@@ -177,9 +179,54 @@ class TestCalculoCuadrantes(unittest.TestCase):
 
         pos = calcular_posicionamiento_parlamentario(parl, votaciones, self.leyes_map)
         self.assertEqual(pos.total_votaciones_computadas, 25)
+        self.assertEqual(pos.votaciones_relevantes_x, 25)
+        self.assertEqual(pos.votaciones_relevantes_y, 25)
         self.assertEqual(pos.sigma_x, 0.0)
-        self.assertEqual(pos.error_estandar, 0.0)
-        self.assertEqual(pos.nivel_confianza, "Alta")
+        self.assertEqual(pos.error_estandar_x, 0.0)
+        self.assertEqual(pos.nivel_confianza_x, "Alta")
+        self.assertEqual(pos.nivel_confianza_y, "Alta")
+
+    def test_eje_irrelevante_no_diluye_el_otro_eje(self):
+        """Una ley 100% tributaria (no aporta a Y) no debe diluir el promedio de Y
+        de un parlamentario que además vota leyes de bienestar puro."""
+        parl = Parlamentario(id="8", nombre_completo="Diputado Mixto", camara=CamaraTipo.DIPUTADOS)
+        leyes = {
+            "bienestar": LeyEvaluada(
+                boletin="bienestar", titulo="Ley 100% de Bienestar",
+                vector_impacto=VectorImpacto(
+                    d1_transferencias=0.8, d2_bienes_publicos=0.0, d3_derechos_laborales=0.0,
+                    d4_carga_fiscal=0.0, d5_costos_privados=0.0, d6_burocracia=0.0,
+                ),
+            ),
+            "tributaria": LeyEvaluada(
+                boletin="tributaria", titulo="Ley 100% Tributaria",
+                vector_impacto=VectorImpacto(
+                    d1_transferencias=0.0, d2_bienes_publicos=0.0, d3_derechos_laborales=0.0,
+                    d4_carga_fiscal=0.9, d5_costos_privados=0.0, d6_burocracia=0.0,
+                ),
+            ),
+        }
+        votaciones = [
+            Votacion(
+                id=401, camara=CamaraTipo.DIPUTADOS, fecha="2026-01-01", boletin="bienestar",
+                descripcion="Bienestar", resultado="APROBADO",
+                votos=[VotoNominal(parlamentario_id="8", nombre_completo=parl.nombre_completo, opcion=OpcionVoto.AFIRMATIVO)],
+            ),
+            Votacion(
+                id=402, camara=CamaraTipo.DIPUTADOS, fecha="2026-01-02", boletin="tributaria",
+                descripcion="Tributaria", resultado="APROBADO",
+                votos=[VotoNominal(parlamentario_id="8", nombre_completo=parl.nombre_completo, opcion=OpcionVoto.AFIRMATIVO)],
+            ),
+        ]
+
+        pos = calcular_posicionamiento_parlamentario(parl, votaciones, leyes)
+        self.assertEqual(pos.total_votaciones_computadas, 2)
+        self.assertEqual(pos.votaciones_relevantes_x, 1)
+        self.assertEqual(pos.votaciones_relevantes_y, 1)
+        # Y se promedia SOLO sobre la ley de bienestar (n=1, no n=2): 0.8/3 (promedio
+        # ponderado d1/d2/d3 con pesos por defecto 1/1/1), no la mitad de eso por la
+        # ley tributaria que no le aporta nada a Y.
+        self.assertAlmostEqual(pos.y, 0.8 / 3, places=4)
 
     def test_detalle_votos_coincide_con_agregado(self):
         """El detalle voto a voto debe promediar exactamente a lo que reporta
@@ -218,8 +265,13 @@ class TestCalculoCuadrantes(unittest.TestCase):
 
         self.assertEqual(len(detalle), pos.total_votaciones_computadas)
         self.assertEqual({d.boletin for d in detalle}, {"0001-01", "impuestos"})
-        self.assertAlmostEqual(sum(d.aporte_x for d in detalle) / len(detalle), pos.x, places=3)
-        self.assertAlmostEqual(sum(d.aporte_y for d in detalle) / len(detalle), pos.y, places=3)
+
+        relevantes_x = [d for d in detalle if d.relevante_x]
+        relevantes_y = [d for d in detalle if d.relevante_y]
+        self.assertEqual(len(relevantes_x), pos.votaciones_relevantes_x)
+        self.assertEqual(len(relevantes_y), pos.votaciones_relevantes_y)
+        self.assertAlmostEqual(sum(d.aporte_x for d in relevantes_x) / len(relevantes_x), pos.x, places=3)
+        self.assertAlmostEqual(sum(d.aporte_y for d in relevantes_y) / len(relevantes_y), pos.y, places=3)
 
     def test_metricas_bancada_cohesion(self):
         """Una bancada con votos idénticos debe tener disciplina máxima (ID_P = 1.0)."""
